@@ -9,5 +9,5 @@
 - [ ] slice both drawer models in OrcaSlicer, record real time and filament in specs/printability.md
 - [x] drawer variant: ramp at the front, 90 degree back wall, door unchanged (specs/drawer-swap.md)
 - [x] section script: cross-section plots and outlines (make sections)
-- [ ] decide whether the slide rails stay at their original position in the swapped drawer (specs/drawer-swap.md)
+- [x] keep the slide rails at their original position in the swapped drawer (specs/drawer-swap.md)
 - [ ] decide how to print the back wall ceiling: bridge, supports, or design change (specs/drawer-swap.md)

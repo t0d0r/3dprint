@@ -47,5 +47,9 @@ Default bed is 220 x 220 x 250 mm.
 - Orientation: still door down. 21.8 cm2 of downward-facing surface at
   the top: the inside of the new back wall, which must bridge 113 mm
   between the side walls. All other orientations are worse.
-- Wall thickness unchanged: median 1.30 mm, min 0.62 mm on the rails.
-- 68.4 cm3, about 30 g PLA rough.
+- Wall thickness: median 1.30 mm, 0.3% of the surface under 0.8 mm,
+  min 0.38 mm. The thin spots are the lower inner edge of the rails'
+  0.3 mm wall bite in the 15 mm behind the door where the rails stand
+  free of the wall (specs/drawer-swap.md): a corner of a feature that
+  is itself 3.2 mm wide, not a thin wall. No model change needed.
+- 68.3 cm3, about 30 g PLA rough.

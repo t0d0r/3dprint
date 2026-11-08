@@ -12,8 +12,13 @@ Continues session/2026-11-08-setup.md.
   `models/drawer-20cm-front-slope.stl`, the drawer with the ramp moved to
   the front against the door and a vertical 1.3 mm back wall. Method and
   numbers in specs/drawer-swap.md.
-- Output verified: watertight after STL reload, one body, same outer
-  size, 68.4 cm3. Previews and sections rendered and checked.
+- Rails kept at their original position (door face to 22 mm before the
+  back): the script now splits them off before mirroring the body, with
+  a 0.3 mm bite of wall so they fuse back in, and extends them to the
+  door across the fillet zone.
+- Output verified: watertight after STL reload, one body, no unfused
+  rail faces, genus 2 as expected (see spec), same outer size,
+  68.3 cm3. Previews, corner zooms and sections rendered and checked.
 - Printability of the new model recorded in specs/printability.md.
 - requirements: rtree, shapely, networkx, matplotlib added.
 
@@ -24,16 +29,21 @@ Continues session/2026-11-08-setup.md.
 - Cuts stay off the door face (0.02 mm inside the plate for the door,
   3.5 mm past it for the body): a coplanar cut left a zero-thickness
   sheet, and a cut through the fillet left slivers inside the back wall.
+- Rails are split off with 0.3 mm of wall, not on the wall plane: the
+  wall faces have 0.03 mm of noise, and a split on the plane left the
+  rails a few microns off the wall, unfused, with a stray handle in the
+  topology.
+- The core is clipped 0.005 mm inside the outermost wall points, so its
+  outer faces are flat; costs 0.03 mm of wall at the noisiest spots.
 - Final `Manifold.simplify(1e-3)` is required: without it the boolean
   result is watertight in memory but not after the STL float32 round
   trip. The script asserts watertightness on its own reloaded output.
-- Back wall clipped flush with the side walls (not the rails).
+- Genus 2 is accepted and asserted (0 or 2 only): the two handles are
+  the open corners between the rails and the rounded ramp tip at the
+  door, real geometry that prints as islands merging a few layers up.
 
 ## Open
 
-- Rails moved with the mirrored body (now 22 mm behind the door to 1 mm
-  before the back; originally 58 mm behind the door to 22 mm before the
-  back). Whether that matters depends on the cabinet.
 - The inside of the back wall is a 113 mm bridge when printing on the
   door. Print as bridge, support it, or change the design.
 - Real slicer numbers still not recorded.
@@ -55,7 +65,7 @@ todo/todo.md, this note.
 
 ## Next step
 
-Decide on rails and on the back-wall ceiling, then slice in OrcaSlicer.
+Decide on the back-wall ceiling, then slice in OrcaSlicer.
 
 ## Security Note
 
