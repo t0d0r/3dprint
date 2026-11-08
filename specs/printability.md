@@ -47,5 +47,6 @@ Default bed is 220 x 220 x 250 mm.
 - Orientation: still door down. 21.8 cm2 of downward-facing surface at
   the top: the inside of the new back wall, which must bridge 113 mm
   between the side walls. All other orientations are worse.
-- Wall thickness unchanged: median 1.30 mm, min 0.62 mm on the rails.
-- 68.4 cm3, about 30 g PLA rough.
+- Wall thickness unchanged by the swap or the front braces: median
+  1.30 mm, min 0.63 mm on the rails, 0.2% under 0.8 mm.
+- 70.1 cm3 with the front braces, about 31 g PLA rough.

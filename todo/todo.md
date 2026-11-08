@@ -10,4 +10,5 @@
 - [x] drawer variant: ramp at the front, 90 degree back wall, door unchanged (specs/drawer-swap.md)
 - [x] section script: cross-section plots and outlines (make sections)
 - [x] decide whether the slide rails stay at their original position in the swapped drawer: no, they move with the body (specs/drawer-swap.md)
+- [x] front braces: side walls continued to the door with a stepped fillet, the plate was held by the ramp tip only (specs/drawer-swap.md)
 - [ ] decide how to print the back wall ceiling: bridge, supports, or design change (specs/drawer-swap.md)

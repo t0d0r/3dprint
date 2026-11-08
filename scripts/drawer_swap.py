@@ -15,6 +15,7 @@ import sys
 import manifold3d
 import numpy as np
 import trimesh
+from shapely.geometry import MultiPolygon, Polygon
 from shapely.ops import unary_union
 from trimesh.intersections import slice_mesh_plane
 
@@ -23,6 +24,11 @@ OVERLAP = 0.3     # how far parts sink into each other before union (mm)
 FILLET = 3.5      # length of the body/door fillet flare to cut away (mm)
 EPS = 0.02        # keep cuts off the door face by this much (mm)
 SIMPLIFY = 1e-3   # final sliver clean-up tolerance (mm)
+BRACE_LEN = 40    # side braces reach this far behind the door (mm)
+BRACE_BAND = 12   # width of wall kept for the braces: wall + corner round (mm)
+BRACE_INSET = 0.1  # braces stay this far inside the wall planes, past their 0.03 mm noise (mm)
+SKIN = 0.05       # braces stay this far inside the body's other surfaces (mm)
+CHAMFER = 3       # stepped fillet where the braces meet the door (mm)
 
 src, dst = sys.argv[1], sys.argv[2]
 m = trimesh.load(src, force="mesh")
@@ -81,11 +87,15 @@ u_poly = unary_union(p2.polygons_full).simplify(0.02, preserve_topology=True).bu
 
 
 def prism(poly, z0, z1):
-    """Extrude a 2D section polygon between two Z values."""
-    p = trimesh.creation.extrude_polygon(poly, abs(z1 - z0))
-    p.apply_transform(to_3d)
-    p.apply_translation([0, 0, min(z0, z1) - p.bounds[0, 2]])
-    return p
+    """Extrude a 2D section polygon (or multipolygon) between two Z values."""
+    polys = list(poly.geoms) if isinstance(poly, MultiPolygon) else [poly]
+    parts = []
+    for q in polys:
+        p = trimesh.creation.extrude_polygon(q, abs(z1 - z0))
+        p.apply_transform(to_3d)
+        p.apply_translation([0, 0, min(z0, z1) - p.bounds[0, 2]])
+        parts.append(p)
+    return trimesh.util.concatenate(parts)
 
 
 # Fill the cut-away length with the U profile, then close it with a wall.
@@ -103,7 +113,43 @@ clip = trimesh.creation.box(bounds=[[m.bounds[0, 0] - 1, ylo, m.bounds[0, 2] - 1
 wall = trimesh.boolean.intersection([wall, clip], engine="manifold")
 print(f"back wall: {wall.extents.round(2)} mm (x y z); fill {fill.extents[2]:.2f} mm long")
 
-out = trimesh.boolean.union([body, fill, wall, door], engine="manifold")
+# Side braces: the mirrored body meets the door only with the thin ramp
+# tip and the rounded wall corners, too little to pull the drawer by the
+# plate. Continue both side walls, with their corner rounds, at full
+# height from the door to past the end of the ramp, inset slightly so
+# they fuse with the existing wall instead of leaving a coplanar skin,
+# and foot them on the door with a stepped fillet on the inside.
+to_2d = np.linalg.inv(to_3d)
+z_sec = far + door_sign * 15
+
+
+def rect2d(x0, x1, y0, y1):
+    pts = trimesh.transform_points([[x0, y0, z_sec], [x1, y0, z_sec], [x1, y1, z_sec], [x0, y1, z_sec]], to_2d)
+    return Polygon(pts[:, :2])
+
+
+x_open = v[:, 0].min()                      # open edge of the walls
+x_deep = m.bounds[1, 0] + 1
+between = rect2d(x_open, x_deep, ylo + BRACE_INSET, yhi - BRACE_INSET)   # inside the wall planes, below the open edge
+bands = unary_union([rect2d(x_open - 1, x_deep, ylo, ylo + BRACE_BAND),
+                     rect2d(x_open - 1, x_deep, yhi - BRACE_BAND, yhi)]).intersection(between)
+# The U profile still carries the rails here; the clip to 'between' drops
+# them, otherwise a 0.05 mm fin of rail would run along the braces.
+brace2d = u_poly.buffer(-SKIN).intersection(bands)
+# Solid footprint of the body (U with its channel closed, rails cut off),
+# to keep the fillet steps inside the body's outer surface.
+closed = unary_union([u_poly, rect2d(x_open - 0.5, x_open + 0.5, ylo, yhi)])
+if closed.geom_type != "Polygon":
+    closed = max(closed.geoms, key=lambda g: g.area)
+filled = Polygon(closed.exterior).buffer(-SKIN).intersection(between)
+z_b0 = z_face + door_sign * OVERLAP        # start inside the door plate
+braces = [prism(brace2d, z_b0, z_face - door_sign * BRACE_LEN)]
+for k in range(1, CHAMFER + 1):
+    step = brace2d.buffer(k).intersection(filled)
+    braces.append(prism(step, z_b0, z_face - door_sign * (CHAMFER + 1 - k)))
+print(f"braces: {brace2d.area:.1f} mm2 section, {BRACE_LEN} mm long, {CHAMFER} mm stepped fillet at the door")
+
+out = trimesh.boolean.union([body, fill, wall, door, *braces], engine="manifold")
 
 # Collapse slivers left by the booleans. Without this, STL's 32-bit floats
 # merge their vertices on reload and the mesh is no longer 2-manifold.
