@@ -40,3 +40,12 @@ Default bed is 220 x 220 x 250 mm.
   plate. Print with 3 perimeters at 0.4 mm and thin-wall detection on;
   no model change needed.
 - Rough weight 29 g PLA; the slicer gives the real number.
+
+### models/drawer-20cm-front-slope.stl (2026-11-08)
+
+- Built by `make drawer-swap`, see specs/drawer-swap.md.
+- Orientation: still door down. 21.8 cm2 of downward-facing surface at
+  the top: the inside of the new back wall, which must bridge 113 mm
+  between the side walls. All other orientations are worse.
+- Wall thickness unchanged: median 1.30 mm, min 0.62 mm on the rails.
+- 68.4 cm3, about 30 g PLA rough.

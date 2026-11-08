@@ -3,3 +3,6 @@ numpy-stl
 manifold3d
 cadquery
 rtree
+matplotlib
+shapely
+networkx

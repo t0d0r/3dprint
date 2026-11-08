@@ -8,6 +8,9 @@
 | manifold3d    | latest     | pip, in .venv                            |
 | numpy-stl     | latest     | pip, in .venv                            |
 | rtree         | latest     | pip, in .venv (ray casting for trimesh)  |
+| shapely       | latest     | pip, in .venv (section polygons)         |
+| networkx      | latest     | pip, in .venv (trimesh path graphs)      |
+| matplotlib    | latest     | pip, in .venv (section plots)            |
 | OpenSCAD      | 2026.10.11 | Homebrew cask openscad@snapshot          |
 | OrcaSlicer    | installed  | /Applications/OrcaSlicer.app             |
 | Blender       | installed  | /Applications/Blender.app                |
