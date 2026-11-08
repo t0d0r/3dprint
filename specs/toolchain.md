@@ -7,6 +7,7 @@
 | CadQuery      | 2.8        | pip, in .venv                            |
 | manifold3d    | latest     | pip, in .venv                            |
 | numpy-stl     | latest     | pip, in .venv                            |
+| rtree         | latest     | pip, in .venv (ray casting for trimesh)  |
 | OpenSCAD      | 2026.10.11 | Homebrew cask openscad@snapshot          |
 | OrcaSlicer    | installed  | /Applications/OrcaSlicer.app             |
 | Blender       | installed  | /Applications/Blender.app                |
