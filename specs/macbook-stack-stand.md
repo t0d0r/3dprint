@@ -12,6 +12,7 @@ other, on two small stands.
 - The lower laptop sits 5 mm above the desk, in a channel it slides in.
 - The upper laptop sits 10 mm above the lower one, in its own channel.
 - The stands go at the middle of the laptops, clear of the ports.
+- Each stand can be screwed to the desk with two screws.
 
 ## Design
 
@@ -55,6 +56,12 @@ Laptop reference dimensions (Apple): 15.5 mm thick closed, 312.6 mm wide,
 | `length`    | 68    | rail length along the laptop side                    |
 | `foot_out`  | 12    | outward foot                                         |
 | `foot_h`    | 12    | height where the foot meets the wall                 |
+| `foot_tip`  | 4     | thickness of the foot at its outer end               |
+| `screw_n`   | 2     | screw holes in the outward foot; 0 for none          |
+| `screw_inset` | 20  | hole centre to the rail end                          |
+| `screw_d`   | 4.5   | clearance hole, for a 4 mm countersunk wood screw    |
+| `screw_head_d` | 8.5 | head pocket diameter                                |
+| `screw_seat` | 1.5  | material under the countersink                       |
 | `flare`     | 0.8   | channel opens by this much at both rail ends         |
 | `lead`      | 4     | length of that lead-in                               |
 
@@ -84,6 +91,18 @@ Result: 31 mm wide, 49.5 mm tall, 68 mm long, 36.8 cm3.
 - Outward foot: without it the base would be 19 mm wide under a 49.5 mm
   tall part and an empty stand would tip while the first laptop goes
   in.
+- Screw holes are in the outward foot, not in the bottom shelf: the
+  screws stay reachable with both laptops in place, and no screw head
+  sits under a laptop. Two holes, 20 mm from each rail end (28 mm
+  apart), on the centre line of the foot, 6 mm outside the wall.
+- Each hole is a 4.5 mm clearance hole with a 90 degree countersink
+  for a 4 mm countersunk wood screw, and an 8.5 mm pocket above it
+  that runs out through the sloped top of the foot. 1.5 mm of material
+  stays under the countersink; the head ends 3.5 mm above the desk,
+  below the foot surface all round.
+- `foot_tip` is 4 mm (was 2.5 mm): with the thinner tip the pocket rim
+  on the outer side was 0.4 mm thick. Now 1.7 mm of foot remains
+  outside the pocket.
 - Lead-in at both rail ends (0.8 mm over 4 mm on the floor, ceiling and
   wall of each channel) so a laptop edge finds the channel, and so
   first-layer squish does not narrow the entrance.
@@ -106,10 +125,20 @@ Result: 31 mm wide, 49.5 mm tall, 68 mm long, 36.8 cm3.
    its rear feet catch on the middle shelf, stack both laptops first
    with a 10 mm spacer between them and push the stands on from the
    sides over both edges at once.
-3. Keep the stands snug against the laptop sides. They are not joined
-   to each other; only friction on the desk stops them from moving
-   apart. Thin self-adhesive rubber dots under the base help; subtract
-   their thickness from `desk_gap` to keep the 5 mm.
+3. Loose stands: keep them snug against the laptop sides. They are not
+   joined to each other; only friction on the desk stops them from
+   moving apart. Thin self-adhesive rubber dots under the base help;
+   subtract their thickness from `desk_gap` to keep the 5 mm.
+4. Screwed stands: fix them 313.6 mm apart, wall to wall on the inside
+   (laptop width plus 0.5 mm play per side), parallel to each other.
+   4 mm countersunk wood screws; the screw passes 1.5 mm of plastic
+   before the desk, so length is chosen by the desk top alone. The
+   driver runs 6 mm from the wall: a plain shaft or a bare bit fits, a
+   wide bit holder does not.
+5. Screwed stands cannot be pushed on from the sides. Both laptops then
+   have to slide in from the front, and that only works if the rubber
+   feet clear the 15 mm shelves (see Open). Check this with the stands
+   loose before drilling the desk.
 
 ## Print notes
 
@@ -123,16 +152,21 @@ Result: 31 mm wide, 49.5 mm tall, 68 mm long, 36.8 cm3.
   over the laptop edge without force, then rebuild at full length
   (the test overwrites `out/macbook-stack-stand.stl`). Tune `clearance`.
 - About 46 g PLA each if printed solid; less with infill.
+- The screw holes print as horizontal holes. No supports; the top of
+  the 8.5 mm pocket sags slightly, which the screw head does not touch.
 
 ## Checks (2026-11-09)
 
-- Watertight, consistent winding, one body, Euler number 2.
+- Watertight, consistent winding, one body.
 - Sections at mid length: solid from 0 to 5.0, 21.0 to 30.5 and 46.5 to
   49.5 mm, so both channels are 16.0 mm and the laptops rest 5.0 and
   30.5 mm above the desk (10.0 mm apart for 15.5 mm laptops).
 - At the rail ends the channels are 17.6 mm and the wall 3.2 mm.
 - Shelves and top lip end 19.0 mm from the outer wall face: 4 mm wall
   plus 15.0 mm channel depth.
+- Screw holes: Euler number -2 (two through holes), both hole axes
+  free, 4.50 mm at the base and 8.50 mm in the pocket, centres 20 and
+  48 mm along the 68 mm rail.
 - Printability in specs/printability.md.
 
 ## Open
@@ -144,9 +178,13 @@ Result: 31 mm wide, 49.5 mm tall, 68 mm long, 36.8 cm3.
   intake slots on the underside end.
 - Rubber feet against the 15 mm shelves: if the feet sit less than
   15 mm from the side edge, a laptop cannot be slid through a channel
-  lengthwise. Either fit the stands from the sides (see Use), or cut a
-  relief for the feet in the bottom and middle shelves, or reduce
-  `engage` below the measured feet inset.
+  lengthwise. Loose stands can be fitted from the sides (see Use).
+  Stands screwed to the desk cannot, so for them this has to be solved
+  in the part: a relief for the feet in the bottom and middle shelves,
+  or `engage` below the measured feet inset.
+- Screw size is assumed (4 mm countersunk). Other screws need
+  `screw_d` and `screw_head_d` changed; a head wider than 9 mm needs a
+  wider foot (`foot_out`).
 - The intake slots run along the left and right underside edges. The
   bottom shelf now covers a 68 x 15 mm strip there, about twice the
   earlier area. If it overlaps a slot, move the stands forward, shorten
@@ -160,4 +198,6 @@ the fit with the 10 mm test piece before trusting the stands with two
 laptops, and keep the stands snug against the sides: they are not joined
 and a stand knocked outward by more than the 15 mm channel depth drops
 the laptop edge. Do not force a laptop through a channel if its rubber
-feet catch on a shelf.
+feet catch on a shelf. Before screwing into the desk, check what is
+under the surface at that spot and pick a screw shorter than the desk
+top is thick.

@@ -26,7 +26,14 @@ top_t     = 3;      // lip above the upper laptop
 length    = 68;     // rail length along the laptop side (60 mm of full channel + 2 lead-ins)
 foot_out  = 12;     // outward foot that keeps an empty stand upright
 foot_h    = 12;     // height where the foot meets the wall
-foot_tip  = 2.5;    // thickness of the foot at its outer end
+foot_tip  = 4;      // thickness of the foot at its outer end (holds the screw heads)
+
+/* [Screws] */
+screw_n      = 2;   // screw holes in the outward foot; 0 for none
+screw_inset  = 20;  // hole centre to the rail end
+screw_d      = 4.5; // clearance hole, for a 4 mm countersunk wood screw
+screw_head_d = 8.5; // head pocket diameter
+screw_seat   = 1.5; // material under the countersink
 
 /* [Detail] */
 r_tip = 1.2;        // rounding of outer corners (shelf tips)
@@ -51,6 +58,8 @@ total_h = y4 + top_t;
 assert(top_t > 2 * r_tip, "top lip thinner than two tip radii");
 assert(foot_tip > 2 * r_tip, "foot tip thinner than two tip radii");
 assert(lead * 2 < length, "lead-ins longer than the rail");
+assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
+assert(screw_n < 2 || screw_inset * 2 + screw_head_d < length, "screw holes overlap");
 
 // X = 0 is the outer face of the wall, shelves point to +X, foot to -X.
 module profile_raw() {
@@ -82,6 +91,23 @@ module lead_in(y) {
     }
 }
 
+// Vertical screw hole (in use) at the origin, axis along +Y: clearance
+// hole, 90 degree countersink, then a head pocket open through the
+// sloped top of the foot.
+module screw_hole() {
+    cone_h = (screw_head_d - screw_d) / 2;
+    rotate([-90, 0, 0]) {
+        translate([0, 0, -1]) cylinder(d = screw_d, h = foot_h + 2);
+        translate([0, 0, screw_seat])
+            cylinder(d1 = screw_d, d2 = screw_head_d, h = cone_h + 0.01);
+        translate([0, 0, screw_seat + cone_h]) cylinder(d = screw_head_d, h = foot_h + 1);
+    }
+}
+
+// Hole centres along the rail: screw_inset from each end, evenly spaced.
+function screw_z(i) = screw_n == 1 ? length / 2
+    : screw_inset + i * (length - 2 * screw_inset) / (screw_n - 1);
+
 module stand() {
     difference() {
         linear_extrude(length) profile();
@@ -89,6 +115,9 @@ module stand() {
             lead_in(y);
             translate([0, 0, length]) mirror([0, 0, 1]) lead_in(y);
         }
+        if (screw_n > 0)
+            for (i = [0 : screw_n - 1])
+                translate([-foot_out / 2, 0, screw_z(i)]) screw_hole();
     }
 }
 

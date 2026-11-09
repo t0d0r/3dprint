@@ -18,8 +18,14 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
 - Current version: channel depth (`engage`) 15 mm and `length` 68 mm
   (60 mm of full channel plus two 4 mm lead-ins). 31 x 49.5 x 68 mm,
   36.8 cm3, about 46 g PLA solid each.
+- Two screw holes in the outward foot for fixing a stand to the desk:
+  20 mm from each rail end, 4.5 mm hole, 90 degree countersink, 8.5 mm
+  head pocket, for 4 mm countersunk wood screws. `screw_n = 0` removes
+  them. Foot tip thickened from 2.5 to 4 mm to hold the head pocket.
 - Verified: watertight, one body; channel heights 16.0 mm and channel
-  depth 15.0 mm measured from sections; zero overhangs as modelled.
+  depth 15.0 mm measured from sections; both hole axes free, 4.50 and
+  8.50 mm diameters measured; the only overhang is the top of the two
+  horizontal screw holes.
 - Printability recorded in specs/printability.md.
 - Fit-test command corrected to `-D length=10 -D flare=0`: with the
   lead-ins on, a 10 mm slice has the real channel height over 2 mm only.
@@ -34,6 +40,8 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   not slide through lengthwise. The stands go on from the sides.
 - Middle shelf is 9.5 mm so the laptops rest exactly 10 mm apart with
   0.5 mm channel clearance.
+- Screw holes go in the outward foot, not under the laptop: reachable
+  with the laptops in place and no screw head under a laptop.
 - Print orientation is the modelled one: profile on the bed.
 - The section preview uses `--render`: the OpenCSG preview painted every
   cut face in one colour.
@@ -46,7 +54,9 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   machines. Measure, then print the 10 mm fit test.
 - Rubber feet against the 15 mm shelves: a relief in the bottom and
   middle shelves is the likely fix if the feet turn out to be closer
-  than 15 mm to the side edge.
+  than 15 mm to the side edge. Stands screwed to the desk cannot be
+  fitted from the sides, so with screws this is no longer optional.
+- Screw size (4 mm countersunk) is assumed.
 - 68 mm rails end about 77 mm from the back edge; the margin to the
   last port on each side is a few millimetres and unmeasured.
 - The two rails are not joined; a tie bar under the lower laptop or

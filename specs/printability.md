@@ -55,10 +55,12 @@ Default bed is 220 x 220 x 250 mm.
 
 - Built by `make macbook-stand`, see specs/macbook-stack-stand.md.
 - 31 x 49.5 x 68 mm, 36.8 cm3, watertight, one body (15 mm channel
-  depth, 68 mm length).
-- Orientation: as modelled, E profile on the bed, rail length up. Zero
-  overhangs, no supports, 4.7 cm2 bed contact. Every other orientation
+  depth, 68 mm length, two screw holes in the foot).
+- Orientation: as modelled, E profile on the bed, rail length up. No
+  supports, 4.8 cm2 bed contact. The only overhang is 0.7 cm2 at the
+  top of the two horizontal screw holes. Every other orientation
   needs supports and puts the layer lines across the shelf roots.
-- Thinnest section 2.2 mm (top lip at the flared rail ends); nothing
-  under 0.8 mm.
+- Thinnest structural section 2.2 mm (top lip at the flared rail
+  ends). 0.1% of the surface reads under 0.8 mm: the feather edge
+  where the screw head pockets run out through the sloped foot.
 - About 46 g PLA each if printed solid; two are needed.
