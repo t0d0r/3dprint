@@ -26,12 +26,12 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   on, at its full 9.5 mm thickness, 80 mm to the back edge of the
   laptops, and ends in a cross plate 49.5 mm tall and 5 mm thick (a T
   seen from the side) that stops both laptops. No wall, foot or shelf
-  beside the bar. The bar is cut back to a 5 mm rib from the rail to
-  156 mm (170 mm at the tip), so the intake slot of the upper laptop
-  is open over it; the last 10 mm are full depth (`ext_pad`). Left and
-  right stands are mirror images (`out/macbook-stack-stand-left.stl`,
-  `-right.stl`), 185 x 49.5 x 31 mm as exported, 50.4 cm3, about 62 g
-  PLA solid each.
+  beside the bar. The bar is cut back to a 10 mm rib (`bar_rib`; 5 mm
+  at first) from the rail to 156 mm (165 mm at the tip) over the
+  intake slot of the upper laptop; the last 15 mm are full depth
+  (`ext_pad`). Left and right stands are mirror images
+  (`out/macbook-stack-stand-left.stl`, `-right.stl`), 185 x 49.5 x
+  31 mm as exported, 53.6 cm3, about 66 g PLA solid each.
 - The first bar was 5 mm thick, full width, at the bottom of the gap,
   with a brace to the plate; replaced by the full-thickness bar with
   a window.
@@ -79,8 +79,11 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   cross plate arms would be unsupported 180 mm above the bed.
 - Bar at the thickness of the middle shelf; the air for the upper
   laptop's intake slot comes from the side through a window in the
-  bar, as in the rail. `ext_pad` 10 keeps the whole slot length over
-  the bar open; the price is a 56 mm rib bridge when printing.
+  bar, as in the rail. The window ends where the slot ends
+  (156 mm); the price is a 56 mm rib bridge when printing.
+- Rib of the bar 10 mm instead of 5: stiffer sideways and sturdier,
+  but it reaches 5.5 mm under the upper laptop's edge and may lie
+  under the slot, whose distance from the side edge is unmeasured.
 - Cross plate full height: stops both laptops and stands on the desk.
 - The section preview uses `--render`: the OpenCSG preview painted every
   cut face in one colour.

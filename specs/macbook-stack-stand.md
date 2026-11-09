@@ -34,10 +34,10 @@ Behind the rail only the middle shelf goes on, at its full 9.5 mm
 thickness, as a bar between the two laptops, 80 mm to the back edge of
 the laptops. There it ends in a cross plate as tall as the stand. Seen
 from the side, bar and plate form a T lying on its side. There is no
-wall, foot or shelf beside the bar. From the rail to 10 mm in front of
-the plate the bar is cut back to a 5 mm wide rib (wall thickness plus
-the 1 mm rib of the rail), so the intake slot of the upper laptop is
-open there too.
+wall, foot or shelf beside the bar. From the rail to 15 mm in front of
+the plate the bar is cut back to a 10 mm wide rib, twice the rib of
+the rail, so the intake slot of the upper laptop is mostly open there
+too.
 
 ```
     side view, front of the laptops on the left
@@ -54,12 +54,13 @@ open there too.
 
     bar seen from above, wall line at the bottom of the sketch
 
-      rail |<------------- 56 ------------->|<-14->|<10>| plate
-    -------+                                        +----+---+  19 mm
-     pad   |                                       /     |   |
-           |______________________________________/      |   |   5 mm rib
-    =======+=============================================+===+
-          100                              156    170   180 185 mm
+      rail |<------------- 56 ------------->|<9>|<-15->| plate
+    -------+                                    +------+---+  19 mm
+     pad   |                                   /       |   |
+           |__________________________________/        |   |  10 mm rib
+           |                                           |   |
+    =======+===========================================+===+
+          100                              156 165    180 185 mm
 ```
 
 The shelves and the top lip are full depth only over the first and last
@@ -113,7 +114,8 @@ Laptop reference dimensions (Apple): 15.5 mm thick closed, 312.6 mm wide,
 | `pad_len`   | 12    | full-depth shelf at each rail end; 0 = full length   |
 | `stub`      | 1     | shelf rib left along the wall between the pads       |
 | `ext`       | 80    | rail rear end to the stop face; 0 = no back stop     |
-| `ext_pad`   | 10    | full-depth bar in front of the cross plate           |
+| `ext_pad`   | 15    | full-depth bar in front of the cross plate           |
+| `bar_rib`   | 10    | width of the rib of the bar, from the outer wall face |
 | `cap_t`     | 5     | thickness of the cross plate                         |
 | `side`      | right | which stand to export: "right" or "left"             |
 | `foot_out`  | 12    | outward foot                                         |
@@ -131,7 +133,7 @@ Preview-only parameters: `vent_from_back` 24 and `vent_len` 105
 (intake slot, measured on the machine), `free_from_back` 80 (rail
 position when `ext` is 0).
 
-Result: 185 mm long, 49.5 mm tall, 31 mm wide, 50.4 cm3 each.
+Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
 
 ## Decisions
 
@@ -177,18 +179,25 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 50.4 cm3 each.
   cut used a 5 mm bar at the bottom of the gap to leave air under the
   upper laptop). At full thickness the upper laptop lies on the bar,
   so the air has to come from the side instead: the bar is cut back
-  to the rib from the rear end of the rail (100 mm) to 156 mm at the
-  rib and 170 mm at the tip, with the same 45 degree flank as the
-  window of the rail. The intake slot of the upper laptop ends 24 mm
-  from the back edge, which is 156 mm along the stand, so over the
-  extension the slot is fully open; the flank and the full-depth last
-  10 mm lie behind the end of the slot.
-- Slot cover of the upper laptop, whole stand: 75% of the slot length
-  fully open (23 mm in the window of the rail, 56 mm over the bar),
-  11% under the rear pad of the rail, 13% under its flank. The lower
-  laptop has nothing under it behind the rail.
-- The full-depth last 10 mm of the bar carries the back corner of the
-  upper laptop and joins the cross plate over the whole 19 x 9.5 mm
+  to a rib from the rear end of the rail (100 mm) to 156 mm, with a
+  45 degree flank to 165 mm at the tip, like the window of the rail.
+  The intake slot of the upper laptop ends 24 mm from the back edge,
+  which is 156 mm along the stand, so the flank and the full-depth
+  last 15 mm lie behind the end of the slot.
+- The rib of the bar is 10 mm wide (`bar_rib`), twice the 5 mm it had
+  at first (wall plus the 1 mm rib of the rail): the 5 x 9.5 mm rib
+  was soft sideways and looked too slight for a part that a laptop is
+  pushed against. At 10 mm it is about eight times stiffer sideways.
+  The cost: the rib now reaches 5.5 mm under the edge of the upper
+  laptop along 56 mm of its intake slot (it was 0.5 mm). How far the
+  slot lies from the side edge is not measured; if it is closer than
+  about 6 mm, the rib is under it there. See Open.
+- Lengthwise, 75% of the slot of the upper laptop has no full-depth
+  shelf under it (23 mm in the window of the rail, 56 mm over the
+  bar), 11% is under the rear pad of the rail, 13% under its flank.
+  The lower laptop has nothing under it behind the rail.
+- The full-depth last 15 mm of the bar carry the back corner of the
+  upper laptop and join the cross plate over the whole 19 x 9.5 mm
   section. A brace between bar and plate is not possible: the upper
   laptop lies on the bar and the lower one passes 0.5 mm under it.
 - The cross plate is as tall as the stand, 0 to 49.5 mm: it stops
@@ -282,16 +291,16 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 50.4 cm3 each.
   tips, no supports. 185 x 49.5 mm on the bed, 31 mm tall. 0.2 mm
   layers, 3 or more perimeters, 20% infill or more. PLA or PETG; PETG
   if the laptops run warm for long periods in clamshell mode.
-- Bed contact is 5.8 cm2 in strips (shelf tips, the last 10 mm of
+- Bed contact is 6.2 cm2 in strips (shelf tips, the last 15 mm of
   the bar, cross plate): use a brim.
-- Bridges, all with both ends supported, 14 mm above the bed: the
-  three ribs in the window of the rail bridge 48 mm, the rib of the
-  bar bridges 56 mm from the rail to its flank. The inner face of the
-  wall bridges 16 mm across each channel, 15 mm above the bed. Normal
-  bridge settings with part cooling. The bridged faces are not
-  contact surfaces. If the 56 mm bridge sags too much, a larger
-  `ext_pad` shortens it at the cost of covering the end of the slot
-  (`-D ext_pad=24` gives 42 mm).
+- Bridges, all with both ends supported: the three ribs in the window
+  of the rail bridge 48 mm, 14 mm above the bed; the rib of the bar
+  bridges 56 mm from the rail to its flank, 9 mm above the bed. The
+  inner face of the wall bridges 16 mm across each channel, 15 mm
+  above the bed. Normal bridge settings with part cooling. The
+  bridged faces are not contact surfaces. If the 56 mm bridge sags
+  too much, a larger `ext_pad` shortens it at the cost of covering
+  the end of the slot (`-D ext_pad=29` gives 42 mm).
 - The shelf tips are rounded and lie on the bed; the first two layers
   there overhang slightly and may look rough.
 - The screw holes print as horizontal holes, as before.
@@ -300,7 +309,7 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 50.4 cm3 each.
   profile, printed standing. Check that it slips over the laptop edge
   without force. Tune `clearance` (`SCAD_ARGS="-D clearance=0.8"`
   works for both targets).
-- About 62 g PLA each if printed solid; less with infill.
+- About 66 g PLA each if printed solid; less with infill.
 
 ## Checks (2026-11-09)
 
@@ -309,8 +318,8 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 50.4 cm3 each.
   The left mesh mirrored equals the right one in volume and bounds.
 - Sections across the length of the right stand, in the model frame:
   0 to 100 mm the full profile (0 to 49.5 mm high, foot included);
-  100 to 156 mm the rib of the bar, 21.0 to 30.5 mm high, 5.0 mm
-  wide; widening to 12.0 mm at 163 mm and 19.0 mm from 170 mm; 180 to
+  100 to 156 mm the rib of the bar, 21.0 to 30.5 mm high, 10.0 mm
+  wide; widening to 14.0 mm at 160 mm and 19.0 mm from 165 mm; 180 to
   185 mm the cross plate, 0 to 49.5 mm high, 19.0 mm wide.
 - Lower laptop top at 20.5 mm, bar underside at 21.0 mm; bar top at
   30.5 mm, level with the middle shelf.
@@ -347,15 +356,12 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 50.4 cm3 each.
   side, so about 4.5 mm of it meets the straight part of the back
   edge. With a larger radius the laptop goes slightly further back
   before it stops.
-- Over 56 mm the bar is a 5 x 9.5 mm rib, held at the rail and, through
-  the plate, standing on the desk. It is stiff along its length, which
-  is how the stop is loaded, and soft sideways: the cross plate can be
-  pushed a few millimetres to the side by hand.
-- How far the intake slot lies from the side edge is not measured. The
-  rib of the bar reaches 0.5 mm under the laptop edge.
-- Whether the remaining slot opening is enough under sustained load
-  with the lid closed is not tested. Watch temperatures on the first
-  long run.
+- How far the intake slot lies from the side edge is not measured.
+  The 10 mm rib of the bar reaches 5.5 mm under the edge of the upper
+  laptop over 56 mm of the slot. If the slot turns out to be under
+  the rib, the choices are a narrower `bar_rib` (5 is the first
+  version), a groove in the top of the rib, or a bar lowered below
+  the laptop as in the first cut.
 
 ## Security Note
 

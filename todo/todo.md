@@ -23,3 +23,5 @@
 - [x] stand: middle shelf continued 80 mm as a bar with a T-shaped back stop for both laptops, left and right stands, printed lying down (specs/macbook-stack-stand.md)
 - [ ] stand: measure the plan corner radius of the laptop; the cross plate reaches 14.5 mm in from the side (specs/macbook-stack-stand.md)
 - [x] stand: bar behind the rail at the full 9.5 mm of the middle shelf, cut back to the rib over the intake slot of the upper laptop (specs/macbook-stack-stand.md)
+- [x] stand: rib of the bar widened from 5 to 10 mm (specs/macbook-stack-stand.md)
+- [ ] stand: measure how far the intake slot lies from the side edge; the 10 mm rib of the bar reaches 5.5 mm under the upper laptop (specs/macbook-stack-stand.md)

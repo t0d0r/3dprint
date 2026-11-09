@@ -13,8 +13,8 @@
 // as a bar between the two laptops, and ends in a cross plate: seen from
 // the side the bar and the plate form a T. The plate stops both laptops at
 // their back edges. There is no wall beside the bar, so the ports stay
-// free. Like the shelves of the rail, the bar is cut back to the rib where
-// the intake slot of the upper laptop runs over it.
+// free. Like the shelves of the rail, the bar is cut back to a narrower
+// rib where the intake slot of the upper laptop runs over it.
 //
 // Model frame: the E profile is in XY and the rail length is Z (front end
 // at Z = 0, back stop at the far end). In use the profile Y axis points up.
@@ -45,7 +45,8 @@ foot_tip  = 4;      // thickness of the foot at its outer end (holds the screw h
 
 /* [Back stop] */
 ext     = 80;       // rail rear end to the back stop face = to the laptop back edge; 0 for none
-ext_pad = 10;       // full-depth bar in front of the cross plate; the rest is cut back to the rib
+ext_pad = 15;       // full-depth bar in front of the cross plate; the rest is cut back to the rib
+bar_rib = 10;       // width of that rib, from the outer wall face (the rib of the rail is wall_t + stub = 5)
 cap_t   = 5;        // thickness of the cross plate
 
 /* [Screws] */
@@ -91,6 +92,7 @@ windowed = pad_len > 0 && win_len > 0;
 has_ext  = ext > 0;
 z_c      = length + ext;                   // front face of the cross plate
 rail_from_back = has_ext ? ext : free_from_back;
+bar_ramp = wall_t + engage - bar_rib;      // 45 degree run from the bar rib to the full bar
 
 assert(top_t > 2 * r_tip, "top lip thinner than two tip radii");
 assert(foot_tip > 2 * r_tip, "foot tip thinner than two tip radii");
@@ -99,7 +101,9 @@ assert(pad_len == 0 || pad_len >= lead, "pads shorter than the lead-in");
 assert(pad_len == 0 || win_len > 0, "rail too short for pads and ramps; set pad_len = 0");
 assert(stub > 0 && stub < engage, "stub must be between 0 and engage");
 assert(!has_ext || ext_pad >= 0, "ext_pad must not be negative");
-assert(!has_ext || ext > ext_pad + ramp, "extension too short for its window; lower ext_pad");
+assert(!has_ext || (bar_rib >= wall_t + stub && bar_rib <= wall_t + engage),
+       "bar_rib must be between wall_t + stub and wall_t + engage");
+assert(!has_ext || ext > ext_pad + bar_ramp, "extension too short for its window; lower ext_pad");
 assert(side == "right" || side == "left", "side must be right or left");
 assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
 assert(screw_n < 2 || screw_inset * 2 + screw_head_d < length, "screw holes overlap");
@@ -142,16 +146,17 @@ module plate_profile() {
     }
 }
 
-// Cuts the bar back to the rib from the rear end of the rail to ext_pad
-// in front of the cross plate. The cut meets the full-depth part at 45
-// degrees, like the window of the rail.
+// Cuts the bar back to a rib bar_rib wide from the rear end of the rail to
+// ext_pad in front of the cross plate. The cut meets the full-depth part
+// at 45 degrees, like the window of the rail.
 module bar_window() {
-    x0 = wall_t + stub;
+    x0 = bar_rib;
     x1 = wall_t + engage + 1;
-    translate([0, total_h + 1, 0]) rotate([90, 0, 0])
-        linear_extrude(total_h + 2)
-            polygon([[x1, length], [x0, length],
-                     [x0, z_c - ext_pad - ramp], [x1, z_c - ext_pad + 1]]);
+    if (bar_ramp > 0)
+        translate([0, total_h + 1, 0]) rotate([90, 0, 0])
+            linear_extrude(total_h + 2)
+                polygon([[x1, length], [x0, length],
+                         [x0, z_c - ext_pad - bar_ramp], [x1, z_c - ext_pad + 1]]);
 }
 
 // Bar and cross plate.
