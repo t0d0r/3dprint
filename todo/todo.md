@@ -13,4 +13,6 @@
 - [x] front braces: side walls continued to the door with a stepped fillet, the plate was held by the ramp tip only (specs/drawer-swap.md)
 - [ ] decide how to print the back wall ceiling: bridge, supports, or design change (specs/drawer-swap.md)
 - [x] stacking stand for two closed MacBook Pro 14" laptops, parametric OpenSCAD part (specs/macbook-stack-stand.md)
-- [ ] measure the laptop (thickness, feet inset from the side, side vent position) and print the 10 mm fit test before the full stands (specs/macbook-stack-stand.md)
+- [ ] measure the laptop (thickness, feet inset from the side, last port position, side vent position) and print the 10 mm fit test before the full stands (specs/macbook-stack-stand.md)
+- [x] stand: channel depth 15 mm (was 7), rail length 68 mm (was 60) (specs/macbook-stack-stand.md)
+- [ ] stand: decide on a relief for the rubber feet in the 15 mm shelves once the feet inset is measured (specs/macbook-stack-stand.md)
