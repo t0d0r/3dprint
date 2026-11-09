@@ -23,12 +23,18 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   (`stub`) in between with 45 degree transitions. 31 x 49.5 x 100 mm,
   39.5 cm3, about 49 g PLA solid each. Screw holes at 15 and 85 mm.
 - Current version: behind the 100 mm rail only the middle shelf goes
-  on, as a 5 x 19 mm bar, 80 mm to the back edge of the laptops, and
-  ends in a cross plate 49.5 mm tall and 5 mm thick (a T seen from the
-  side) that stops both laptops. No wall, foot or shelf beside the
-  bar. Left and right stands are mirror images
-  (`out/macbook-stack-stand-left.stl`, `-right.stl`), 185 x 49.5 x
-  31 mm as exported, 52.0 cm3, about 65 g PLA solid each.
+  on, at its full 9.5 mm thickness, 80 mm to the back edge of the
+  laptops, and ends in a cross plate 49.5 mm tall and 5 mm thick (a T
+  seen from the side) that stops both laptops. No wall, foot or shelf
+  beside the bar. The bar is cut back to a 5 mm rib from the rail to
+  156 mm (170 mm at the tip), so the intake slot of the upper laptop
+  is open over it; the last 10 mm are full depth (`ext_pad`). Left and
+  right stands are mirror images (`out/macbook-stack-stand-left.stl`,
+  `-right.stl`), 185 x 49.5 x 31 mm as exported, 50.4 cm3, about 62 g
+  PLA solid each.
+- The first bar was 5 mm thick, full width, at the bottom of the gap,
+  with a brace to the plate; replaced by the full-thickness bar with
+  a window.
 - Print orientation changed to lying on the shelf tips; the STL is
   exported that way.
 - A first cut of the back stop kept thin bars and a wall with port
@@ -71,8 +77,10 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   with the laptops in place and no screw head under a laptop.
 - Print orientation: lying on the shelf tips. Standing on end the
   cross plate arms would be unsupported 180 mm above the bed.
-- Bar at the bottom of the 10 mm gap, 5 mm thick, so the upper
-  laptop's intake slot keeps 4.5 mm of air above the bar.
+- Bar at the thickness of the middle shelf; the air for the upper
+  laptop's intake slot comes from the side through a window in the
+  bar, as in the rail. `ext_pad` 10 keeps the whole slot length over
+  the bar open; the price is a 56 mm rib bridge when printing.
 - Cross plate full height: stops both laptops and stands on the desk.
 - The section preview uses `--render`: the OpenCSG preview painted every
   cut face in one colour.

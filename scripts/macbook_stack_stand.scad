@@ -9,10 +9,12 @@
 // the pads they are cut back to a 1 mm rib, so the air intake slot on the
 // underside of each laptop stays open there.
 //
-// Behind the rail only the middle shelf continues, as a flat bar between
-// the two laptops, and ends in a cross plate: seen from the side the bar and
-// the plate form a T. The plate stops both laptops at their back edges.
-// There is no wall beside the bar, so the ports stay free.
+// Behind the rail only the middle shelf continues, at its full thickness,
+// as a bar between the two laptops, and ends in a cross plate: seen from
+// the side the bar and the plate form a T. The plate stops both laptops at
+// their back edges. There is no wall beside the bar, so the ports stay
+// free. Like the shelves of the rail, the bar is cut back to the rib where
+// the intake slot of the upper laptop runs over it.
 //
 // Model frame: the E profile is in XY and the rail length is Z (front end
 // at Z = 0, back stop at the far end). In use the profile Y axis points up.
@@ -42,10 +44,9 @@ foot_h    = 12;     // height where the foot meets the wall
 foot_tip  = 4;      // thickness of the foot at its outer end (holds the screw heads)
 
 /* [Back stop] */
-ext    = 80;        // rail rear end to the back stop face = to the laptop back edge; 0 for none
-bar_t  = 5;         // thickness of the bar, measured up from the top of the lower laptop's channel
-cap_t  = 5;         // thickness of the cross plate
-gusset = 4;         // 45 degree brace between the bar and the plate, on the upper side
+ext     = 80;       // rail rear end to the back stop face = to the laptop back edge; 0 for none
+ext_pad = 10;       // full-depth bar in front of the cross plate; the rest is cut back to the rib
+cap_t   = 5;        // thickness of the cross plate
 
 /* [Screws] */
 screw_n      = 2;   // screw holes in the outward foot; 0 for none
@@ -97,9 +98,8 @@ assert(lead * 2 < length, "lead-ins longer than the rail");
 assert(pad_len == 0 || pad_len >= lead, "pads shorter than the lead-in");
 assert(pad_len == 0 || win_len > 0, "rail too short for pads and ramps; set pad_len = 0");
 assert(stub > 0 && stub < engage, "stub must be between 0 and engage");
-assert(bar_t >= 3 && bar_t <= mid_t, "bar_t must be between 3 and the middle shelf thickness");
-assert(bar_t + gusset <= mid_t, "gusset reaches into the upper laptop");
-assert(!has_ext || ext > 2 * gusset, "extension too short");
+assert(!has_ext || ext_pad >= 0, "ext_pad must not be negative");
+assert(!has_ext || ext > ext_pad + ramp, "extension too short for its window; lower ext_pad");
 assert(side == "right" || side == "left", "side must be right or left");
 assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
 assert(screw_n < 2 || screw_inset * 2 + screw_head_d < length, "screw holes overlap");
@@ -123,13 +123,13 @@ module profile() {
             profile_raw();
 }
 
-// Section of the bar behind the rail: the lower part of the middle shelf,
-// wall thickness included. Cut from profile(), so it shares its surface
-// with the rail and the union leaves no slivers.
+// Section of the bar behind the rail: the middle shelf at its full
+// thickness, wall thickness included. Cut from profile(), so it shares its
+// surface with the rail and the union leaves no slivers.
 module bar_profile() {
     intersection() {
         profile();
-        translate([0, y2]) square([wall_t + engage + 1, bar_t]);
+        translate([0, y2]) square([wall_t + engage + 1, mid_t]);
     }
 }
 
@@ -142,18 +142,25 @@ module plate_profile() {
     }
 }
 
-// Bar, cross plate and brace. The brace is on the upper side only, where
-// the upper laptop rides 4.5 mm above the bar; below the bar the lower
-// laptop passes with 0.5 mm.
+// Cuts the bar back to the rib from the rear end of the rail to ext_pad
+// in front of the cross plate. The cut meets the full-depth part at 45
+// degrees, like the window of the rail.
+module bar_window() {
+    x0 = wall_t + stub;
+    x1 = wall_t + engage + 1;
+    translate([0, total_h + 1, 0]) rotate([90, 0, 0])
+        linear_extrude(total_h + 2)
+            polygon([[x1, length], [x0, length],
+                     [x0, z_c - ext_pad - ramp], [x1, z_c - ext_pad + 1]]);
+}
+
+// Bar and cross plate.
 module back_stop() {
-    translate([0, 0, length - 0.01]) linear_extrude(ext + 0.02) bar_profile();
+    difference() {
+        translate([0, 0, length - 0.01]) linear_extrude(ext + 0.02) bar_profile();
+        bar_window();
+    }
     translate([0, 0, z_c]) linear_extrude(cap_t) plate_profile();
-    // polygon is in (Z, Y); the rotation maps it there and extrudes along -X
-    // it starts at the shelf tip plane, which is the bed when printing
-    translate([wall_t + engage, 0, 0]) rotate([0, -90, 0])
-        linear_extrude(wall_t + engage - 0.5)
-        polygon([[z_c - gusset, y2 + bar_t - 0.01], [z_c + 0.01, y2 + bar_t - 0.01],
-                 [z_c + 0.01, y2 + bar_t + gusset]]);
 }
 
 // Tapered cutter that widens one channel at one rail end. The small end
