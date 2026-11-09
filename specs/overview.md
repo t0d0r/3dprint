@@ -8,7 +8,8 @@ convert formats, and inspect meshes before slicing in OrcaSlicer.
 
 ## Layout
 
-- `models/`   input models (STL, 3MF, STEP). Treated as untrusted data.
+- `models/`   input models (STL, 3MF, STEP), treated as untrusted data,
+              and saved copies of finished parts built here.
 - `scripts/`  Python and OpenSCAD sources. One script per task.
 - `out/`      generated files. Not committed; `make clean` removes it.
 - `specs/`, `todo/`, `session/` as required by ../AGENTS.md.

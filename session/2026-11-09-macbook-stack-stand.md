@@ -87,7 +87,9 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
 - Cross plate full height: stops both laptops and stands on the desk.
 - The section preview uses `--render`: the OpenCSG preview painted every
   cut face in one colour.
-- STL stays in `out/` (build product), unlike the drawer STL.
+- The STL is built in `out/`; the left and right stand are also saved
+  in `models/` and committed (`make macbook-stand-save`, binary STL).
+  The saved copy has to be refreshed after each source change.
 
 ## Open
 
@@ -109,13 +111,15 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
 
 ## Files touched
 
-Makefile, scripts/macbook_stack_stand.scad, specs/macbook-stack-stand.md,
+Makefile, scripts/macbook_stack_stand.scad, models/macbook-stack-stand-left.stl,
+models/macbook-stack-stand-right.stl, specs/overview.md, specs/macbook-stack-stand.md,
 specs/README.md, specs/printability.md, todo/todo.md, this note.
 
 ## How to run
 
 - `make macbook-stand`                              build left and right STL and previews
 - `make macbook-stand-fit`                           fit-test slice
+- `make macbook-stand-save`                          rebuild and copy both STL to models/
 - `make printcheck MODEL=out/macbook-stack-stand-right.stl`
 - `make check`
 

@@ -25,3 +25,4 @@
 - [x] stand: bar behind the rail at the full 9.5 mm of the middle shelf, cut back to the rib over the intake slot of the upper laptop (specs/macbook-stack-stand.md)
 - [x] stand: rib of the bar widened from 5 to 10 mm (specs/macbook-stack-stand.md)
 - [ ] stand: measure how far the intake slot lies from the side edge; the 10 mm rib of the bar reaches 5.5 mm under the upper laptop (specs/macbook-stack-stand.md)
+- [x] stand: left and right STL saved in models/ (make macbook-stand-save) (specs/macbook-stack-stand.md)

@@ -8,6 +8,8 @@ of each) and previews: `-part.png` (right stand as printed),
 stands seen from below, intake slots in red, back edge at the bottom
 of the picture).
 Fit test: `make macbook-stand-fit` -> `out/macbook-stack-stand-fit.stl`.
+Saved model: `models/macbook-stack-stand-left.stl` and `-right.stl`,
+written by `make macbook-stand-save`.
 
 ## Goal
 
@@ -261,7 +263,12 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   lead-ins, window or screw holes. The earlier recipe, the full part
   with `-D length=10`, failed on the screw hole assertion and wrote
   over the stand STL.
-- The STL is a build product in `out/` and is not committed.
+- The STL is a build product in `out/`. A copy of the left and right
+  stand is kept in `models/` and committed, so the printable files
+  are at hand without the toolchain. `make macbook-stand-save`
+  rebuilds and copies them; run it after every change to the source,
+  or the saved model falls behind. The files are binary STL (about
+  230 kB each instead of 1.1 MB as text).
 
 ## Use
 
@@ -327,6 +334,9 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   shelf reach 15.0 mm in the pads and 1.0 mm in the window, screw
   holes at 15 and 85 mm.
 - `make macbook-stand-fit`: 31 x 49.5 x 10 mm, watertight.
+- `models/macbook-stack-stand-left.stl` and `-right.stl` are byte for
+  byte the files built from the source at the time of saving, and
+  read back watertight.
 - Printability in specs/printability.md.
 
 ## Open
