@@ -51,23 +51,23 @@ Default bed is 220 x 220 x 250 mm.
   1.30 mm, min 0.63 mm on the rails, 0.2% under 0.8 mm.
 - 70.1 cm3 with the front braces, about 31 g PLA rough.
 
-### out/macbook-stack-stand.stl (2026-11-09)
+### out/macbook-stack-stand-left.stl, -right.stl (2026-11-09)
 
 - Built by `make macbook-stand`, see specs/macbook-stack-stand.md.
-- 31 x 49.5 x 100 mm, 39.5 cm3, watertight, one body (15 mm channel
-  depth, 100 mm length, shelves full depth only at the two 12 mm end
-  pads, two screw holes in the foot).
-- Orientation: as modelled, E profile on the bed, rail length up. No
-  supports, 4.8 cm2 bed contact. Overhangs: the undersides of the
-  three upper pads, 45 degrees over 14 mm (3.5 cm2, at the limit the
-  check counts, so only part of it shows in the 1.9 cm2 it reports),
-  and the top of the two horizontal screw holes. Every other
-  orientation needs supports and puts the layer lines across the
-  shelf roots.
-- 100 mm tall on a 31 x 49.5 mm footprint: brim if adhesion is
-  marginal.
-- Thinnest structural section 2.2 mm (top lip at the flared rail
-  ends). 0.1% of the surface reads under 0.8 mm: feather edges where
+- 185 x 49.5 x 31 mm as exported, 52.0 cm3 each, watertight, one body
+  (100 mm rail with end pads, 80 mm bar, cross plate, two screw holes).
+- Orientation: as exported, lying on the shelf tips. No supports,
+  8.3 cm2 bed contact in strips; brim recommended.
+- The check reports 43 cm2 of overhang for this orientation and ranks
+  it below standing on end. It counts every downward face and does
+  not know bridges: 36 cm2 of that is bridged with both ends
+  supported (three 48 mm rib bridges at 14 mm, 16 mm bridges across
+  the channels at 15 mm), the rest is the 45 degree pad flanks.
+  Standing on end leaves the arms of the cross plate unsupported
+  180 mm above the bed and makes a 185 mm tall print on a 31 x 49.5 mm
+  footprint.
+- Thinnest structural section 2.2 mm (top lip at the flared front
+  end). 0.1% of the surface reads under 0.8 mm: feather edges where
   the screw head pockets run out through the sloped foot and where
   the 45 degree cuts meet the rounded shelf tips.
-- About 49 g PLA each if printed solid; two are needed.
+- About 65 g PLA each if printed solid; one left and one right.

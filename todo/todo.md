@@ -19,4 +19,6 @@
 - [x] stand: two countersunk screw holes in the outward foot, 15 mm from the rail ends (first cut: 20 mm) (specs/macbook-stack-stand.md)
 - [x] stand: rail 100 mm, shelves full depth only at two 12 mm end pads, window over the intake slot (24 to 129 mm from the back edge) (specs/macbook-stack-stand.md)
 - [x] stand: separate fit-test output, make macbook-stand-fit (specs/macbook-stack-stand.md)
-- [ ] stand: confirm the last port position and adjust rail_from_back (80 mm assumed) (specs/macbook-stack-stand.md)
+- [ ] stand: confirm the last port position and adjust ext (80 mm assumed) (specs/macbook-stack-stand.md)
+- [x] stand: middle shelf continued 80 mm as a bar with a T-shaped back stop for both laptops, left and right stands, printed lying down (specs/macbook-stack-stand.md)
+- [ ] stand: measure the plan corner radius of the laptop; the cross plate reaches 14.5 mm in from the side (specs/macbook-stack-stand.md)

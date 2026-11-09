@@ -7,9 +7,10 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
 - `scripts/macbook_stack_stand.scad`: parametric side rail with an
   E-shaped profile that holds two closed MacBook Pro 14" (M4) laptops,
   the lower 5 mm above the desk and the upper 10 mm above the lower.
-  Two identical rails are used, at the middle of the left and right
-  sides. Geometry and reasons in specs/macbook-stack-stand.md.
-- `make macbook-stand`: exports `out/macbook-stack-stand.stl`, renders
+  One rail on the left side and one on the right (identical at first,
+  mirror images since the back stop). Geometry and reasons in specs/macbook-stack-stand.md.
+- `make macbook-stand`: exports the stand STL (now a left and a right
+  file), renders
   an assembly view and a cut-away section with the laptops in place,
   prints mesh info. `SCAD_ARGS` passes OpenSCAD overrides.
 - First version: 7 mm channel depth, 60 mm long, 23 x 49.5 x 60 mm,
@@ -17,10 +18,22 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
 - Second version: channel depth (`engage`) 15 mm and `length` 68 mm
   (60 mm of full channel plus two 4 mm lead-ins). 31 x 49.5 x 68 mm,
   36.8 cm3.
-- Current version: `length` 100 mm, shelves and top lip full depth
+- Third version: `length` 100 mm, shelves and top lip full depth
   only over 12 mm at each rail end (`pad_len`), cut back to a 1 mm rib
   (`stub`) in between with 45 degree transitions. 31 x 49.5 x 100 mm,
   39.5 cm3, about 49 g PLA solid each. Screw holes at 15 and 85 mm.
+- Current version: behind the 100 mm rail only the middle shelf goes
+  on, as a 5 x 19 mm bar, 80 mm to the back edge of the laptops, and
+  ends in a cross plate 49.5 mm tall and 5 mm thick (a T seen from the
+  side) that stops both laptops. No wall, foot or shelf beside the
+  bar. Left and right stands are mirror images
+  (`out/macbook-stack-stand-left.stl`, `-right.stl`), 185 x 49.5 x
+  31 mm as exported, 52.0 cm3, about 65 g PLA solid each.
+- Print orientation changed to lying on the shelf tips; the STL is
+  exported that way.
+- A first cut of the back stop kept thin bars and a wall with port
+  openings beside the laptops and a plate grown at 45 degrees; it was
+  dropped for the bar-and-T version before commit.
 - Intake slot measured: starts 24 mm from the back edge, 105 mm long
   (24 to 129 mm). Rail placed 80 to 180 mm from the back edge; about
   75% of the slot length stays fully open.
@@ -56,7 +69,11 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   0.5 mm channel clearance.
 - Screw holes go in the outward foot, not under the laptop: reachable
   with the laptops in place and no screw head under a laptop.
-- Print orientation is the modelled one: profile on the bed.
+- Print orientation: lying on the shelf tips. Standing on end the
+  cross plate arms would be unsupported 180 mm above the bed.
+- Bar at the bottom of the 10 mm gap, 5 mm thick, so the upper
+  laptop's intake slot keeps 4.5 mm of air above the bar.
+- Cross plate full height: stops both laptops and stands on the desk.
 - The section preview uses `--render`: the OpenCSG preview painted every
   cut face in one colour.
 - STL stays in `out/` (build product), unlike the drawer STL.
@@ -71,8 +88,10 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   than 15 mm to the side edge. Stands screwed to the desk cannot be
   fitted from the sides, so with screws this is no longer optional.
 - Screw size (4 mm countersunk) is assumed.
-- The rail starts 80 mm from the back edge on the assumption that the
-  ports end at about 74 mm; unmeasured.
+- The rail starts 80 mm from the back edge (`ext`) on the assumption
+  that the ports end at about 74 mm; unmeasured.
+- Plan corner radius of the laptop unmeasured; the cross plate reaches
+  14.5 mm in from the side.
 - Cooling with the remaining slot opening is untested under load.
 - The two rails are not joined; a tie bar under the lower laptop or
   rubber pads under the base are possible follow-ups if they creep.
@@ -84,16 +103,16 @@ specs/README.md, specs/printability.md, todo/todo.md, this note.
 
 ## How to run
 
-- `make macbook-stand`                              build STL and previews
+- `make macbook-stand`                              build left and right STL and previews
 - `make macbook-stand-fit`                           fit-test slice
-- `make printcheck MODEL=out/macbook-stack-stand.stl`
+- `make printcheck MODEL=out/macbook-stack-stand-right.stl`
 - `make check`
 
 ## Next step
 
 Measure the feet inset and the last port position, print the fit test
-(`make macbook-stand-fit`), adjust `clearance` and `rail_from_back`,
-decide on the feet relief, then print two full stands.
+(`make macbook-stand-fit`), adjust `clearance` and `ext`, decide on
+the feet relief, then print one left and one right stand.
 
 ## Security Note
 

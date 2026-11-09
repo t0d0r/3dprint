@@ -55,20 +55,27 @@ sections: build ## plot out/section_{X,Y,Z}.png cross-sections of MODEL
 drawer-swap: build ## build models/drawer-20cm-front-slope.stl from models/drawer-20cm.stl
 	$(PY) -I scripts/drawer_swap.py models/drawer-20cm.stl models/drawer-20cm-front-slope.stl
 
-macbook-stand: build ## build out/macbook-stack-stand.stl and previews (SCAD_ARGS passes -D overrides)
+MBS := scripts/macbook_stack_stand.scad
+MBS_PNG := $(OPENSCAD) -q --render --backend=manifold $(SCAD_ARGS) --colorscheme=Tomorrow
+
+macbook-stand: build ## build out/macbook-stack-stand-{left,right}.stl and previews (SCAD_ARGS passes -D overrides)
 	mkdir -p out
-	$(OPENSCAD) --backend=manifold -q $(SCAD_ARGS) -o out/macbook-stack-stand.stl scripts/macbook_stack_stand.scad
-	$(OPENSCAD) -q $(SCAD_ARGS) -D 'part="assembly"' -o out/macbook-stack-stand-assembly.png --imgsize=1200,700 \
-	  --camera=0,0,20,65,0,25,900 --colorscheme=Tomorrow scripts/macbook_stack_stand.scad
-	$(OPENSCAD) -q --render --backend=manifold $(SCAD_ARGS) -D 'part="section"' -o out/macbook-stack-stand-section.png --imgsize=1000,700 \
-	  --projection=ortho --camera=-150,0,24,90,0,0,220 --colorscheme=Tomorrow scripts/macbook_stack_stand.scad
-	$(OPENSCAD) -q --render --backend=manifold $(SCAD_ARGS) -D 'part="plan"' -o out/macbook-stack-stand-plan.png --imgsize=1200,900 \
-	  --projection=ortho --autocenter --viewall --camera=0,0,0,180,0,0,0 --colorscheme=Tomorrow scripts/macbook_stack_stand.scad
-	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand.stl
+	for side in left right; do \
+	  $(OPENSCAD) --backend=manifold -q $(SCAD_ARGS) -D "side=\"$$side\"" -o out/macbook-stack-stand-$$side.stl $(MBS) || exit 1; done
+	$(MBS_PNG) -o out/macbook-stack-stand-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(MBS)
+	$(MBS_PNG) -D 'part="assembly"' -o out/macbook-stack-stand-assembly.png --imgsize=1200,700 --camera=0,0,20,62,0,150,900 $(MBS)
+	$(MBS_PNG) -D 'part="section"' -o out/macbook-stack-stand-section.png --imgsize=1000,700 \
+	  --projection=ortho --camera=-150,0,24,90,0,0,220 $(MBS)
+	$(MBS_PNG) -D 'part="assembly"' -o out/macbook-stack-stand-side.png --imgsize=1200,500 \
+	  --projection=ortho --camera=0,0,24,90,0,90,620 $(MBS)
+	$(MBS_PNG) -D 'part="plan"' -o out/macbook-stack-stand-plan.png --imgsize=1200,900 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,180,0,0,0 $(MBS)
+	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand-left.stl
+	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand-right.stl
 
 macbook-stand-fit: build ## build out/macbook-stack-stand-fit.stl, a 10 mm slice of the profile for a fit test
 	mkdir -p out
-	$(OPENSCAD) --backend=manifold -q $(SCAD_ARGS) -D 'part="fit"' -o out/macbook-stack-stand-fit.stl scripts/macbook_stack_stand.scad
+	$(OPENSCAD) --backend=manifold -q $(SCAD_ARGS) -D 'part="fit"' -o out/macbook-stack-stand-fit.stl $(MBS)
 	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand-fit.stl
 
 clean: ## remove build output
