@@ -2,13 +2,18 @@
 //
 // One stand is a side rail with an E-shaped cross-section: a vertical wall
 // with three shelves. The laptop edges slide into the two channels between
-// the shelves. Two identical stands are needed, one at the middle of the
-// left side and one at the middle of the right side of the laptops.
+// the shelves. Two identical stands are needed, one on the left side and
+// one on the right side of the laptops.
+//
+// The shelves are full depth only at the two rail ends (the pads). Between
+// the pads they are cut back to a 1 mm rib, so the air intake slot on the
+// underside of each laptop stays open there.
 //
 // The part is modelled in print orientation: the E profile lies on the bed
 // (XY) and the rail length is Z. In use the profile Y axis points up.
 //
-// Build:  make macbook-stand
+// Build:  make macbook-stand        (stand STL and previews)
+//         make macbook-stand-fit    (10 mm slice of the profile, fit test)
 // See specs/macbook-stack-stand.md for the reasons behind the numbers.
 
 /* [Laptop] */
@@ -23,7 +28,9 @@ clearance = 0.5;    // vertical slack of a laptop in its channel
 engage    = 15;     // channel depth: how far the shelves reach in from the wall
 wall_t    = 4;      // vertical wall
 top_t     = 3;      // lip above the upper laptop
-length    = 68;     // rail length along the laptop side (60 mm of full channel + 2 lead-ins)
+length    = 100;    // rail length along the laptop side
+pad_len   = 12;     // full-depth shelf at each rail end; 0 keeps the shelves full length
+stub      = 1;      // shelf rib left along the wall between the pads
 foot_out  = 12;     // outward foot that keeps an empty stand upright
 foot_h    = 12;     // height where the foot meets the wall
 foot_tip  = 4;      // thickness of the foot at its outer end (holds the screw heads)
@@ -41,9 +48,17 @@ r_in  = 1.0;        // fillet of inner corners (shelf roots)
 flare = 0.8;        // each channel opens by this much at both rail ends
 lead  = 4;          // length of that lead-in
 
+/* [Placement, previews only] */
+rail_from_back = 80;   // laptop back edge to the rear end of the rail
+vent_from_back = 24;   // laptop back edge to the start of the intake slot (measured)
+vent_len       = 105;  // length of the intake slot (measured)
+side_gap       = 0.5;  // laptop side to stand wall
+
 /* [Output] */
-part = "stand";     // "stand" (print this, twice), "assembly" or "section" (previews)
-side_gap = 0.5;     // assembly preview: laptop side to stand wall
+// "stand" (print this, twice), "fit" (test slice), or a preview:
+// "assembly", "section" (cut through a pad), "plan" (seen from below)
+part = "stand";
+fit_len = 10;       // length of the fit-test slice
 
 $fn = 64;
 
@@ -55,9 +70,16 @@ y3      = y2 + mid_t;              // floor of the upper channel
 y4      = y3 + slot_h;             // ceiling of the upper channel
 total_h = y4 + top_t;
 
+ramp     = engage - stub;                  // 45 degree run from rib to full shelf
+win_len  = length - 2 * (pad_len + ramp);  // window length at the wall
+windowed = pad_len > 0 && win_len > 0;
+
 assert(top_t > 2 * r_tip, "top lip thinner than two tip radii");
 assert(foot_tip > 2 * r_tip, "foot tip thinner than two tip radii");
 assert(lead * 2 < length, "lead-ins longer than the rail");
+assert(pad_len == 0 || pad_len >= lead, "pads shorter than the lead-in");
+assert(pad_len == 0 || win_len > 0, "rail too short for pads and ramps; set pad_len = 0");
+assert(stub > 0 && stub < engage, "stub must be between 0 and engage");
 assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
 assert(screw_n < 2 || screw_inset * 2 + screw_head_d < length, "screw holes overlap");
 
@@ -91,6 +113,18 @@ module lead_in(y) {
     }
 }
 
+// Cuts the shelves and the top lip back to the rib between the two end
+// pads. The cut meets each pad at 45 degrees, so the pad at the upper end
+// of the print grows out of the rib without supports.
+module window() {
+    x0 = wall_t + stub;
+    x1 = wall_t + engage + 1;
+    translate([0, total_h + 1, 0]) rotate([90, 0, 0])
+        linear_extrude(total_h + 2)
+            polygon([[x1, pad_len - 1], [x0, pad_len + ramp],
+                     [x0, length - pad_len - ramp], [x1, length - pad_len + 1]]);
+}
+
 // Vertical screw hole (in use) at the origin, axis along +Y: clearance
 // hole, 90 degree countersink, then a head pocket open through the
 // sloped top of the foot.
@@ -115,13 +149,22 @@ module stand() {
             lead_in(y);
             translate([0, 0, length]) mirror([0, 0, 1]) lead_in(y);
         }
+        if (windowed) window();
         if (screw_n > 0)
             for (i = [0 : screw_n - 1])
                 translate([-foot_out / 2, 0, screw_z(i)]) screw_hole();
     }
 }
 
-// --- assembly preview -----------------------------------------------------
+// Short slice of the bare profile: no lead-ins, no window, no screws.
+module fit_test() {
+    linear_extrude(fit_len) profile();
+}
+
+// --- previews ---------------------------------------------------------------
+// Laptop centred on the origin, back edge at +Y, front edge at -Y.
+
+rail_y = laptop_d / 2 - rail_from_back;   // rear end of the rail
 
 module laptop() {
     r = 10;
@@ -129,18 +172,20 @@ module laptop() {
         offset(r = r) square([laptop_w - 2 * r, laptop_d - 2 * r], center = true);
 }
 
-// Stand turned to its position in use: wall vertical, rail along Y.
+// Stand turned to its position in use: wall vertical, rail along Y,
+// part Z = 0 at the rear end.
 module stand_in_use() {
-    translate([-(laptop_w / 2 + side_gap + wall_t), length / 2, 0])
+    translate([-(laptop_w / 2 + side_gap + wall_t), rail_y, 0])
         rotate([90, 0, 0]) stand();
 }
 
-// Keeps the half behind the middle of the rails when cut is true, so the
-// section preview shows the profile with the laptops in it.
+// Keeps the half behind the middle of the front pads when cut is true, so
+// the section preview shows the full profile with the laptops in it.
 module clip(cut) {
+    y_cut = rail_y - length + (windowed ? pad_len / 2 : length / 2);
     if (cut) intersection() {
         children();
-        translate([0, 500, 0]) cube(1000, center = true);
+        translate([0, 500 + y_cut, 0]) cube(1000, center = true);
     }
     else children();
 }
@@ -154,6 +199,22 @@ module assembly(cut = false) {
         cube([laptop_w + 120, laptop_d + 80, 4], center = true);
 }
 
+// Lower laptop and the stands seen from below. The red strips mark the
+// measured length of the intake slots; their distance from the side edge
+// and their width are not measured and only indicative.
+module plan() {
+    color("orange") stand_in_use();
+    color("orange") mirror([1, 0, 0]) stand_in_use();
+    color("silver") translate([0, 0, y1]) laptop();
+    for (sx = [-1, 1])
+        color("red")
+            translate([sx * (laptop_w / 2 - 5) - 1.5,
+                       laptop_d / 2 - vent_from_back - vent_len, y1 - 0.2])
+                cube([3, vent_len, 0.2]);
+}
+
 if (part == "assembly") assembly();
 else if (part == "section") assembly(cut = true);
+else if (part == "plan") plan();
+else if (part == "fit") fit_test();
 else stand();
