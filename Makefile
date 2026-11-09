@@ -9,7 +9,7 @@ OPENSCAD ?= openscad
 MODEL   ?= models/drawer-20cm.stl
 
 .DEFAULT_GOAL := help
-.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap
+.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand
 
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
@@ -54,6 +54,15 @@ sections: build ## plot out/section_{X,Y,Z}.png cross-sections of MODEL
 
 drawer-swap: build ## build models/drawer-20cm-front-slope.stl from models/drawer-20cm.stl
 	$(PY) -I scripts/drawer_swap.py models/drawer-20cm.stl models/drawer-20cm-front-slope.stl
+
+macbook-stand: build ## build out/macbook-stack-stand.stl and assembly previews (SCAD_ARGS="-D length=10" for a fit test)
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q $(SCAD_ARGS) -o out/macbook-stack-stand.stl scripts/macbook_stack_stand.scad
+	$(OPENSCAD) -q $(SCAD_ARGS) -D 'part="assembly"' -o out/macbook-stack-stand-assembly.png --imgsize=1200,700 \
+	  --camera=0,0,20,65,0,25,900 --colorscheme=Tomorrow scripts/macbook_stack_stand.scad
+	$(OPENSCAD) -q --render --backend=manifold $(SCAD_ARGS) -D 'part="section"' -o out/macbook-stack-stand-section.png --imgsize=1000,700 \
+	  --projection=ortho --camera=-150,0,24,90,0,0,220 --colorscheme=Tomorrow scripts/macbook_stack_stand.scad
+	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand.stl
 
 clean: ## remove build output
 	rm -rf out __pycache__ scripts/__pycache__

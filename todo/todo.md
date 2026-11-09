@@ -12,3 +12,5 @@
 - [x] decide whether the slide rails stay at their original position in the swapped drawer: no, they move with the body (specs/drawer-swap.md)
 - [x] front braces: side walls continued to the door with a stepped fillet, the plate was held by the ramp tip only (specs/drawer-swap.md)
 - [ ] decide how to print the back wall ceiling: bridge, supports, or design change (specs/drawer-swap.md)
+- [x] stacking stand for two closed MacBook Pro 14" laptops, parametric OpenSCAD part (specs/macbook-stack-stand.md)
+- [ ] measure the laptop (thickness, feet inset from the side, side vent position) and print the 10 mm fit test before the full stands (specs/macbook-stack-stand.md)

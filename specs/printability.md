@@ -50,3 +50,14 @@ Default bed is 220 x 220 x 250 mm.
 - Wall thickness unchanged by the swap or the front braces: median
   1.30 mm, min 0.63 mm on the rails, 0.2% under 0.8 mm.
 - 70.1 cm3 with the front braces, about 31 g PLA rough.
+
+### out/macbook-stack-stand.stl (2026-11-09)
+
+- Built by `make macbook-stand`, see specs/macbook-stack-stand.md.
+- 23 x 49.5 x 60 mm, 24.2 cm3, watertight, one body.
+- Orientation: as modelled, E profile on the bed, rail length up. Zero
+  overhangs, no supports, 3.6 cm2 bed contact. Every other orientation
+  needs supports and puts the layer lines across the shelf roots.
+- Thinnest section 2.1 mm (top lip at the flared rail ends); nothing
+  under 0.8 mm.
+- About 30 g PLA each if printed solid; two are needed.
