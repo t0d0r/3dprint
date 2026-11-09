@@ -19,7 +19,7 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   (60 mm of full channel plus two 4 mm lead-ins). 31 x 49.5 x 68 mm,
   36.8 cm3, about 46 g PLA solid each.
 - Two screw holes in the outward foot for fixing a stand to the desk:
-  20 mm from each rail end, 4.5 mm hole, 90 degree countersink, 8.5 mm
+  15 mm from each rail end (first cut: 20 mm), 4.5 mm hole, 90 degree countersink, 8.5 mm
   head pocket, for 4 mm countersunk wood screws. `screw_n = 0` removes
   them. Foot tip thickened from 2.5 to 4 mm to hold the head pocket.
 - Verified: watertight, one body; channel heights 16.0 mm and channel

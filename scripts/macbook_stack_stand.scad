@@ -30,7 +30,7 @@ foot_tip  = 4;      // thickness of the foot at its outer end (holds the screw h
 
 /* [Screws] */
 screw_n      = 2;   // screw holes in the outward foot; 0 for none
-screw_inset  = 20;  // hole centre to the rail end
+screw_inset  = 15;  // hole centre to the rail end
 screw_d      = 4.5; // clearance hole, for a 4 mm countersunk wood screw
 screw_head_d = 8.5; // head pocket diameter
 screw_seat   = 1.5; // material under the countersink

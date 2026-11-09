@@ -58,7 +58,7 @@ Laptop reference dimensions (Apple): 15.5 mm thick closed, 312.6 mm wide,
 | `foot_h`    | 12    | height where the foot meets the wall                 |
 | `foot_tip`  | 4     | thickness of the foot at its outer end               |
 | `screw_n`   | 2     | screw holes in the outward foot; 0 for none          |
-| `screw_inset` | 20  | hole centre to the rail end                          |
+| `screw_inset` | 15  | hole centre to the rail end                          |
 | `screw_d`   | 4.5   | clearance hole, for a 4 mm countersunk wood screw    |
 | `screw_head_d` | 8.5 | head pocket diameter                                |
 | `screw_seat` | 1.5  | material under the countersink                       |
@@ -93,7 +93,7 @@ Result: 31 mm wide, 49.5 mm tall, 68 mm long, 36.8 cm3.
   in.
 - Screw holes are in the outward foot, not in the bottom shelf: the
   screws stay reachable with both laptops in place, and no screw head
-  sits under a laptop. Two holes, 20 mm from each rail end (28 mm
+  sits under a laptop. Two holes, 15 mm from each rail end (38 mm
   apart), on the centre line of the foot, 6 mm outside the wall.
 - Each hole is a 4.5 mm clearance hole with a 90 degree countersink
   for a 4 mm countersunk wood screw, and an 8.5 mm pocket above it
@@ -165,8 +165,8 @@ Result: 31 mm wide, 49.5 mm tall, 68 mm long, 36.8 cm3.
 - Shelves and top lip end 19.0 mm from the outer wall face: 4 mm wall
   plus 15.0 mm channel depth.
 - Screw holes: Euler number -2 (two through holes), both hole axes
-  free, 4.50 mm at the base and 8.50 mm in the pocket, centres 20 and
-  48 mm along the 68 mm rail.
+  free, 4.50 mm at the base and 8.50 mm in the pocket, centres 15 and
+  53 mm along the 68 mm rail.
 - Printability in specs/printability.md.
 
 ## Open

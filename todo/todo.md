@@ -16,4 +16,4 @@
 - [ ] measure the laptop (thickness, feet inset from the side, last port position, side vent position) and print the 10 mm fit test before the full stands (specs/macbook-stack-stand.md)
 - [x] stand: channel depth 15 mm (was 7), rail length 68 mm (was 60) (specs/macbook-stack-stand.md)
 - [ ] stand: decide on a relief for the rubber feet in the 15 mm shelves once the feet inset is measured (specs/macbook-stack-stand.md)
-- [x] stand: two countersunk screw holes in the outward foot, 20 mm from the rail ends (specs/macbook-stack-stand.md)
+- [x] stand: two countersunk screw holes in the outward foot, 15 mm from the rail ends (first cut: 20 mm) (specs/macbook-stack-stand.md)
