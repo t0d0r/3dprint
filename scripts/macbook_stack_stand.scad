@@ -48,9 +48,8 @@ ext     = 80;       // rail rear end to the back stop face = to the laptop back 
 ext_pad = 15;       // full-depth bar in front of the cross plate; the rest is cut back to the rib
 bar_rib = 10;       // width of that rib, from the outer wall face (the rib of the rail is wall_t + stub = 5)
 cap_t   = 5;        // thickness of the cross plate
-ear_len = 18;       // screw ear behind the cross plate, on the mounting face; 0 for none
-ear_t   = 6;        // thickness of the ear
-ear_gusset = 3;     // 45 degree brace between the ear and the plate
+ear_len = 18;       // screw ear in front of the cross plate, on the mounting face; 0 for none
+ear_access_d = 9;   // hole through the bar above the ear screw, for the screw and the driver
 
 /* [Screws] */
 screw_n      = 2;   // screw holes in the outward foot; 0 for none
@@ -95,6 +94,10 @@ windowed = pad_len > 0 && win_len > 0;
 has_ext  = ext > 0;
 z_c      = length + ext;                   // front face of the cross plate
 rail_from_back = has_ext ? ext : free_from_back;
+ear_t    = desk_gap;                       // the ear is as thick as the shelf beside the mounting face
+ear_seat = ear_t - (screw_head_d - screw_d) / 2;   // head flush with the ear
+ear_z    = z_c - ear_len / 2;              // ear screw, along the stand
+ear_x    = (wall_t + engage) / 2;
 bar_ramp = wall_t + engage - bar_rib;      // 45 degree run from the bar rib to the full bar
 
 assert(top_t > 2 * r_tip, "top lip thinner than two tip radii");
@@ -107,8 +110,10 @@ assert(!has_ext || ext_pad >= 0, "ext_pad must not be negative");
 assert(!has_ext || (bar_rib >= wall_t + stub && bar_rib <= wall_t + engage),
        "bar_rib must be between wall_t + stub and wall_t + engage");
 assert(!has_ext || ext > ext_pad + bar_ramp, "extension too short for its window; lower ext_pad");
-assert(ear_len == 0 || ear_len >= ear_gusset + screw_head_d + 3, "ear too short for the screw head");
-assert(ear_len == 0 || ear_t >= screw_seat + (screw_head_d - screw_d) / 2, "ear thinner than seat plus countersink");
+assert(ear_len == 0 || ear_len >= screw_head_d + 6, "ear too short for the screw head");
+assert(ear_len == 0 || ear_seat >= 2, "ear too thin for a countersunk screw");
+assert(ear_len == 0 || ear_len / 2 + ear_access_d / 2 < ext_pad, "access hole leaves the full-depth part of the bar");
+assert(ear_len == 0 || ear_access_d + 6 <= wall_t + engage, "access hole too wide for the bar");
 assert(r_in < engage / 2 && 2 * r_in < slot_h, "root fillet too large for the channel");
 assert(side == "right" || side == "left", "side must be right or left");
 assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
@@ -165,34 +170,37 @@ module bar_window() {
                          [x0, z_c - ext_pad - bar_ramp], [x1, z_c - ext_pad + 1]]);
 }
 
-// Screw ear behind the cross plate, flat on the mounting face (the desk,
-// or the underside of a top when the stand hangs). It has the outline of
-// the plate foot, a 45 degree brace to the plate and one screw hole, centred
-// between the brace and the end of the ear.
+// Screw ear in front of the cross plate, flat on the mounting face (the
+// desk, or the underside of a top when the stand hangs). It is as thick as
+// the shelf next to that face, so it stays out of the laptop's way, and the
+// screw head is flush with it. The front edge is chamfered.
 module ear() {
-    z0 = z_c + cap_t;
     difference() {
-        union() {
-            translate([0, 0, z0 - 0.01]) linear_extrude(ear_len + 0.01)
-                intersection() {
-                    plate_profile();
-                    square([wall_t + engage + 1, ear_t]);
-                }
-            // polygon is in (Z, Y); extruded along X, clear of the rounded edges
-            translate([wall_t + engage - 1.5, 0, 0]) rotate([0, -90, 0])
-                linear_extrude(wall_t + engage - 3)
-                    polygon([[z0 - 0.01, ear_t - 0.01], [z0 + ear_gusset, ear_t - 0.01],
-                             [z0 - 0.01, ear_t + ear_gusset]]);
-        }
-        translate([(wall_t + engage) / 2, 0, z0 + (ear_gusset + ear_len) / 2]) screw_hole();
+        translate([0, 0, z_c - ear_len]) linear_extrude(ear_len + 0.01)
+            intersection() {
+                plate_profile();
+                square([wall_t + engage + 1, ear_t]);
+            }
+        translate([ear_x, 0, ear_z]) screw_hole(ear_seat);
+        // chamfer, polygon in (Z, Y), extruded along X
+        translate([wall_t + engage + 1, 0, 0]) rotate([0, -90, 0])
+            linear_extrude(wall_t + engage + 2)
+                polygon([[z_c - ear_len - 0.01, ear_t - 1.5], [z_c - ear_len - 0.01, ear_t + 0.01],
+                         [z_c - ear_len + 1.5, ear_t + 0.01]]);
     }
 }
 
-// Bar, cross plate and screw ear.
+// Bar, cross plate and screw ear. The bar has a hole straight above the
+// ear screw: the screw goes in through it and the driver follows.
 module back_stop() {
     difference() {
-        translate([0, 0, length - 0.01]) linear_extrude(ext + 0.02) bar_profile();
+        // starts 1 mm inside the rear pad of the rail; a 0.01 mm overlap
+        // left a degenerate facet after the STL round trip
+        translate([0, 0, length - 1]) linear_extrude(ext + 1.01) bar_profile();
         bar_window();
+        if (ear_len > 0)
+            translate([ear_x, y2 - 1, ear_z]) rotate([-90, 0, 0])
+                cylinder(d = ear_access_d, h = mid_t + 2);
     }
     translate([0, 0, z_c]) linear_extrude(cap_t) plate_profile();
     if (ear_len > 0) ear();
@@ -228,13 +236,13 @@ module window() {
 // Vertical screw hole (in use) at the origin, axis along +Y: clearance
 // hole, 90 degree countersink, then a head pocket open through the
 // sloped top of the foot.
-module screw_hole() {
+module screw_hole(seat = screw_seat) {
     cone_h = (screw_head_d - screw_d) / 2;
     rotate([-90, 0, 0]) {
         translate([0, 0, -1]) cylinder(d = screw_d, h = foot_h + 2);
-        translate([0, 0, screw_seat])
+        translate([0, 0, seat])
             cylinder(d1 = screw_d, d2 = screw_head_d, h = cone_h + 0.01);
-        translate([0, 0, screw_seat + cone_h]) cylinder(d = screw_head_d, h = foot_h + 1);
+        translate([0, 0, seat + cone_h]) cylinder(d = screw_head_d, h = foot_h + 1);
     }
 }
 

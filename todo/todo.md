@@ -32,3 +32,4 @@
 - [x] stand: shelf root fillets 3 mm (was 1), lead-in no longer cuts them at the front end (specs/macbook-stack-stand.md)
 - [ ] stand: measure the edge radius of the laptop body against the 3 mm root fillets; reprint the fit test (specs/macbook-stack-stand.md)
 - [x] stand: screw ear behind the cross plate of the T, third screw per stand (specs/macbook-stack-stand.md)
+- [x] stand: T screw ear moved in front of the cross plate, 5 mm thick, with a driver hole through the bar; stand build fails on OpenSCAD warnings (specs/macbook-stack-stand.md)

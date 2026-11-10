@@ -61,7 +61,7 @@ MBS_PNG := $(OPENSCAD) -q --render --backend=manifold $(SCAD_ARGS) --colorscheme
 macbook-stand: build ## build out/macbook-stack-stand-{left,right}.stl and previews (SCAD_ARGS passes -D overrides)
 	mkdir -p out
 	for side in left right; do \
-	  $(OPENSCAD) --backend=manifold -q --export-format binstl $(SCAD_ARGS) -D "side=\"$$side\"" -o out/macbook-stack-stand-$$side.stl $(MBS) || exit 1; done
+	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "side=\"$$side\"" -o out/macbook-stack-stand-$$side.stl $(MBS) || exit 1; done
 	$(MBS_PNG) -o out/macbook-stack-stand-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(MBS)
 	$(MBS_PNG) -D 'part="assembly"' -o out/macbook-stack-stand-assembly.png --imgsize=1200,700 --camera=0,0,20,62,0,150,900 $(MBS)
 	$(MBS_PNG) -D 'part="section"' -o out/macbook-stack-stand-section.png --imgsize=1000,700 \
@@ -79,7 +79,7 @@ macbook-stand-save: macbook-stand ## rebuild the stand and copy the left and rig
 
 macbook-stand-fit: build ## build out/macbook-stack-stand-fit.stl, a 10 mm slice of the profile for a fit test
 	mkdir -p out
-	$(OPENSCAD) --backend=manifold -q $(SCAD_ARGS) -D 'part="fit"' -o out/macbook-stack-stand-fit.stl $(MBS)
+	$(OPENSCAD) --backend=manifold -q --hardwarnings $(SCAD_ARGS) -D 'part="fit"' -o out/macbook-stack-stand-fit.stl $(MBS)
 	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand-fit.stl
 
 clean: ## remove build output
