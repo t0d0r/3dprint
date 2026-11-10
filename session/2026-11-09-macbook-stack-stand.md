@@ -24,14 +24,18 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   39.5 cm3, about 49 g PLA solid each. Screw holes at 15 and 85 mm.
 - Current version: behind the 100 mm rail only the middle shelf goes
   on, at its full 9.5 mm thickness, 80 mm to the back edge of the
-  laptops, and ends in a cross plate 49.5 mm tall and 5 mm thick (a T
+  laptops, and ends in a cross plate 51.5 mm tall and 5 mm thick (a T
   seen from the side) that stops both laptops. No wall, foot or shelf
   beside the bar. The bar is cut back to a 10 mm rib (`bar_rib`; 5 mm
   at first) from the rail to 156 mm (165 mm at the tip) over the
   intake slot of the upper laptop; the last 15 mm are full depth
   (`ext_pad`). Left and right stands are mirror images
-  (`out/macbook-stack-stand-left.stl`, `-right.stl`), 185 x 49.5 x
-  31 mm as exported, 53.6 cm3, about 66 g PLA solid each.
+  (`out/macbook-stack-stand-left.stl`, `-right.stl`), 185 x 51.5 x
+  31 mm as exported, 55.8 cm3, about 69 g PLA solid each.
+- 2026-11-10: a printed stand broke at a shelf that was too thin. Top
+  lip thickened from 3 to 5 mm (`top_t`), the same as the bottom
+  shelf; shelves are now 5, 9.5 and 5 mm. Models in `models/`
+  re-saved. Which shelf broke and where is not recorded.
 - The first bar was 5 mm thick, full width, at the bottom of the gap,
   with a brace to the plate; replaced by the full-thickness bar with
   a window.

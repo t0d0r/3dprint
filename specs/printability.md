@@ -54,7 +54,7 @@ Default bed is 220 x 220 x 250 mm.
 ### out/macbook-stack-stand-left.stl, -right.stl (2026-11-09)
 
 - Built by `make macbook-stand`, see specs/macbook-stack-stand.md.
-- 185 x 49.5 x 31 mm as exported, 53.6 cm3 each, watertight, one body
+- 185 x 51.5 x 31 mm as exported, 55.8 cm3 each, watertight, one body
   (100 mm rail with end pads, 80 mm bar with its own window, cross
   plate, two screw holes).
 - Orientation: as exported, lying on the shelf tips. No supports,
@@ -66,10 +66,10 @@ Default bed is 220 x 220 x 250 mm.
   bridges across the channels at 15 mm), the rest is the 45 degree
   flanks.
   Standing on end leaves the arms of the cross plate unsupported
-  180 mm above the bed and makes a 185 mm tall print on a 31 x 49.5 mm
+  180 mm above the bed and makes a 185 mm tall print on a 31 x 51.5 mm
   footprint.
-- Thinnest structural section 2.2 mm (top lip at the flared front
-  end). 0.1% of the surface reads under 0.8 mm: feather edges where
+- Thinnest structural section 3.2 mm (wall at the flared front
+  end); the shelves are 5, 9.5 and 5 mm. 0.1% of the surface reads under 0.8 mm: feather edges where
   the screw head pockets run out through the sloped foot and where
   the 45 degree cuts meet the rounded shelf tips.
-- About 66 g PLA each if printed solid; one left and one right.
+- About 69 g PLA each if printed solid; one left and one right.
