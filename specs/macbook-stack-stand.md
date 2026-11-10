@@ -119,6 +119,8 @@ Laptop reference dimensions (Apple): 15.5 mm thick closed, 312.6 mm wide,
 | `ext_pad`   | 15    | full-depth bar in front of the cross plate           |
 | `bar_rib`   | 10    | width of the rib of the bar, from the outer wall face |
 | `cap_t`     | 5     | thickness of the cross plate                         |
+| `ear_len`   | 18    | screw ear behind the cross plate; 0 for none         |
+| `ear_t`     | 6     | thickness of the ear                                 |
 | `side`      | right | which stand to export: "right" or "left"             |
 | `foot_out`  | 12    | outward foot                                         |
 | `foot_h`    | 12    | height where the foot meets the wall                 |
@@ -135,7 +137,7 @@ Preview-only parameters: `vent_from_back` 24 and `vent_len` 105
 (intake slot, measured on the machine), `free_from_back` 80 (rail
 position when `ext` is 0).
 
-Result: 185 mm long, 51.5 mm tall, 31 mm wide, 56.5 cm3 each.
+Result: 203 mm long, 51.5 mm tall, 31 mm wide, 58.5 cm3 each.
 
 ## Decisions
 
@@ -243,6 +245,15 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 56.5 cm3 each.
   that runs out through the sloped top of the foot. 3.5 mm of material
   stays under the countersink (was 1.5 mm); the head ends 5.5 mm from
   the mounting face, below the foot surface all round.
+- Screw ear on the T: behind the cross plate, flat on the mounting
+  face, 18 mm long, 19 mm wide, 6 mm thick, with one hole of the same
+  kind as in the foot, 195.5 mm along the stand, and a 3 mm brace to
+  the plate. It ties the far end of the stand to the top it is
+  mounted on: hanging, the cross plate and the bar would otherwise be
+  held by the rail alone, 80 mm away. It lies behind the back edge of
+  the laptops, where there are no ports, and the screw is reached
+  from the back with the laptops in place. The stand is 18 mm longer;
+  each stand now takes three screws.
 - `screw_seat` is 3.5 mm because the stand is also to be used hanging:
   turned over and screwed to the underside of a top. Standing on a
   desk the screws only keep the stand in place; hanging, the plastic
@@ -307,10 +318,10 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 56.5 cm3 each.
 ## Print notes
 
 - Print one left and one right stand, as exported: lying on the shelf
-  tips, no supports. 185 x 51.5 mm on the bed, 31 mm tall. 0.2 mm
+  tips, no supports. 203 x 51.5 mm on the bed, 31 mm tall. 0.2 mm
   layers, 3 or more perimeters, 20% infill or more. PLA or PETG; PETG
   if the laptops run warm for long periods in clamshell mode.
-- Bed contact is 6.2 cm2 in strips (shelf tips, the last 15 mm of
+- Bed contact is 7.6 cm2 in strips (shelf tips, the last 15 mm of
   the bar, cross plate): use a brim.
 - Bridges, all with both ends supported: the three ribs in the window
   of the rail bridge 48 mm, 14 mm above the bed; the rib of the bar
@@ -328,10 +339,14 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 56.5 cm3 each.
   profile, printed standing. Check that it slips over the laptop edge
   without force. Tune `clearance` (`SCAD_ARGS="-D clearance=0.8"`
   works for both targets).
-- About 70 g PLA each if printed solid; less with infill.
+- About 73 g PLA each if printed solid; less with infill.
 
 ## Checks (2026-11-09)
 
+- Ear: 185 to 203 mm along the stand, 0 to 6.0 mm high, 19.0 mm
+  wide; hole centred at 195.5 mm, 9.5 mm from the outer wall face,
+  4.50 mm at the mounting face and 8.50 mm in the head pocket. Three
+  through holes in all (Euler number -4).
 - Both STL files: watertight, consistent winding, one body, Euler
   number -2 (two screw holes), no edge shared by more than two faces.
   The left mesh mirrored equals the right one in volume and bounds.
@@ -370,8 +385,8 @@ points are known and not addressed:
   other on the 5 mm former top lip, which is then the lowest and the
   most loaded shelf. The shelves are loaded across the layers and the
   root fillet is 1 mm.
-- The cross plate no longer stands on anything; it hangs at the end of
-  the bar.
+- The cross plate no longer stands on anything. Its screw ear holds
+  it to the top, so it does not hang on the bar alone.
 - The stands cannot be used loose or fitted from the sides. The
   laptops enter from the front only, so the rubber feet have to pass
   through the channels.

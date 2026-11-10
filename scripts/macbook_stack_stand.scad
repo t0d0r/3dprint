@@ -48,6 +48,9 @@ ext     = 80;       // rail rear end to the back stop face = to the laptop back 
 ext_pad = 15;       // full-depth bar in front of the cross plate; the rest is cut back to the rib
 bar_rib = 10;       // width of that rib, from the outer wall face (the rib of the rail is wall_t + stub = 5)
 cap_t   = 5;        // thickness of the cross plate
+ear_len = 18;       // screw ear behind the cross plate, on the mounting face; 0 for none
+ear_t   = 6;        // thickness of the ear
+ear_gusset = 3;     // 45 degree brace between the ear and the plate
 
 /* [Screws] */
 screw_n      = 2;   // screw holes in the outward foot; 0 for none
@@ -104,6 +107,8 @@ assert(!has_ext || ext_pad >= 0, "ext_pad must not be negative");
 assert(!has_ext || (bar_rib >= wall_t + stub && bar_rib <= wall_t + engage),
        "bar_rib must be between wall_t + stub and wall_t + engage");
 assert(!has_ext || ext > ext_pad + bar_ramp, "extension too short for its window; lower ext_pad");
+assert(ear_len == 0 || ear_len >= ear_gusset + screw_head_d + 3, "ear too short for the screw head");
+assert(ear_len == 0 || ear_t >= screw_seat + (screw_head_d - screw_d) / 2, "ear thinner than seat plus countersink");
 assert(side == "right" || side == "left", "side must be right or left");
 assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
 assert(screw_n < 2 || screw_inset * 2 + screw_head_d < length, "screw holes overlap");
@@ -159,13 +164,37 @@ module bar_window() {
                          [x0, z_c - ext_pad - bar_ramp], [x1, z_c - ext_pad + 1]]);
 }
 
-// Bar and cross plate.
+// Screw ear behind the cross plate, flat on the mounting face (the desk,
+// or the underside of a top when the stand hangs). It has the outline of
+// the plate foot, a 45 degree brace to the plate and one screw hole, centred
+// between the brace and the end of the ear.
+module ear() {
+    z0 = z_c + cap_t;
+    difference() {
+        union() {
+            translate([0, 0, z0 - 0.01]) linear_extrude(ear_len + 0.01)
+                intersection() {
+                    plate_profile();
+                    square([wall_t + engage + 1, ear_t]);
+                }
+            // polygon is in (Z, Y); extruded along X, clear of the rounded edges
+            translate([wall_t + engage - 1.5, 0, 0]) rotate([0, -90, 0])
+                linear_extrude(wall_t + engage - 3)
+                    polygon([[z0 - 0.01, ear_t - 0.01], [z0 + ear_gusset, ear_t - 0.01],
+                             [z0 - 0.01, ear_t + ear_gusset]]);
+        }
+        translate([(wall_t + engage) / 2, 0, z0 + (ear_gusset + ear_len) / 2]) screw_hole();
+    }
+}
+
+// Bar, cross plate and screw ear.
 module back_stop() {
     difference() {
         translate([0, 0, length - 0.01]) linear_extrude(ext + 0.02) bar_profile();
         bar_window();
     }
     translate([0, 0, z_c]) linear_extrude(cap_t) plate_profile();
+    if (ear_len > 0) ear();
 }
 
 // Tapered cutter that widens one channel at one rail end. The small end
