@@ -137,7 +137,7 @@ Preview-only parameters: `vent_from_back` 24 and `vent_len` 105
 (intake slot, measured on the machine), `free_from_back` 80 (rail
 position when `ext` is 0).
 
-Result: 203 mm long, 51.5 mm tall, 31 mm wide, 58.5 cm3 each.
+Result: 203 mm long, 51.5 mm tall, 31 mm wide, 59.2 cm3 each.
 
 ## Decisions
 
@@ -171,9 +171,9 @@ Result: 203 mm long, 51.5 mm tall, 31 mm wide, 58.5 cm3 each.
   upper pad grew out of the rib; it serves both orientations.) A
   steeper transition would open more of the slot but lengthen the
   bridges.
-- The rib is 1 mm, the inner fillet radius: the cut ends where the
-  fillets end, the wall keeps three stiffening ribs, and no cut face
-  is coplanar with the wall.
+- The rib is 1 mm: the wall keeps three stiffening ribs and no cut
+  face is coplanar with the wall. With the 3 mm root fillets the rib
+  is about 0.8 mm thicker on each side than the shelf it belongs to.
 - Back stop: the laptops slide in from the front, and without a stop
   they can be pushed out through the back. Only the middle shelf is
   continued, because a wall or a shelf beside the laptops would stand
@@ -264,12 +264,25 @@ Result: 203 mm long, 51.5 mm tall, 31 mm wide, 58.5 cm3 each.
   taller than the top of the screw head at the outer rim of the head
   pocket. With the 3.5 mm seat the head top is at 5.5 mm and the foot
   is 6.0 mm there; 1.75 mm of foot remains outside the pocket.
-- Lead-in at the front end of the rail (0.8 mm over 4 mm on the floor,
-  ceiling and wall of each channel) so a laptop edge finds the
-  channel. With `ext` 0 the rear end gets the same lead-in.
-- Outer corners rounded 1.2 mm, inner corners filleted 1.0 mm. The
-  fillets are smaller than the edge radius of the laptop body, so they
-  do not lift it off the shelf.
+- Lead-in at the front end of the rail (0.8 mm over 4 mm on the floor
+  and ceiling of each channel) so a laptop edge finds the channel.
+  It starts 3 mm from the wall, where the root fillets end: an
+  earlier form also flared the wall and cut the fillets away over
+  the first 4 mm, which is inside the front pads that carry the load.
+  With `ext` 0 the rear end gets the same lead-in.
+- Outer corners rounded 1.2 mm. Inner corners, the shelf roots, are
+  filleted 3 mm (`r_in`, was 1 mm). Printed lying down, a shelf is
+  loaded across the layers and the stress peaks in the corner where
+  it meets the wall; a printed stand has already broken at a shelf.
+  With the fillets the shelves are 8, 15.5 and 8 mm thick at the wall
+  instead of 5, 9.5 and 5 mm, and the corner is three times blunter.
+- Cost of the 3 mm fillets: they are no longer sure to be smaller
+  than the edge radius of the laptop body, which is not measured. An
+  edge with a smaller radius meets the fillet before the wall and
+  the laptop stays up to about 1 mm further from the wall (for an
+  edge radius of 2 mm; 3 mm for a sharp edge). The shelves are 15 mm
+  deep, so the hold is not at risk, but the distance between the two
+  stands has to be set with a laptop in place, not from a number.
 - Printed lying on the shelf tips, outer wall face and foot up (was:
   standing on the front end). Standing, the part would be 185 mm tall
   on a 31 x 51.5 mm footprint, and the arms of the cross plate would
@@ -296,8 +309,10 @@ Result: 203 mm long, 51.5 mm tall, 31 mm wide, 58.5 cm3 each.
 ## Use
 
 1. Left stand on the left, right stand on the right, cross plates at
-   the back, 313.6 mm apart wall to wall on the inside (laptop width
-   plus 0.5 mm play per side), parallel to each other.
+   the back, parallel to each other. Set the distance with a laptop
+   in both channels and about 0.5 mm play per side; it is 313.6 mm
+   wall to wall on the inside if the laptop edges reach the walls,
+   and up to a few millimetres more if they stop on the root fillets.
 2. Slide the lower laptop in from the front, under the bars, until
    its back edge meets the cross plates. Then the upper one, above
    the bars.
@@ -343,6 +358,12 @@ Result: 203 mm long, 51.5 mm tall, 31 mm wide, 58.5 cm3 each.
 
 ## Checks (2026-11-09)
 
+- Shelf roots in the pads, from sections at 6 and 94 mm: the solid
+  reaches 1.93 mm past each shelf face 0.2 mm from the wall, 0.77 mm
+  at 1 mm, 0.18 mm at 2 mm and nothing at 3 mm, a 3.0 mm fillet. The
+  same at 0.1 and 2 mm from the front end: the fillets run through
+  the lead-in.
+- `make macbook-stand-fit` rebuilt with the 3 mm fillets, watertight.
 - Ear: 185 to 203 mm along the stand, 0 to 6.0 mm high, 19.0 mm
   wide; hole centred at 195.5 mm, 9.5 mm from the outer wall face,
   4.50 mm at the mounting face and 8.50 mm in the head pocket. Three
@@ -383,8 +404,8 @@ points are known and not addressed:
   through the shelf that lies against the top would remove this.
 - Turned over, one laptop lies on the 9.5 mm middle shelf and the
   other on the 5 mm former top lip, which is then the lowest and the
-  most loaded shelf. The shelves are loaded across the layers and the
-  root fillet is 1 mm.
+  most loaded shelf. The shelves are loaded across the layers; the
+  root fillets are 3 mm for that reason.
 - The cross plate no longer stands on anything. Its screw ear holds
   it to the top, so it does not hang on the bar alone.
 - The stands cannot be used loose or fitted from the sides. The
@@ -396,8 +417,8 @@ points are known and not addressed:
 
 - Which shelf broke on the printed stand, and where (root, window or
   bar), is not recorded. If it was not the top lip, or if the 5 mm lip
-  breaks too, the next steps are a larger root fillet (`r_in`, now
-  1 mm) or more perimeters and infill.
+  breaks too, the next steps are more perimeters and infill, PETG,
+  or thicker shelves. The root fillets are already 3 mm.
 
 - Laptop numbers come from the published dimensions, not from a
   measurement of the actual machines. Measure the closed thickness

@@ -31,7 +31,7 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   intake slot of the upper laptop; the last 15 mm are full depth
   (`ext_pad`). Left and right stands are mirror images
   (`out/macbook-stack-stand-left.stl`, `-right.stl`), 203 x 51.5 x
-  31 mm as exported, 58.5 cm3, about 73 g PLA solid each.
+  31 mm as exported, 59.2 cm3, about 73 g PLA solid each.
 - 2026-11-10: a printed stand broke at a shelf that was too thin. Top
   lip thickened from 3 to 5 mm (`top_t`), the same as the bottom
   shelf; shelves are now 5, 9.5 and 5 mm. Models in `models/`
@@ -46,6 +46,12 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
 - 2026-11-10: screw ear behind the cross plate of the T (18 x 19 x
   6 mm, one countersunk hole, 3 mm brace), so the far end of a hanging
   stand is held to the top by a third screw. Stand length 203 mm.
+- 2026-11-10: shelf root fillets raised from 1 to 3 mm (`r_in`); the
+  shelves are 8, 15.5 and 8 mm thick at the wall. The lead-in now
+  starts where the fillets end and no longer flares the wall, so the
+  fillets run to the front end. Models and fit test rebuilt. Open:
+  the laptop edge radius against the 3 mm fillets; the stand spacing
+  is set with a laptop in place.
 - The first bar was 5 mm thick, full width, at the bottom of the gap,
   with a brace to the plate; replaced by the full-thickness bar with
   a window.

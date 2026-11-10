@@ -61,7 +61,7 @@ screw_seat   = 3.5; // material under the countersink; carries the load when the
 
 /* [Detail] */
 r_tip = 1.2;        // rounding of outer corners (shelf tips)
-r_in  = 1.0;        // fillet of inner corners (shelf roots)
+r_in  = 3.0;        // fillet of inner corners (shelf roots)
 flare = 0.8;        // each channel opens by this much at the front end (both ends if ext = 0)
 lead  = 4;          // length of that lead-in
 
@@ -109,6 +109,7 @@ assert(!has_ext || (bar_rib >= wall_t + stub && bar_rib <= wall_t + engage),
 assert(!has_ext || ext > ext_pad + bar_ramp, "extension too short for its window; lower ext_pad");
 assert(ear_len == 0 || ear_len >= ear_gusset + screw_head_d + 3, "ear too short for the screw head");
 assert(ear_len == 0 || ear_t >= screw_seat + (screw_head_d - screw_d) / 2, "ear thinner than seat plus countersink");
+assert(r_in < engage / 2 && 2 * r_in < slot_h, "root fillet too large for the channel");
 assert(side == "right" || side == "left", "side must be right or left");
 assert(screw_n == 0 || foot_out >= screw_head_d + 3, "foot too narrow for the screw head");
 assert(screw_n < 2 || screw_inset * 2 + screw_head_d < length, "screw holes overlap");
@@ -197,13 +198,17 @@ module back_stop() {
     if (ear_len > 0) ear();
 }
 
-// Tapered cutter that widens one channel at one rail end. The small end
-// sits 0.05 mm inside the channel so no face is coplanar with the part.
+// Tapered cutter that widens one channel at one rail end: it lowers the
+// floor and raises the ceiling. It starts where the root fillets end, so
+// the fillets run through to the rail end; the pads there carry the load.
+// The small end sits 0.05 mm inside the channel so no face is coplanar
+// with the part.
 module lead_in(y) {
+    x0 = wall_t + r_in;
     hull() {
-        translate([wall_t - flare, y - flare, -0.01])
-            cube([engage + flare + 2, slot_h + 2 * flare, 0.01]);
-        translate([wall_t + 0.05, y + 0.05, lead])
+        translate([x0, y - flare, -0.01])
+            cube([engage + 2, slot_h + 2 * flare, 0.01]);
+        translate([x0, y + 0.05, lead])
             cube([engage + 2, slot_h - 0.1, 0.01]);
     }
 }

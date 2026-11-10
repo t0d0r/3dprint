@@ -28,5 +28,7 @@
 - [x] stand: left and right STL saved in models/ (make macbook-stand-save) (specs/macbook-stack-stand.md)
 - [x] stand: top lip 5 mm instead of 3 after a printed shelf broke; stand 51.5 mm tall (specs/macbook-stack-stand.md)
 - [x] stand: 3.5 mm of plastic under the screw heads (was 1.5) and 5 mm foot tip, for hanging use (specs/macbook-stack-stand.md)
-- [ ] stand, hanging use: second row of screws on the laptop side and a larger shelf root fillet; load test before use (specs/macbook-stack-stand.md)
+- [ ] stand, hanging use: second row of screws on the laptop side; load test before use (specs/macbook-stack-stand.md)
+- [x] stand: shelf root fillets 3 mm (was 1), lead-in no longer cuts them at the front end (specs/macbook-stack-stand.md)
+- [ ] stand: measure the edge radius of the laptop body against the 3 mm root fillets; reprint the fit test (specs/macbook-stack-stand.md)
 - [x] stand: screw ear behind the cross plate of the T, third screw per stand (specs/macbook-stack-stand.md)
