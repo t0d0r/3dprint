@@ -82,7 +82,7 @@ The shelves and the top lip are full depth only over the first and last
 
 ```
         +-------+
-        |  +----+   top lip, 3 mm
+        |  +----+   top lip, 5 mm
         |  |
         |  |        upper channel, 16.0 mm  <- upper laptop
         |  +----+
@@ -111,7 +111,7 @@ Laptop reference dimensions (Apple): 15.5 mm thick closed, 312.6 mm wide,
 | `clearance` | 0.5   | vertical slack of a laptop in its channel            |
 | `engage`    | 15    | channel depth: how far the shelves reach in          |
 | `wall_t`    | 4     | vertical wall                                        |
-| `top_t`     | 3     | lip above the upper laptop                           |
+| `top_t`     | 5     | lip above the upper laptop                           |
 | `length`    | 100   | rail length along the laptop side                    |
 | `pad_len`   | 12    | full-depth shelf at each rail end; 0 = full length   |
 | `stub`      | 1     | shelf rib left along the wall between the pads       |
@@ -135,7 +135,7 @@ Preview-only parameters: `vent_from_back` 24 and `vent_len` 105
 (intake slot, measured on the machine), `free_from_back` 80 (rail
 position when `ext` is 0).
 
-Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
+Result: 185 mm long, 51.5 mm tall, 31 mm wide, 55.8 cm3 each.
 
 ## Decisions
 
@@ -202,7 +202,12 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   upper laptop and join the cross plate over the whole 19 x 9.5 mm
   section. A brace between bar and plate is not possible: the upper
   laptop lies on the bar and the lower one passes 0.5 mm under it.
-- The cross plate is as tall as the stand, 0 to 49.5 mm: it stops
+- The top lip is 5 mm thick (was 3 mm): a printed stand broke at a
+  shelf that was too thin. The lip was the thinnest of the three, 3 mm
+  and 2.2 mm at the flared front end, and printed lying down it is
+  loaded across the layers at its root. It now matches the 5 mm
+  bottom shelf; the stand is 2 mm taller.
+- The cross plate is as tall as the stand, 0 to 51.5 mm: it stops
   both laptops over their full thickness, and its lower arm stands on
   the desk and carries the free end of the bar. It is 19 mm wide and
   covers the outer 14.5 mm of each back corner; the exhaust in the
@@ -226,7 +231,7 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   to 92 mm and its transition part of 92 to 106 mm. From 24 to 80 mm
   and from 106 to 129 mm the slot is open: about 75% of its length
   fully open, 12% under a pad, 13% under the transition.
-- Outward foot: without it the base would be 19 mm wide under a 49.5 mm
+- Outward foot: without it the base would be 19 mm wide under a 51.5 mm
   tall part and an empty stand would tip while the first laptop goes
   in.
 - Screw holes are in the outward foot, not in the bottom shelf: the
@@ -249,7 +254,7 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   do not lift it off the shelf.
 - Printed lying on the shelf tips, outer wall face and foot up (was:
   standing on the front end). Standing, the part would be 185 mm tall
-  on a 31 x 49.5 mm footprint, and the arms of the cross plate would
+  on a 31 x 51.5 mm footprint, and the arms of the cross plate would
   hang in the air 180 mm above the bed. Lying, it is 31 mm tall, the
   bar and the plate lie on the bed and their layers run along the bar,
   which is the direction the stop is loaded in. The shelves are now
@@ -295,7 +300,7 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
 ## Print notes
 
 - Print one left and one right stand, as exported: lying on the shelf
-  tips, no supports. 185 x 49.5 mm on the bed, 31 mm tall. 0.2 mm
+  tips, no supports. 185 x 51.5 mm on the bed, 31 mm tall. 0.2 mm
   layers, 3 or more perimeters, 20% infill or more. PLA or PETG; PETG
   if the laptops run warm for long periods in clamshell mode.
 - Bed contact is 6.2 cm2 in strips (shelf tips, the last 15 mm of
@@ -316,7 +321,7 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   profile, printed standing. Check that it slips over the laptop edge
   without force. Tune `clearance` (`SCAD_ARGS="-D clearance=0.8"`
   works for both targets).
-- About 66 g PLA each if printed solid; less with infill.
+- About 69 g PLA each if printed solid; less with infill.
 
 ## Checks (2026-11-09)
 
@@ -324,22 +329,30 @@ Result: 185 mm long, 49.5 mm tall, 31 mm wide, 53.6 cm3 each.
   number -2 (two screw holes), no edge shared by more than two faces.
   The left mesh mirrored equals the right one in volume and bounds.
 - Sections across the length of the right stand, in the model frame:
-  0 to 100 mm the full profile (0 to 49.5 mm high, foot included);
+  0 to 100 mm the full profile (0 to 51.5 mm high, foot included);
   100 to 156 mm the rib of the bar, 21.0 to 30.5 mm high, 10.0 mm
   wide; widening to 14.0 mm at 160 mm and 19.0 mm from 165 mm; 180 to
-  185 mm the cross plate, 0 to 49.5 mm high, 19.0 mm wide.
+  185 mm the cross plate, 0 to 51.5 mm high, 19.0 mm wide.
+- Shelf thicknesses in the pads: bottom 5.0 mm (0 to 5.0), middle
+  9.5 mm (21.0 to 30.5), top 5.0 mm (46.5 to 51.5); at the flared
+  front end 4.2, 7.9 and 4.2 mm.
 - Lower laptop top at 20.5 mm, bar underside at 21.0 mm; bar top at
   30.5 mm, level with the middle shelf.
 - Rail unchanged from the 100 mm version: channel heights 16.0 mm,
   shelf reach 15.0 mm in the pads and 1.0 mm in the window, screw
   holes at 15 and 85 mm.
-- `make macbook-stand-fit`: 31 x 49.5 x 10 mm, watertight.
+- `make macbook-stand-fit`: 31 x 51.5 x 10 mm, watertight.
 - `models/macbook-stack-stand-left.stl` and `-right.stl` are byte for
   byte the files built from the source at the time of saving, and
   read back watertight.
 - Printability in specs/printability.md.
 
 ## Open
+
+- Which shelf broke on the printed stand, and where (root, window or
+  bar), is not recorded. If it was not the top lip, or if the 5 mm lip
+  breaks too, the next steps are a larger root fillet (`r_in`, now
+  1 mm) or more perimeters and infill.
 
 - Laptop numbers come from the published dimensions, not from a
   measurement of the actual machines. Measure the closed thickness
