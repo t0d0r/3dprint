@@ -122,12 +122,12 @@ Laptop reference dimensions (Apple): 15.5 mm thick closed, 312.6 mm wide,
 | `side`      | right | which stand to export: "right" or "left"             |
 | `foot_out`  | 12    | outward foot                                         |
 | `foot_h`    | 12    | height where the foot meets the wall                 |
-| `foot_tip`  | 4     | thickness of the foot at its outer end               |
+| `foot_tip`  | 5     | thickness of the foot at its outer end               |
 | `screw_n`   | 2     | screw holes in the outward foot; 0 for none          |
 | `screw_inset` | 15  | hole centre to the rail end                          |
 | `screw_d`   | 4.5   | clearance hole, for a 4 mm countersunk wood screw    |
 | `screw_head_d` | 8.5 | head pocket diameter                                |
-| `screw_seat` | 1.5  | material under the countersink                       |
+| `screw_seat` | 3.5  | material under the countersink                       |
 | `flare`     | 0.8   | channel opens by this much at the front end          |
 | `lead`      | 4     | length of that lead-in                               |
 
@@ -135,7 +135,7 @@ Preview-only parameters: `vent_from_back` 24 and `vent_len` 105
 (intake slot, measured on the machine), `free_from_back` 80 (rail
 position when `ext` is 0).
 
-Result: 185 mm long, 51.5 mm tall, 31 mm wide, 55.8 cm3 each.
+Result: 185 mm long, 51.5 mm tall, 31 mm wide, 56.5 cm3 each.
 
 ## Decisions
 
@@ -240,12 +240,19 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 55.8 cm3 each.
   apart), on the centre line of the foot, 6 mm outside the wall.
 - Each hole is a 4.5 mm clearance hole with a 90 degree countersink
   for a 4 mm countersunk wood screw, and an 8.5 mm pocket above it
-  that runs out through the sloped top of the foot. 1.5 mm of material
-  stays under the countersink; the head ends 3.5 mm above the desk,
-  below the foot surface all round.
-- `foot_tip` is 4 mm (was 2.5 mm): with the thinner tip the pocket rim
-  on the outer side was 0.4 mm thick. Now 1.7 mm of foot remains
-  outside the pocket.
+  that runs out through the sloped top of the foot. 3.5 mm of material
+  stays under the countersink (was 1.5 mm); the head ends 5.5 mm from
+  the mounting face, below the foot surface all round.
+- `screw_seat` is 3.5 mm because the stand is also to be used hanging:
+  turned over and screwed to the underside of a top. Standing on a
+  desk the screws only keep the stand in place; hanging, the plastic
+  under the two screw heads carries the stand and its share of both
+  laptops in tension. 1.5 mm was enough for the first and too little
+  for the second.
+- `foot_tip` is 5 mm (2.5 mm at first, then 4 mm): the foot has to be
+  taller than the top of the screw head at the outer rim of the head
+  pocket. With the 3.5 mm seat the head top is at 5.5 mm and the foot
+  is 6.0 mm there; 1.75 mm of foot remains outside the pocket.
 - Lead-in at the front end of the rail (0.8 mm over 4 mm on the floor,
   ceiling and wall of each channel) so a laptop edge finds the
   channel. With `ext` 0 the rear end gets the same lead-in.
@@ -292,7 +299,7 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 55.8 cm3 each.
    moving apart. Thin self-adhesive rubber dots under the base help;
    subtract their thickness from `desk_gap` to keep the 5 mm.
 5. Screwed stands: 4 mm countersunk wood screws; the screw passes
-   1.5 mm of plastic before the desk, so length is chosen by the desk
+   3.5 mm of plastic before the desk, so length is chosen by the desk
    top alone. The driver runs 6 mm from the wall: a plain shaft or a
    bare bit fits, a wide bit holder does not. Check the fit with the
    stands loose before drilling the desk.
@@ -321,7 +328,7 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 55.8 cm3 each.
   profile, printed standing. Check that it slips over the laptop edge
   without force. Tune `clearance` (`SCAD_ARGS="-D clearance=0.8"`
   works for both targets).
-- About 69 g PLA each if printed solid; less with infill.
+- About 70 g PLA each if printed solid; less with infill.
 
 ## Checks (2026-11-09)
 
@@ -346,6 +353,29 @@ Result: 185 mm long, 51.5 mm tall, 31 mm wide, 55.8 cm3 each.
   byte the files built from the source at the time of saving, and
   read back watertight.
 - Printability in specs/printability.md.
+
+## Hanging use
+
+The stand can be turned over and screwed to the underside of a top.
+Only the screw seat has been changed for this (see Decisions). The
+rest of the part is as designed for standing on a desk, and these
+points are known and not addressed:
+
+- Both screws are in the outward foot, 6 mm outside the wall, and the
+  laptops hang on the other side of the wall. The stand tends to peel
+  off the top around the outer edge of the foot, and the screws carry
+  roughly four times the weight on the stand. A second row of screws
+  through the shelf that lies against the top would remove this.
+- Turned over, one laptop lies on the 9.5 mm middle shelf and the
+  other on the 5 mm former top lip, which is then the lowest and the
+  most loaded shelf. The shelves are loaded across the layers and the
+  root fillet is 1 mm.
+- The cross plate no longer stands on anything; it hangs at the end of
+  the bar.
+- The stands cannot be used loose or fitted from the sides. The
+  laptops enter from the front only, so the rubber feet have to pass
+  through the channels.
+- Not tested under load in this orientation.
 
 ## Open
 

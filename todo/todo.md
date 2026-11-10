@@ -27,3 +27,5 @@
 - [ ] stand: measure how far the intake slot lies from the side edge; the 10 mm rib of the bar reaches 5.5 mm under the upper laptop (specs/macbook-stack-stand.md)
 - [x] stand: left and right STL saved in models/ (make macbook-stand-save) (specs/macbook-stack-stand.md)
 - [x] stand: top lip 5 mm instead of 3 after a printed shelf broke; stand 51.5 mm tall (specs/macbook-stack-stand.md)
+- [x] stand: 3.5 mm of plastic under the screw heads (was 1.5) and 5 mm foot tip, for hanging use (specs/macbook-stack-stand.md)
+- [ ] stand, hanging use: second row of screws on the laptop side and a larger shelf root fillet; load test before use (specs/macbook-stack-stand.md)

@@ -31,11 +31,18 @@ Continues session/2026-11-08-drawer-swap.md. New, unrelated part.
   intake slot of the upper laptop; the last 15 mm are full depth
   (`ext_pad`). Left and right stands are mirror images
   (`out/macbook-stack-stand-left.stl`, `-right.stl`), 185 x 51.5 x
-  31 mm as exported, 55.8 cm3, about 69 g PLA solid each.
+  31 mm as exported, 56.5 cm3, about 70 g PLA solid each.
 - 2026-11-10: a printed stand broke at a shelf that was too thin. Top
   lip thickened from 3 to 5 mm (`top_t`), the same as the bottom
   shelf; shelves are now 5, 9.5 and 5 mm. Models in `models/`
   re-saved. Which shelf broke and where is not recorded.
+- 2026-11-10: the stand is also to be used hanging, turned over and
+  screwed to the underside of a top. Material under the screw heads
+  raised from 1.5 to 3.5 mm (`screw_seat`), foot tip from 4 to 5 mm
+  so the heads stay below the foot surface. Models re-saved. The
+  other weak points for hanging use (screws on one side only, shelf
+  root fillet, free-hanging cross plate) are listed in the spec under
+  Hanging use and are not addressed.
 - The first bar was 5 mm thick, full width, at the bottom of the gap,
   with a brace to the plate; replaced by the full-thickness bar with
   a window.

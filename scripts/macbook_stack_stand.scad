@@ -41,7 +41,7 @@ pad_len   = 12;     // full-depth shelf at each rail end; 0 keeps the shelves fu
 stub      = 1;      // shelf rib left along the wall between the pads
 foot_out  = 12;     // outward foot that keeps an empty stand upright
 foot_h    = 12;     // height where the foot meets the wall
-foot_tip  = 4;      // thickness of the foot at its outer end (holds the screw heads)
+foot_tip  = 5;      // thickness of the foot at its outer end (holds the screw heads)
 
 /* [Back stop] */
 ext     = 80;       // rail rear end to the back stop face = to the laptop back edge; 0 for none
@@ -54,7 +54,7 @@ screw_n      = 2;   // screw holes in the outward foot; 0 for none
 screw_inset  = 15;  // hole centre to the rail end
 screw_d      = 4.5; // clearance hole, for a 4 mm countersunk wood screw
 screw_head_d = 8.5; // head pocket diameter
-screw_seat   = 1.5; // material under the countersink
+screw_seat   = 3.5; // material under the countersink; carries the load when the stand hangs
 
 /* [Detail] */
 r_tip = 1.2;        // rounding of outer corners (shelf tips)
