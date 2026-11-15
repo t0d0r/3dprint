@@ -9,7 +9,7 @@ OPENSCAD ?= openscad
 MODEL   ?= models/drawer-20cm.stl
 
 .DEFAULT_GOAL := help
-.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save phone-mount phone-mount-fit phone-mount-save tube-clip tube-clip-save tube-edge-clip tube-edge-clip-save
+.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save phone-mount phone-mount-fit phone-mount-save tube-clip tube-clip-save tube-edge-clip tube-edge-clip-save deco-platform deco-platform-fit deco-platform-save
 
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
@@ -136,6 +136,27 @@ tube-edge-clip: build ## build out/tube-edge-clip.stl, two clips for a 20 mm tub
 tube-edge-clip-save: tube-edge-clip ## rebuild the shelf-edge tube clips and copy the STL to models/
 	cp out/tube-edge-clip.stl models/
 	ls -l models/tube-edge-clip.stl
+
+DAP := scripts/deco_arm_platform.scad
+
+deco-platform: build ## build out/deco-arm-platform-{tray,rim}.stl, the Deco platform for the monitor arm knuckle, and previews (SCAD_ARGS passes -D overrides, e.g. -D knuckle_w=30)
+	mkdir -p out
+	for p in tray rim; do \
+	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "part=\"$$p\"" -o out/deco-arm-platform-$$p.stl $(DAP) || exit 1; \
+	  $(PY) -I scripts/mesh_info.py out/deco-arm-platform-$$p.stl || exit 1; done
+	$(MBS_PNG) -o out/deco-arm-platform-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(DAP)
+	$(MBS_PNG) -D 'part="assembly"' -o out/deco-arm-platform-assembly.png --imgsize=1200,900 --autocenter --viewall --camera=0,0,0,65,0,150,0 $(DAP)
+	$(MBS_PNG) -D 'part="side"' -o out/deco-arm-platform-side.png --imgsize=1200,900 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(DAP)
+	$(MBS_PNG) -D 'part="below"' -o out/deco-arm-platform-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,125,0,30,0 $(DAP)
+
+deco-platform-fit: build ## build out/deco-arm-platform-fit.stl, the saddle of the Deco platform on a small plate, for a fit test on the arm
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D 'part="fit"' -o out/deco-arm-platform-fit.stl $(DAP)
+	$(PY) -I scripts/mesh_info.py out/deco-arm-platform-fit.stl
+
+deco-platform-save: deco-platform ## rebuild the Deco platform and copy both STLs to models/
+	cp out/deco-arm-platform-tray.stl out/deco-arm-platform-rim.stl models/
+	ls -l models/deco-arm-platform-*.stl
 
 clean: ## remove build output
 	rm -rf out __pycache__ scripts/__pycache__
