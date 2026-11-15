@@ -74,3 +74,18 @@ Default bed is 220 x 220 x 250 mm.
   the screw head pockets run out through the sloped foot and where
   the 45 degree cuts meet the rounded shelf tips.
 - About 72 g PLA each if printed solid; one left and one right.
+
+## out/car-phone-mount-vertical.stl, -horizontal.stl
+
+- Vertical 225.3 x 72.5 x 94.7 mm, 224 cm3 solid; horizontal
+  225.3 x 73.9 x 57.2 mm, 246 cm3 solid. As exported (car frame,
+  underside of the plug on the bed), both watertight.
+- As exported: 99 and 117 cm2 bed contact, 0.4 cm2 of downward face,
+  no supports. Neither fits a 220 mm bed straight; both fit
+  diagonally, or straight on 235 mm and larger.
+- Layers lie across the 5 mm backrest (specs/car-phone-mount.md).
+- About 97 and 107 g at 20% infill by the rough factor; 10 to 15% is
+  enough. PETG or ASA, not PLA: the part sits on a dashboard in the
+  sun.
+- Fit test `out/car-phone-mount-fit.stl`: three flat rings, 2 mm
+  thick, 225.3 x 92.8 mm, 13.0 cm3. The same for both variants.

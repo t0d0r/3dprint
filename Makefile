@@ -9,7 +9,7 @@ OPENSCAD ?= openscad
 MODEL   ?= models/drawer-20cm.stl
 
 .DEFAULT_GOAL := help
-.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save
+.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save phone-mount phone-mount-fit phone-mount-save
 
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
@@ -81,6 +81,27 @@ macbook-stand-fit: build ## build out/macbook-stack-stand-fit.stl, a 10 mm slice
 	mkdir -p out
 	$(OPENSCAD) --backend=manifold -q --hardwarnings $(SCAD_ARGS) -D 'part="fit"' -o out/macbook-stack-stand-fit.stl $(MBS)
 	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand-fit.stl
+
+CPM := scripts/car_phone_mount.scad
+
+phone-mount: build ## build out/car-phone-mount-{vertical,horizontal}.stl, the dashboard slot phone holder, and previews (SCAD_ARGS passes -D overrides, e.g. -D mouth_h=27)
+	mkdir -p out
+	for v in vertical horizontal; do \
+	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "variant=\"$$v\"" -o out/car-phone-mount-$$v.stl $(CPM) || exit 1; \
+	  $(MBS_PNG) -D "variant=\"$$v\"" -o out/car-phone-mount-$$v-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(CPM) || exit 1; \
+	  $(MBS_PNG) -D "variant=\"$$v\"" -D 'part="assembly"' -o out/car-phone-mount-$$v-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,60,0,205,0 $(CPM) || exit 1; \
+	  $(MBS_PNG) -D "variant=\"$$v\"" -D 'part="side"' -o out/car-phone-mount-$$v-side.png --imgsize=1200,800 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(CPM) || exit 1; \
+	  $(PY) -I scripts/mesh_info.py out/car-phone-mount-$$v.stl || exit 1; done
+	$(MBS_PNG) -o out/car-phone-mount-top.png --imgsize=1200,600 --projection=ortho --autocenter --viewall --camera=0,0,0,0,0,0,0 $(CPM)
+
+phone-mount-fit: build ## build out/car-phone-mount-fit.stl, three flat templates of the plug outline for a fit test in the slot
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D 'part="fit"' -o out/car-phone-mount-fit.stl $(CPM)
+	$(PY) -I scripts/mesh_info.py out/car-phone-mount-fit.stl
+
+phone-mount-save: phone-mount ## rebuild both phone holder variants and copy the STLs to models/
+	cp out/car-phone-mount-vertical.stl out/car-phone-mount-horizontal.stl models/
+	ls -l models/car-phone-mount-*.stl
 
 clean: ## remove build output
 	rm -rf out __pycache__ scripts/__pycache__
