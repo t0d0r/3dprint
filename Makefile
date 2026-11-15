@@ -9,7 +9,7 @@ OPENSCAD ?= openscad
 MODEL   ?= models/drawer-20cm.stl
 
 .DEFAULT_GOAL := help
-.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save phone-mount phone-mount-fit phone-mount-save
+.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save phone-mount phone-mount-fit phone-mount-save tube-clip tube-clip-save tube-edge-clip tube-edge-clip-save
 
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
@@ -102,6 +102,38 @@ phone-mount-fit: build ## build out/car-phone-mount-fit.stl, three flat template
 phone-mount-save: phone-mount ## rebuild both phone holder variants and copy the STLs to models/
 	cp out/car-phone-mount-vertical.stl out/car-phone-mount-horizontal.stl models/
 	ls -l models/car-phone-mount-*.stl
+
+TBC := scripts/tube_clip.scad
+
+tube-clip: build ## build out/tube-clip.stl, two tape-on clips for a 20 mm tube, and previews (SCAD_ARGS passes -D overrides, e.g. -D tube_d=25)
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/tube-clip.stl $(TBC)
+	$(MBS_PNG) -o out/tube-clip-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(TBC)
+	$(MBS_PNG) -D 'part="assembly"' -o out/tube-clip-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,115,0,35,0 $(TBC)
+	$(MBS_PNG) -D 'part="side"' -o out/tube-clip-side.png --imgsize=1200,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(TBC)
+	$(MBS_PNG) -o out/tube-clip-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,60,0,205,0 $(TBC)
+	$(PY) -I scripts/mesh_info.py out/tube-clip.stl
+
+tube-clip-save: tube-clip ## rebuild the tube clips and copy the STL to models/
+	cp out/tube-clip.stl models/
+	ls -l models/tube-clip.stl
+
+TEC := scripts/tube_edge_clip.scad
+
+tube-edge-clip: build ## build out/tube-edge-clip.stl, two clips for a 20 mm tube that push onto the shelf edge, and previews (SCAD_ARGS passes -D overrides, e.g. -D shelf_t=10)
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/tube-edge-clip.stl $(TEC)
+	$(MBS_PNG) -o out/tube-edge-clip-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(TEC)
+	$(MBS_PNG) -D 'part="assembly"' -o out/tube-edge-clip-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,75,0,325,0 $(TEC)
+	$(MBS_PNG) -D 'part="assembly"' -o out/tube-edge-clip-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,115,0,215,0 $(TEC)
+	$(MBS_PNG) -D 'part="side"' -o out/tube-edge-clip-side.png --imgsize=1200,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(TEC)
+	$(PY) -I scripts/mesh_info.py out/tube-edge-clip.stl
+
+tube-edge-clip-save: tube-edge-clip ## rebuild the shelf-edge tube clips and copy the STL to models/
+	cp out/tube-edge-clip.stl models/
+	ls -l models/tube-edge-clip.stl
 
 clean: ## remove build output
 	rm -rf out __pycache__ scripts/__pycache__

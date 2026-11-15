@@ -39,3 +39,8 @@
 - [x] car phone mount: indicator window dropped, the plug stays solid; lamp_w, lamp_x, cradle_x stay in the script, off (specs/car-phone-mount.md)
 - [x] car phone mount: cradle for a Xiaomi 15T Pro in a case, two variants, vertical and horizontal; lip lowered below the screen (specs/car-phone-mount.md)
 - [ ] car phone mount: measure the phone in its case, set case_side and case_back; print in PETG or ASA (specs/car-phone-mount.md)
+- [x] tube clip: tape-on snap clip for a 20 mm tube under a shelf, two per tube, parametric OpenSCAD part (specs/tube-clip.md)
+- [x] tube clip: optional countersunk screw holes in the pad, one each side of the ring (specs/tube-clip.md)
+- [x] tube clip: second model pushed onto the edge of the 8 mm shelf, tube in line with the taped clips (specs/tube-clip.md)
+- [ ] tube clip: measure the tape thickness and set tape_t so edge clips and taped clips line up (specs/tube-clip.md)
+- [ ] tube clip: measure the tube, print the pair in PETG, test the snap and the tape; adjust mouth and tube_clr (specs/tube-clip.md)

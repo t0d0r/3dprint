@@ -89,3 +89,30 @@ Default bed is 220 x 220 x 250 mm.
   sun.
 - Fit test `out/car-phone-mount-fit.stl`: three flat rings, 2 mm
   thick, 225.3 x 92.8 mm, 13.0 cm3. The same for both variants.
+
+## out/tube-clip.stl
+
+- Two clips, 60 x 63.2 x 40 mm as exported (standing on an end face),
+  24.7 cm3 together, watertight.
+- As exported: 6.2 cm2 bed contact, no supports. The 0.3 cm2 reported
+  as overhang are the upper halves of the four 3.8 mm screw holes,
+  which lie horizontally. Every
+  other orientation needs supports and puts the layers across the
+  snap arm.
+- Wall thickness min 1.18 mm (pad under the countersinks), 5th
+  percentile 2.40 mm (the ring), median 3.00 mm.
+- About 11 g at 20% infill by the rough factor for both; PETG
+  recommended (specs/tube-clip.md).
+
+## out/tube-edge-clip.stl
+
+- Two clips, 52 x 85.8 x 30 mm as exported (standing on an end face),
+  30.5 cm3 together, watertight.
+- As exported: 10.2 cm2 bed contact, no overhang, no supports. Every
+  other orientation needs supports and puts the layers across the
+  jaw and the snap arm.
+- Wall thickness 5th percentile 2.40 mm (the ring), median 4.00 mm;
+  the 0.43 mm minimum is the feather edge where the bump runs out
+  into the jaw.
+- About 13 g at 20% infill by the rough factor for both; PETG
+  recommended (specs/tube-clip.md).
