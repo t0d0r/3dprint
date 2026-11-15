@@ -118,11 +118,12 @@ Default bed is 220 x 220 x 250 mm.
 
 ## out/deco-arm-platform-tray.stl, out/deco-arm-platform-rim.stl
 
-- Tray as exported (top face down): 114.4 x 114.4 x 14 mm, 41.6 cm3,
-  watertight. 100 cm2 on the bed, 2 cm2 of overhang (the tie groove,
-  a 7 mm bridge), no supports. Thinnest wall 2.2 mm.
+- Tray as exported (top face down): 114.4 x 114.4 x 19 mm, 50.0 cm3,
+  watertight. 100 cm2 on the bed, 1.8 cm2 of overhang (the tie
+  groove, a 7 mm bridge), no supports. Thinnest wall 1.0 mm, the pad
+  beside the pin cap pocket; floor 4 mm.
 - Rim as exported (upper edge down): 118.7 x 118.7 x 10 mm, 10.2 cm3,
   watertight, no overhang. Wall 2.0 mm.
-- Fit piece: 47 x 56 x 14 mm, 11 cm3.
-- Arm dimensions are estimates; print the fit piece first
+- Fit piece: 45 x 52 x 19 mm, 18 cm3.
+- Arm dimensions are photo readings; print the fit piece first
   (specs/deco-arm-platform.md).

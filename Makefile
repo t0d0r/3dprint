@@ -139,7 +139,7 @@ tube-edge-clip-save: tube-edge-clip ## rebuild the shelf-edge tube clips and cop
 
 DAP := scripts/deco_arm_platform.scad
 
-deco-platform: build ## build out/deco-arm-platform-{tray,rim}.stl, the Deco platform for the monitor arm knuckle, and previews (SCAD_ARGS passes -D overrides, e.g. -D knuckle_w=30)
+deco-platform: build ## build out/deco-arm-platform-{tray,rim}.stl, the Deco platform for the swivel link of the monitor arm, and previews (SCAD_ARGS passes -D overrides, e.g. -D link_w=27)
 	mkdir -p out
 	for p in tray rim; do \
 	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "part=\"$$p\"" -o out/deco-arm-platform-$$p.stl $(DAP) || exit 1; \

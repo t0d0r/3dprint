@@ -46,5 +46,6 @@
 - [ ] tube clip: measure the tape thickness and set tape_t so edge clips and taped clips line up (specs/tube-clip.md)
 - [ ] tube clip: measure the tube, print the pair in PETG, test the snap and the tape; adjust mouth and tube_clr (specs/tube-clip.md)
 - [x] deco platform: tray with saddle and cable tie for the monitor arm knuckle, loose rim, fit piece, parametric OpenSCAD part (specs/deco-arm-platform.md)
-- [ ] deco platform: print the fit piece (make deco-platform-fit), try it on the knuckle, set knuckle_w, knuckle_len, boss_d, boss_h, pin_to_plate (specs/deco-arm-platform.md)
+- [x] deco platform: reworked from straight ruler photos: saddle on the link along the plate, 7 mm pad over the elbow housing, one cheek away from the plate (specs/deco-arm-platform.md)
+- [ ] deco platform: print the fit piece (make deco-platform-fit), try it on the link, set link_w, link_len, link_back, elbow_h, pin_to_plate (specs/deco-arm-platform.md)
 - [ ] deco platform: check how far the VESA head swivels with the tray in place; print tray and rim (specs/deco-arm-platform.md)
