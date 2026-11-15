@@ -121,14 +121,16 @@ tube-clip-save: tube-clip ## rebuild the tube clips and copy the STL to models/
 
 TEC := scripts/tube_edge_clip.scad
 
-tube-edge-clip: build ## build out/tube-edge-clip.stl, two clips for a 20 mm tube that push onto the shelf edge, and previews (SCAD_ARGS passes -D overrides, e.g. -D shelf_t=10)
+tube-edge-clip: build ## build out/tube-edge-clip.stl, two clips for a 20 mm tube that push onto the shelf edge, tube at 90 degrees to the edge, and previews (SCAD_ARGS passes -D overrides, e.g. -D shelf_t=10)
 	mkdir -p out
 	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/tube-edge-clip.stl $(TEC)
 	$(MBS_PNG) -o out/tube-edge-clip-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(TEC)
-	$(MBS_PNG) -D 'part="assembly"' -o out/tube-edge-clip-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,75,0,325,0 $(TEC)
+	$(MBS_PNG) -D 'part="assembly"' -o out/tube-edge-clip-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,70,0,330,0 $(TEC)
 	$(MBS_PNG) -D 'part="assembly"' -o out/tube-edge-clip-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,115,0,215,0 $(TEC)
-	$(MBS_PNG) -D 'part="side"' -o out/tube-edge-clip-side.png --imgsize=1200,700 \
+	$(MBS_PNG) -D 'part="side"' -o out/tube-edge-clip-side.png --imgsize=1200,500 \
 	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(TEC)
+	$(MBS_PNG) -D 'part="front"' -o out/tube-edge-clip-front.png --imgsize=1000,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(TEC)
 	$(PY) -I scripts/mesh_info.py out/tube-edge-clip.stl
 
 tube-edge-clip-save: tube-edge-clip ## rebuild the shelf-edge tube clips and copy the STL to models/

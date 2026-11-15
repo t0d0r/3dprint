@@ -106,13 +106,12 @@ Default bed is 220 x 220 x 250 mm.
 
 ## out/tube-edge-clip.stl
 
-- Two clips, 52 x 85.8 x 30 mm as exported (standing on an end face),
-  30.5 cm3 together, watertight.
-- As exported: 10.2 cm2 bed contact, no overhang, no supports. Every
-  other orientation needs supports and puts the layers across the
-  jaw and the snap arm.
+- Two clips, 86 x 39.9 x 52 mm as exported (standing on the front
+  face of the web), 37.9 cm3 together, watertight.
+- As exported: 14.9 cm2 bed contact, no overhang, no supports. Every
+  other orientation needs supports.
 - Wall thickness 5th percentile 2.40 mm (the ring), median 4.00 mm;
-  the 0.43 mm minimum is the feather edge where the bump runs out
+  the 0.09 mm minimum is the feather edge where the bump runs out
   into the jaw.
-- About 13 g at 20% infill by the rough factor for both; PETG
+- About 17 g at 20% infill by the rough factor for both; PETG
   recommended (specs/tube-clip.md).

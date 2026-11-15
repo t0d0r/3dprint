@@ -92,61 +92,73 @@ Build: `make tube-edge-clip`; `make tube-edge-clip-save` copies the
 STL to `models/tube-edge-clip.stl` (two clips).
 
 Requirement: holds the 20 mm tube under the 8 mm shelf and is pushed
-onto the front edge of the shelf, with no tape and no screws. Used
-together with the taped clips on one tube, all clips hold the tube in
-one straight line.
+onto the front edge of the shelf, with no tape and no screws. The
+tube runs at 90 degrees to the shelf edge, from the front to the
+back. Used together with the taped clips on one tube, all clips hold
+the tube in one straight line.
 
-Frame of the profile: u from the shelf edge into the shelf, v up,
-shelf underside at v = 0. The tube runs along the shelf edge.
+Frame: X along the shelf edge, Y from the shelf edge into the shelf,
+Z up, shelf underside at Z = 0. The tube runs along Y.
 
-- One profile extruded 30 mm along the tube (`clip_len`).
-- Web 4 mm in front of the shelf edge, plate 48 x 4 mm under the
-  shelf, jaw 3 mm thick reaching 40 mm over the shelf.
+- Clip, 40 mm wide along the edge (`clip_w`): web 4 mm in front of
+  the shelf edge, plate 48 x 4 mm under the shelf, jaw 3 mm thick
+  reaching 40 mm over the shelf.
 - Slot 8.3 mm (`shelf_t` 8 + `clip_clr` 0.3) with square corners at
   its root.
-- Bump of 4 mm radius under the jaw tip closes the slot to 7.2 mm
-  (`pinch` 0.8). The jaw bends up by 0.8 mm on an 8 mm shelf: about
-  7 N of grip, strain under 0.3 %. The bump also rounds the tip
+- Bump of 4 mm radius under the jaw tip closes the slot to 7.5 mm
+  (`pinch` 0.5). The jaw bends up by 0.5 mm on an 8 mm shelf: about
+  6 N of grip, strain under 0.2 %. The bump also rounds the tip
   upwards as a lead-in. The plate is 8 mm longer than the jaw, so
   the shelf lies on the plate before it meets the bump.
-- Ring as in the taped clip: bore 20.2 mm, wall 2.4 mm, mouth 17 mm,
-  solid nose above the mouth, 3 mm fillets to the plate.
-- The mouth faces the front. Pushing the tube in pushes the clip
-  onto the shelf; pulling the tube out pulls the clip off, so hold
-  the clip then.
+- Ring under the plate, axis along Y, 30 mm long (`ring_len`),
+  starting at the front face of the web. Same section as the taped
+  clip: bore 20.2 mm, wall 2.4 mm, mouth 17 mm to the side (+X),
+  solid nose above the mouth, 3 mm fillets to the plate. The ring is
+  open at both ends, so the tube can stand out in front of the shelf.
 - In line with the taped clip:
   - Height: the taped clip holds the tube 5 mm under its pad face,
     plus the tape. This clip holds it `ref_gap` 5 + `tape_t` under
     the shelf. `tape_t` is 1.0 mm, a common foam tape; set it to the
     real tape thickness, or to 0 when the taped clips are only
     screwed. The tube axis is then 16.1 mm under the shelf in both.
-  - Distance from the edge: the tube axis is 32 mm behind the shelf
-    edge (`tube_u`). The 60 mm pad of a taped clip on the same axis
-    ends 2 mm behind the edge. Stick the taped clips with their axis
-    32 mm from the edge and the mouth to the front.
-- The tube axis is under the jaw (32 of 40 mm), so the load presses
-  the jaw onto the shelf and does not lever the clip off.
+  - Sideways: stick the taped clips on the line of the tube, at 90
+    degrees to the shelf edge, with the mouth to the same side as
+    the edge clip. Snap all clips onto the tube first, push the edge
+    clip onto the shelf, then press the taped clips up; the tube
+    lines them up.
+- The tube is snapped in sideways. That pushes the edge clip along
+  the shelf edge, so hold the clip while doing it.
+- The load pulls the plate down and the jaw onto the shelf; the ring
+  is under the first 26 mm of the 40 mm jaw.
 
-Outer size of one clip 52 x 30 x 39.9 mm (depth, along the tube,
-height), 15.2 cm3. It reaches 28.6 mm below the shelf and 11.3 mm
+Outer size of one clip 40 x 52 x 39.9 mm (along the edge, depth,
+height), 18.9 cm3. It reaches 28.6 mm below the shelf and 11.3 mm
 above its underside.
 
-Print: standing on an end face, two clips, 52 x 85.8 mm on the bed,
-30 mm tall, no overhangs, no supports. The layers run along the jaw
-and around the ring, so both springs bend along the layers. PETG.
+Print: standing on the front face of the web (the STL is exported
+that way, two clips, 86 x 39.9 mm on the bed, 52 mm tall). Plate,
+jaw and ring rise from the bed as vertical walls: no overhangs, no
+supports, 14.9 cm2 bed contact. The layers run around the ring, the
+strong direction for the snap arm. They run across the jaw, its weak
+direction; the jaw bends only 0.5 mm, but push the clip straight on
+and do not lever the jaw open. The bump grows out of the jaw at
+41 degrees; an assert keeps it under 45. PETG.
+
+The first version of this model had the tube along the shelf edge,
+ring and clip as one extruded profile; it is in the git history.
 
 Open for this model:
 
-- Needs a free, square front edge. A rounded or profiled edge, or an
-  edge band thicker than the board, changes the slot.
-- Nothing but 7 N of pinch and the load holds the clip; it can be
+- Needs a free, square front edge, 40 mm wide. A rounded or profiled
+  edge, or an edge band thicker than the board, changes the slot.
+- Nothing but 6 N of pinch and the load holds the clip; it can be
   pulled off forwards by hand. That is the intent.
 - If the clip is loose or too tight, change `pinch` or `clip_clr`.
 
 ## Parameters
 
 `make tube-edge-clip SCAD_ARGS='-D tape_t=0.8'` sets the tape
-thickness for the alignment; `shelf_t`, `pinch`, `grip_d`, `tube_u`
+thickness for the alignment; `shelf_t`, `pinch`, `grip_d`, `clip_w`
 fit another shelf.
 
 `make tube-clip SCAD_ARGS='-D tube_d=25'` builds for another tube.
@@ -169,8 +181,6 @@ freely), `mouth` the snap, `clip_len` and `pad_w` the tape area,
 
 ## Open
 
-- Whether the tube runs along the shelf edge is assumed; the edge
-  clip cannot hold a tube that runs front to back.
 - Not printed. The tube diameter is nominal; measure it and set
   `tube_d`.
 - The load on the tube is not known. Above about 0.85 kg in total use
