@@ -14,7 +14,8 @@
 //         one cable tie around the link hold the tray. The tie goes
 //         through two slots in the floor and lies in a groove of the
 //         top face, under the Deco. There is no cheek on the plate
-//         side: the head block swivels there.
+//         side: the head block swivels there. A ring of windows in
+//         the floor lets air reach the vent slots in the Deco base.
 //   rim   a loose band dropped over the edge of the floor. A step in
 //         its bore rests on the floor; above the floor it stands 6 mm
 //         high around the Deco.
@@ -66,6 +67,15 @@ link_clr = 0.5;     // air between link and cheek
 cheek_t  = 5;       // cheek thickness
 cheek_h  = 8;       // cheek height below the pad; the fork cap is about 10 mm thick
 
+/* [Vents] */
+// Windows in the floor under the ring of vent slots in the Deco base.
+// The five rubber feet stand inside that ring, on the solid floor.
+vents    = true;
+vent_r1  = 42;      // inner radius of the windows
+vent_r2  = 53;      // outer radius of the windows
+vent_n   = 8;       // number of windows
+spoke_w  = 8;       // floor left between two windows
+
 /* [Cable tie] */
 tie_x    = 20.5;    // tie position, from the pin axis along the link
 tie_w    = 7;       // slot length along the link (tie up to 5 mm wide)
@@ -114,6 +124,10 @@ assert(groove_d < floor_t - 1.6, "tie groove leaves under 1.6 mm of floor");
 assert(tie_x - tie_w / 2 > link_back, "tie runs over the swivel ring of the head block");
 assert(max([for (x = [-link_back, link_len], y = [-1, 1]) norm(sad([x, y * (y_side + cheek_t)]))])
        < disc_d / 2 - 1, "saddle reaches the edge of the floor");
+sad_r = max([for (x = [-link_back, link_len], y = [-1, 1]) norm(sad([x, y * (y_side + cheek_t)]))]);
+assert(!vents || vent_r1 >= sad_r + 2, "vent windows cut into the saddle");
+assert(!vents || vent_r2 <= disc_d / 2 - 3, "under 3 mm of floor outside the vent windows");
+assert(!vents || 2 * PI * vent_r1 / vent_n - spoke_w >= 6, "vent windows under 6 mm wide; fewer windows or narrower spokes");
 assert(plate_x + band_od / 2 < -plate_gap + eps, "rim touches the plate");
 
 module saddle_frame() {
@@ -149,6 +163,18 @@ module saddle_cut() {
     }
 }
 
+// Ring of windows through the floor, spokes between them.
+module vent_cut() {
+    translate([0, 0, -floor_t - eps]) linear_extrude(floor_t + 2 * eps)
+        difference() {
+            circle(r = vent_r2);
+            circle(r = vent_r1);
+            for (i = [0 : vent_n - 1])
+                rotate(i * 360 / vent_n + 180 / vent_n)
+                    translate([0, -spoke_w / 2]) square([vent_r2 + 1, spoke_w]);
+        }
+}
+
 module tray() {
     difference() {
         union() {
@@ -156,6 +182,7 @@ module tray() {
             saddle_add();
         }
         saddle_cut();
+        if (vents) vent_cut();
     }
 }
 

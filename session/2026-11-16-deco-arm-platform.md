@@ -14,11 +14,13 @@ New part, independent of the earlier ones.
   Reworked from three straight ruler photos: link 26 mm wide, flat
   top 13 mm behind and 31 mm in front of the pin axis, elbow housing
   5 mm above it, pin 57 mm from the plate.
+- Vent windows in the floor: eight openings between 42 and 53 mm
+  radius under the slot ring of the Deco base, 25.8 cm2 open.
 - `make deco-platform` builds `out/deco-arm-platform-{tray,rim}.stl`
   and four previews; `make deco-platform-fit` builds the saddle test
   piece; `make deco-platform-save` copies the STLs to `models/`.
 - `models/deco-arm-platform-tray.stl` (114.4 x 114.4 x 19 mm,
-  50.0 cm3) and `models/deco-arm-platform-rim.stl`
+  39.7 cm3) and `models/deco-arm-platform-rim.stl`
   (118.7 x 118.7 x 10 mm, 10.2 cm3) saved, both watertight.
 - specs/deco-arm-platform.md written; printability results added.
 - `make check` passes.
@@ -45,11 +47,15 @@ New part, independent of the earlier ones.
   tall and 165 cm3.
 - The tie crosses the top face in a groove so the Deco stands flat.
 - A fit piece of the saddle is printed before the tray.
+- Vents as a ring of windows, not holes all over: the Deco base is
+  closed in the middle and breathes through a slot ring near the
+  edge; its feet stand inside that ring and need solid floor.
 
 ## Open
 
 - Not printed. The arm numbers are photo readings, about +-1.5 mm.
-- Deco diameter taken as 110 mm; the device model is not confirmed.
+- Deco diameter is 110 mm. The radii of its slot ring and feet are
+  read from a photo without a ruler.
 - Height of the elbow housing, width of the head block and the swivel
   range with the tray in place are not confirmed.
 - The KVM mount and RM10 hanger work is still uncommitted in

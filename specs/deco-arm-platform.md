@@ -11,6 +11,7 @@ arm, behind the VESA head that carries a printed plate. Source:
 - Carries one Deco: a cylinder of 110 mm diameter, 114 mm tall.
 - Sits on the arm itself, not on the VESA plate and not on the desk.
 - No drilling or change to the arm; removable.
+- Air reaches the vent slots in the base of the Deco.
 
 ## The arm
 
@@ -29,9 +30,10 @@ Seen from above the arm is an L:
 
 ## Source measurements
 
-The Deco diameter is taken as 110 mm: the ruler photo reads 108 to
-110 mm, and 110 mm is the catalogue size of the Deco X50 class. The
-model of the device is not confirmed.
+The Deco is 110 mm in diameter. Its base, from a photo: a ring of
+radial vent slots near the edge, from about 43 to 52 mm radius, and
+five rubber feet inside that ring, at about 33 to 41 mm radius. The
+middle of the base is closed.
 
 The arm numbers are read from three photos with a steel ruler held
 against the parts: one from behind along the link, one from the side
@@ -75,6 +77,13 @@ Tray:
   two 7 x 2.5 mm slots through pad and floor right beside the link,
   and a 1.8 mm deep groove in the top face between them. The tie runs
   in the groove under the Deco and around the link.
+- Vents (`vents`, on by default): eight windows through the floor
+  between 42 and 53 mm radius (`vent_r1`, `vent_r2`), under the slot
+  ring of the Deco, with 8 mm spokes between them; 25.8 cm2 open.
+  The feet stand on the solid floor inside the windows, the saddle
+  ends at 26 mm radius. 4.2 mm of floor stays outside the windows
+  and carries the rim. Under the floor the air is free: the pad
+  holds it 7 mm above the arm.
 - The Deco axis is 4.35 mm further from the plate than the pin axis
   (`tray_off`, derived), so the rim clears the plate by 2 mm, and
   9 mm along the link from the pin (`tray_along`), the middle of the
@@ -93,7 +102,7 @@ The rim is a separate piece so that the tray prints on its flat top
 face. A rim on the tray would lift the floor off the bed and need
 supports under all of it.
 
-Tray 50.0 cm3, rim 10.2 cm3.
+Tray 39.7 cm3, rim 10.2 cm3.
 
 ## Fit piece
 
@@ -107,7 +116,8 @@ and that the head still swivels. Then set the parameters, for example
 ## Print notes
 
 - Tray: upside down, top face on the bed. No supports. The tie groove
-  in the bed face is a 7 mm bridge.
+  in the bed face is a 7 mm bridge; the vent windows are vertical
+  holes.
 - Rim: upside down, upper edge on the bed. No supports.
 - PETG or PLA. PLA is enough indoors away from the sun.
 - 4 perimeters for the cheek.
@@ -122,6 +132,8 @@ and that the head still swivels. Then set the parameters, for example
   swing towards the Deco; the free range is not known.
 - `elbow_h` and the width of the head block are the least certain
   readings. If the floor touches the elbow housing, raise `pad_h`.
+- The radii of the slot ring and the feet are read from a photo
+  without a ruler. If a foot lands on a window, raise `vent_r1`.
 - Whether the pin cap stands above the flat top is not known; the
   pocket allows 1.5 mm.
 
