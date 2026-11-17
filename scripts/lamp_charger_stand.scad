@@ -2,15 +2,18 @@
 // (WIZ017) above the base of an IKEA NYMANE work lamp (A2001), so the
 // Qi pad in the lamp base stays free for a second device.
 //
-// Shape: a truncated cone. Its wide end is a skirt pushed over the rim
-// of the lamp base; its narrow end carries a round plate for the
-// Belkin. The cone wall shows a kumiko pattern (asanoha, hemp leaf) in
-// relief on a thin skin.
+// Shape: a slanted truncated cone. Its wide end is a skirt pushed over
+// the rim of the lamp base; its narrow end carries a round plate for
+// the Belkin. The plate is moved forward until its front edge is
+// straight above the front of the skirt, so the wall is upright at the
+// front and leans most at the rear. That keeps the plate away from the
+// lamp arm, which swings forward and back. The wall shows a kumiko
+// pattern (asanoha, hemp leaf) in relief on a thin skin.
 //
 // Two openings, both open_w wide and as tall as the cone, opposite
 // each other:
 //   rear   for the bracket of the lamp arm, which stands on the base
-//          near its rim and is taller than the stand;
+//          near its rim;
 //   front  the door, for the device that goes on the pad under the
 //          plate.
 // They leave two side walls, left and right.
@@ -24,9 +27,10 @@
 //          from sliding round the lamp. Printed upside down, plate on
 //          the bed.
 //
-// Pattern: on the unrolled cone the triangle grid is regular in
-// (log of the distance from the apex, angle), so every triangle is
-// equilateral in shape and the triangles get smaller towards the top.
+// Pattern: 45 columns round the circle; the rows get lower towards the
+// top in step with the radius, so the triangles keep their shape on
+// the sides of the cone and shrink towards the top. Towards the rear,
+// where the wall leans more, they are stretched along the wall.
 //
 // Model frame: origin on the lamp axis, Z up, top of the lamp base at
 // Z = 0, lamp arm at +Y, door at -Y, side walls at -X and +X.
@@ -37,41 +41,39 @@
 // read from ruler photos.
 
 /* [Lamp, from ruler photos] */
-lamp_d    = 220;    // diameter of the base
+lamp_d    = 210;    // diameter of the base
 lamp_clr  = 0.6;    // air between the base and the skirt, on the radius
 lamp_h    = 28;     // preview only: height of the base
 pad_d     = 80;     // preview only: Qi pad in the middle of the base
 bracket_r = 60;     // lamp axis to the near face of the arm bracket
 bracket_w = 50;     // width of the arm bracket
 bracket_h = 45;     // preview only
-bracket_gap = 2;    // air between Belkin or plate and the bracket
+bracket_gap = 2;    // air between the plate and the bracket
 
 /* [Belkin stand] */
-belkin_d = 135;     // diameter of the base
+belkin_d = 137;     // diameter of the base
 belkin_h = 14;      // preview only: thickness of the base
 
 /* [Device on the pad] */
 phone_w  = 82;      // widest device, in its case
-phone_l  = 166;     // preview only
-phone_t  = 13;      // preview only
 
 /* [Cone] */
-clear_h  = 34;      // lamp top to the underside of the plate
-top_d    = 162;     // diameter of the plate and of the top of the cone
+clear_h  = 65;      // lamp top to the underside of the plate
+top_d    = 150;     // diameter of the plate and of the top of the cone
 wall     = 2.4;     // wall and skirt, measured level
 skirt_h  = 8;       // skirt down the side of the lamp base
 open_w   = 92;      // width of the door and of the rear opening
 
 /* [Plate] */
 top_t    = 5;       // plate thickness
-lip_h    = 3;       // lip under the plate, inside the top of the cone
+lip_h    = 5;       // lip under the plate, inside the top of the cone
 lip_w    = 2.4;     // its width
 lip_clr  = 0.3;     // air between lip and cone
 tab_clr  = 0.3;     // air between a tab and the wall end beside it
 
 /* [Kumiko] */
-n_around = 45;      // triangles round the full circle
-rows     = 3;       // rows of triangles up the wall
+n_around = 42;      // triangles round the full circle
+rows     = 6;       // rows of triangles up the wall
 band_bot = 4;       // plain band at the bottom of the wall
 band_top = 2.5;     // least plain band at the top
 jamb_w   = 3;       // plain band beside the openings
@@ -91,60 +93,92 @@ eps = 0.01;
 r_o  = lamp_d / 2 + lamp_clr + wall;     // outside of the skirt
 r_t  = top_d / 2;                        // outside of the cone at the top
 run  = r_o - r_t;
-slant = norm([run, clear_h]);
-tilt = atan2(clear_h, run);              // wall above the level
+top_fwd = run;                           // plate axis in front of the lamp axis
 lay  = wall - skin;                      // depth of the pattern, measured level
-function r_at(z) = r_o - z * run / clear_h;
-function z_at(r) = (r_o - r) * clear_h / run;
+half = open_w / 2;
 
-// Pattern rows: constant ratio between the radii of neighbouring rows.
+// The wall at height z is a circle of radius r_at(z) round [0, c_at(z)].
+function r_at(z) = r_o - z * run / clear_h;
+function c_at(z) = -top_fwd * z / clear_h;
+function z_at(r) = (r_o - r) * clear_h / run;
+// Lean of the wall above the level, at angle a round the axis.
+function tilt(a) = atan2(clear_h, run + top_fwd * sin(a));
+
+// Pattern rows: constant ratio between the radii of neighbouring rows,
+// set for the sides of the cone (a = 0).
 step    = 360 / n_around;
+slant   = norm([run, top_fwd, clear_h]);
 row_ln  = sqrt(3) / 2 * (2 * PI / n_around) * (run / slant);
 r1      = r_at(band_bot);
 function row_r(k) = r1 * exp(-k * row_ln);
 z2      = z_at(row_r(rows));
 
-// The Belkin stands in front of the lamp axis to clear the bracket.
-stand_off = max(0, belkin_d / 2 + bracket_gap - bracket_r);
-notch_w   = bracket_w + 6;               // cut in the plate for the bracket
+notch_w   = bracket_w + 6;               // cut in the plate for the bracket, if it reaches it
 notch_y   = bracket_r - bracket_gap;
 // Size of the "sides" STL on the bed.
-half      = open_w / 2;
 sides_x   = 2 * (r_o - half) + plate_gap;
 sides_y   = 2 * sqrt(r_o * r_o - half * half);
+// Least lean, at the ends of the walls beside the rear opening.
+tilt_min  = tilt(acos(half / r_o));
 
-assert(tilt >= 45, "wall leans more than 45 degrees; raise clear_h or top_d");
+assert(tilt_min >= 45, "wall leans more than 45 degrees beside the rear opening; raise clear_h or top_d");
 assert(max(sides_x, sides_y) <= bed, "side walls do not fit the bed; widen open_w");
 assert(top_d <= bed, "plate does not fit the bed");
 assert(z2 <= clear_h - band_top, "pattern runs into the top of the wall; fewer rows or more triangles");
-assert(stand_off + belkin_d / 2 <= r_t - 1, "Belkin base reaches over the edge of the plate; raise top_d");
+assert(belkin_d <= top_d - 2, "Belkin base reaches over the edge of the plate; raise top_d");
 assert(open_w >= phone_w + 8, "door under 8 mm wider than the device");
 assert(open_w >= bracket_w + 6, "rear opening under 6 mm wider than the bracket");
 assert(lay >= 0.8, "pattern under 0.8 mm deep; lower skin");
 assert(skin >= 0.8, "skin under 0.8 mm");
+assert(lip_h < clear_h / 4, "lip too deep");
 
 // ---- wall, full circle -------------------------------------------------
 
-module wall_solid() {
-    rotate_extrude() polygon([
-        [r_o - wall, -skirt_h], [r_o, -skirt_h], [r_o, 0],
-        [r_t, clear_h], [r_t - wall, clear_h], [r_o - wall, 0]]);
+// The cone between za and zb, its surface moved out by d (in by -d).
+// It is drawn 1 mm longer at both ends and cut to length, so that the
+// ends are plain faces; thin end discs left bad edges in the STL.
+module frust(d, za, zb) {
+    intersection() {
+        hull() for (z = [za - 1, zb + 1])
+            translate([0, c_at(z), z - 0.1]) linear_extrude(0.1) circle(r = r_at(z) + d);
+        translate([-big, -2 * big, za]) cube([2 * big, 3 * big, zb - za]);
+    }
 }
 
-// Outer layer of the wall between the bands; d widens it outwards.
-module zone(d = 0) {
-    rotate_extrude() polygon([
-        [r1 - lay, band_bot], [r1 + d, band_bot],
-        [row_r(rows) + d, z2], [row_r(rows) - lay, z2]]);
+// Skirt and cone as one convex body, less the same body moved in by
+// the wall and drawn longer at both ends.
+module wall_solid() {
+    zt = clear_h + 1;
+    difference() {
+        hull() {
+            translate([0, 0, -skirt_h]) cylinder(r = r_o, h = skirt_h);
+            translate([0, c_at(clear_h), clear_h - 0.1]) cylinder(r = r_t, h = 0.1);
+        }
+        hull() {
+            translate([0, 0, -skirt_h - 1]) cylinder(r = r_o - wall, h = skirt_h + 1);
+            translate([0, c_at(zt), zt - 0.1]) cylinder(r = r_at(zt) - wall, h = 0.1);
+        }
+    }
+}
+
+// Outer layer of the wall between the bands, open to the outside.
+module zone() {
+    difference() {
+        frust(1, band_bot, z2);
+        frust(-lay, band_bot - eps, z2 + eps);
+    }
 }
 
 function node_a(k, j) = (j + (k % 2) / 2) * step;
 function node(k, j) = [row_r(k), node_a(k, j)];          // [radius, angle]
 function mid3(a, b, c) = [exp((ln(a[0]) + ln(b[0]) + ln(c[0])) / 3), (a[1] + b[1] + c[1]) / 3];
 
+// A short rod through the wall, square to it.
 module peg(p, w) {
-    rotate(p[1]) translate([p[0], 0, z_at(p[0])]) rotate([0, tilt, 0])
-        rotate(7) cylinder(d = w, h = 2 * lay + 4, center = true, $fn = 10);
+    z = z_at(p[0]);
+    translate([0, c_at(z), z]) rotate(p[1]) translate([p[0], 0, 0])
+        rotate([0, tilt(p[1]), 0]) rotate(7)
+            cylinder(d = w, h = 2 * lay + 4, center = true, $fn = 10);
 }
 
 module bar(p, q, w) { hull() { peg(p, w); peg(q, w); } }
@@ -159,12 +193,13 @@ module triangle(a, b, c) {
 // along a facet edge of the wall; such bars left edges shared by four
 // faces in the STL.
 phase = 0.7;
+function ph(p) = [p[0], p[1] + phase];
 
 module bars() {
-    rotate(phase) for (k = [0 : rows - 1], j = [0 : n_around - 1]) {
+    for (k = [0 : rows - 1], j = [0 : n_around - 1]) {
         odd = k % 2;
-        triangle(node(k, j), node(k, j + 1), node(k + 1, j + odd));
-        triangle(node(k + 1, j), node(k + 1, j + 1), node(k, j + 1 - odd));
+        triangle(ph(node(k, j)), ph(node(k, j + 1)), ph(node(k + 1, j + odd)));
+        triangle(ph(node(k + 1, j)), ph(node(k + 1, j + 1)), ph(node(k, j + 1 - odd)));
     }
 }
 
@@ -185,9 +220,10 @@ proud = 0.02;
 module pattern_room() {
     za = band_bot / 2;
     zb = (z2 + clear_h) / 2;
-    in = lay + skin / 2;
-    rotate_extrude() polygon([
-        [r_at(za) - in, za], [r_at(za) + proud, za], [r_at(zb) + proud, zb], [r_at(zb) - in, zb]]);
+    difference() {
+        frust(proud, za, zb);
+        frust(-lay - skin / 2, za - eps, zb + eps);
+    }
 }
 
 // Plain bands beside the openings.
@@ -198,7 +234,7 @@ module jambs() {
 module shell() {
     difference() {
         wall_solid();
-        difference() { zone(1); jambs(); }
+        difference() { zone(); jambs(); }
     }
     intersection() { pattern_room(); bars(); }
 }
@@ -210,24 +246,25 @@ module side_walls() {
     difference() { shell(); openings(); }
 }
 
-// Ring under the plate between ri and the cone surface moved in by c.
-module under_ring(ri, c) {
-    ro = r_t - c;
-    rotate_extrude() polygon([
-        [ri, clear_h - lip_h], [ro + lip_h * run / clear_h, clear_h - lip_h],
-        [ro, clear_h + eps], [ri, clear_h + eps]]);
+// Ring under the plate, lip_h deep, between the cone surface moved in
+// by c and that moved in by ci.
+module under_ring(c, ci) {
+    difference() {
+        frust(-c, clear_h - lip_h, clear_h + eps);
+        frust(-ci, clear_h - lip_h - eps, clear_h + 2 * eps);
+    }
 }
 
 module top_piece() {
-    lip_ro = r_t - wall - lip_clr;
+    lip_in = wall + lip_clr + lip_w;
     difference() {
         union() {
-            translate([0, 0, clear_h]) cylinder(r = r_t, h = top_t);
+            translate([0, -top_fwd, clear_h]) cylinder(r = r_t, h = top_t);
             // lip inside the tops of the side walls
-            under_ring(lip_ro - lip_w, wall + lip_clr);
+            under_ring(wall + lip_clr, lip_in);
             // tabs in the tops of the openings, as thick as the wall
             intersection() {
-                under_ring(lip_ro - lip_w, 0);
+                under_ring(0, lip_in);
                 openings(-tab_clr);
             }
         }
@@ -269,7 +306,7 @@ module assembly() {
     // an earbud case on the pad
     color("SteelBlue") translate([-23, -30, 0.3]) cube([46, 60, 22]);
     stand();
-    translate([0, -stand_off, clear_h + top_t]) belkin();
+    translate([0, -top_fwd, clear_h + top_t]) belkin();
 }
 
 if (part == "sides") {
@@ -280,7 +317,7 @@ if (part == "sides") {
             translate([s > 0 ? 0 : -big, -big, -big]) cube([big, 2 * big, 2 * big]);
         }
 } else if (part == "top") {
-    translate([0, 0, clear_h + top_t]) rotate([180, 0, 0]) top_piece();
+    translate([0, top_fwd, clear_h + top_t]) rotate([180, 0, 0]) top_piece();
 } else if (part == "assembly" || part == "side") {
     assembly();
 } else if (part == "below") {

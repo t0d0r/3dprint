@@ -131,13 +131,13 @@ Default bed is 220 x 220 x 250 mm.
 ## out/lamp-charger-stand-sides.stl, out/lamp-charger-stand-top.stl
 
 - Built by `make lamp-stand`, see specs/lamp-charger-stand.md.
-- Side walls as exported (skirt down): two bodies, 154 x 206.4 x
-  42 mm, 38.3 cm3, watertight. 12.3 cm2 on the bed, a 2.4 mm strip:
-  brim. 6.5 cm2 of overhang, the undersides of the relief bars,
-  1.2 mm deep; no supports. The wall leans in 43 degrees from the
-  vertical.
-- Skin 1.2 mm measured level, 0.87 mm square to the wall; 0.9% of
-  the samples under 0.8 mm are glancing hits at the bar edges.
-- Plate as exported (top face down): 162.2 x 162.8 x 8 mm, 103.1 cm3,
-  watertight, 194 cm2 on the bed, no overhang.
-- About 17 g and 45 g PLA at 20 percent infill, rough.
+- Side walls as exported (skirt down): two bodies, 144 x 195.4 x
+  73 mm, 58.5 cm3, watertight. 11.5 cm2 on the bed, a 2.4 mm strip:
+  brim. 39.8 cm2 counted as overhang: the undersides of the relief
+  bars and the inside of the wall near the rear ends, which leans 44
+  degrees from the vertical. No supports.
+- Skin 1.2 mm measured level; 0.7% of the samples under 0.8 mm are
+  glancing hits at the bar edges.
+- Plate as exported (top face down): 150 x 155.1 x 10 mm, 96.4 cm3,
+  watertight, 177 cm2 on the bed, no supports.
+- About 25 g and 42 g PLA at 20 percent infill, rough.

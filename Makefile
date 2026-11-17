@@ -168,7 +168,7 @@ lamp-stand: build ## build out/lamp-charger-stand-{sides,top}.stl, the round kum
 	  $(MBS_PNG) -D "part=\"$$p\"" -o out/lamp-charger-stand-$$p.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(LCS) || exit 1; done
 	$(MBS_PNG) -D 'part="assembly"' -o out/lamp-charger-stand-assembly.png --imgsize=1200,900 --autocenter --viewall --camera=0,0,0,65,0,330,0 $(LCS)
 	$(MBS_PNG) -D 'part="assembly"' -o out/lamp-charger-stand-rear.png --imgsize=1200,900 --autocenter --viewall --camera=0,0,0,65,0,150,0 $(LCS)
-	$(MBS_PNG) -D 'part="side"' -o out/lamp-charger-stand-side.png --imgsize=1200,900 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(LCS)
+	$(MBS_PNG) -D 'part="side"' -o out/lamp-charger-stand-side.png --imgsize=1200,900 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,90,0 $(LCS)
 	$(MBS_PNG) -D 'part="below"' -o out/lamp-charger-stand-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,120,0,30,0 $(LCS)
 
 lamp-stand-save: lamp-stand ## rebuild the lamp charger stand and copy both STLs to models/
