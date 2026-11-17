@@ -10,30 +10,31 @@
 // lamp arm, which swings forward and back. The wall shows a kumiko
 // pattern (asanoha, hemp leaf) in relief on a thin skin.
 //
-// Two openings, both open_w wide and as tall as the cone, opposite
-// each other:
-//   rear   for the bracket of the lamp arm, which stands on the base
-//          near its rim;
-//   front  the door, for the device that goes on the pad under the
-//          plate.
-// They leave two side walls, left and right.
+// Two openings, both open_w wide, opposite each other:
+//   rear   as tall as the cone, for the bracket of the lamp arm, which
+//          stands on the base near its rim;
+//   front  the door, upright sides with an arch on top, for the device
+//          that goes on the pad under the plate.
 //
-// Three printed pieces, because a ring round a 220 mm base does not
-// fit a 220 mm bed:
-//   sides  the two side walls, in one STL. Printed as they stand,
-//          skirt on the bed.
-//   top    the plate. A lip under it drops inside the tops of the side
-//          walls, and tabs in the tops of both openings keep the walls
-//          from sliding round the lamp. Printed upside down, plate on
-//          the bed.
+// A ledge inside the foot of the wall stands on the flat top of the
+// lamp base and carries the weight; the skirt only keeps the stand in
+// place.
 //
-// Pattern: 45 columns round the circle; the rows get lower towards the
+// Two printed pieces:
+//   cone   the wall with skirt and ledge, a C open at the rear.
+//          Printed as it stands, skirt on the bed, with supports under
+//          the ledge and under the crown of the arch.
+//   top    the plate. A lip under it drops inside the top of the cone,
+//          and a tab in the top of the rear opening keeps it from
+//          turning. Printed upside down, plate on the bed.
+//
+// Pattern: 42 columns round the circle; the rows get lower towards the
 // top in step with the radius, so the triangles keep their shape on
 // the sides of the cone and shrink towards the top. Towards the rear,
 // where the wall leans more, they are stretched along the wall.
 //
 // Model frame: origin on the lamp axis, Z up, top of the lamp base at
-// Z = 0, lamp arm at +Y, door at -Y, side walls at -X and +X.
+// Z = 0, lamp arm at +Y, door at -Y.
 //
 // Build:  make lamp-stand        (STLs and previews)
 //         make lamp-stand-save   (copy the STLs to models/)
@@ -63,6 +64,10 @@ top_d    = 150;     // diameter of the plate and of the top of the cone
 wall     = 2.4;     // wall and skirt, measured level
 skirt_h  = 8;       // skirt down the side of the lamp base
 open_w   = 92;      // width of the door and of the rear opening
+door_h   = 56;      // crown of the door arch above the lamp top
+arch_rise = 16;     // height of the arch; below it the door has upright sides
+ledge_w  = 10;      // ledge on the lamp top, inwards from the wall
+ledge_t  = 3;       // its thickness
 
 /* [Plate] */
 top_t    = 5;       // plate thickness
@@ -82,10 +87,9 @@ grid_w   = 1.6;     // bars of the triangle grid
 leaf_w   = 1.0;     // bars from the centre of a triangle to its corners
 
 /* [Output] */
-// "sides", "top" (print these), or a preview: "assembly", "side", "below"
-part = "sides";
+// "cone", "top" (print these), or a preview: "assembly", "side", "below"
+part = "cone";
 bed  = 220;         // bed side, for the size check
-plate_gap = 20;     // between the two side walls in the "sides" STL
 
 $fn = 180;
 eps = 0.01;
@@ -115,14 +119,15 @@ z2      = z_at(row_r(rows));
 
 notch_w   = bracket_w + 6;               // cut in the plate for the bracket, if it reaches it
 notch_y   = bracket_r - bracket_gap;
-// Size of the "sides" STL on the bed.
-sides_x   = 2 * (r_o - half) + plate_gap;
-sides_y   = 2 * sqrt(r_o * r_o - half * half);
 // Least lean, at the ends of the walls beside the rear opening.
 tilt_min  = tilt(acos(half / r_o));
 
 assert(tilt_min >= 45, "wall leans more than 45 degrees beside the rear opening; raise clear_h or top_d");
-assert(max(sides_x, sides_y) <= bed, "side walls do not fit the bed; widen open_w");
+assert(2 * r_o <= bed, "cone does not fit the bed");
+assert(arch_rise > 0 && arch_rise <= half, "arch_rise must be between 0 and half the door width");
+assert(door_h > arch_rise + 15, "door sides under 15 mm tall");
+assert(door_h <= clear_h - 6, "under 6 mm of wall above the door");
+assert(ledge_t < band_bot + 1, "ledge taller than the plain band at the foot");
 assert(top_d <= bed, "plate does not fit the bed");
 assert(z2 <= clear_h - band_top, "pattern runs into the top of the wall; fewer rows or more triangles");
 assert(belkin_d <= top_d - 2, "Belkin base reaches over the edge of the plate; raise top_d");
@@ -145,18 +150,32 @@ module frust(d, za, zb) {
     }
 }
 
-// Skirt and cone as one convex body, less the same body moved in by
-// the wall and drawn longer at both ends.
+// Skirt and cone as one convex body.
+module body() {
+    hull() {
+        translate([0, 0, -skirt_h]) cylinder(r = r_o, h = skirt_h);
+        translate([0, c_at(clear_h), clear_h - 0.1]) cylinder(r = r_t, h = 0.1);
+    }
+}
+
+// The body less its hollow. The hollow is the body moved in by the
+// wall and drawn longer at both ends, less the ledge on the lamp top.
+// The ledge is left standing in the hollow instead of being added to
+// the wall: added, its faces lay in the faces of the wall and left
+// bad edges in the STL.
 module wall_solid() {
     zt = clear_h + 1;
     difference() {
-        hull() {
-            translate([0, 0, -skirt_h]) cylinder(r = r_o, h = skirt_h);
-            translate([0, c_at(clear_h), clear_h - 0.1]) cylinder(r = r_t, h = 0.1);
-        }
-        hull() {
-            translate([0, 0, -skirt_h - 1]) cylinder(r = r_o - wall, h = skirt_h + 1);
-            translate([0, c_at(zt), zt - 0.1]) cylinder(r = r_at(zt) - wall, h = 0.1);
+        body();
+        difference() {
+            hull() {
+                translate([0, 0, -skirt_h - 1]) cylinder(r = r_o - wall, h = skirt_h + 1);
+                translate([0, c_at(zt), zt - 0.1]) cylinder(r = r_at(zt) - wall, h = 0.1);
+            }
+            linear_extrude(ledge_t) difference() {
+                circle(r = 2 * r_o);
+                circle(r = r_o - wall - ledge_w);
+            }
         }
     }
 }
@@ -205,9 +224,27 @@ module bars() {
 
 big = lamp_d;
 
-// The two openings. d grows them sideways.
+// Outline of the door, seen from the front: X, and Z upwards. Upright
+// sides, and on top a segment of a circle arch_rise high.
+module door_2d() {
+    zs = door_h - arch_rise;                              // where the arch starts
+    ra = (half * half + arch_rise * arch_rise) / (2 * arch_rise);
+    translate([-half, 0]) square([open_w, zs]);
+    intersection() {
+        translate([0, door_h - ra]) circle(r = ra, $fn = 360);
+        translate([-half, zs - 0.01]) square([open_w, arch_rise + 1]);
+    }
+}
+
+// The two openings. d grows them.
 module openings(d = 0) {
-    translate([-half - d, -big, -big]) cube([open_w + 2 * d, 2 * big, 2 * big]);
+    translate([-half - d, 0, -big]) cube([open_w + 2 * d, big, 2 * big]);
+    rotate([90, 0, 0]) linear_extrude(big) offset(r = d) door_2d();
+}
+
+// The rear opening alone. d grows it sideways.
+module rear_opening(d = 0) {
+    translate([-half - d, 0, -big]) cube([open_w + 2 * d, big, 2 * big]);
 }
 
 // Room for the bars: from just outside the wall to the middle of the
@@ -226,9 +263,10 @@ module pattern_room() {
     }
 }
 
-// Plain bands beside the openings.
+// Plain bands round the openings: the openings grown by the band. The
+// openings themselves are cut out of the wall afterwards.
 module jambs() {
-    difference() { openings(jamb_w); openings(); }
+    openings(jamb_w);
 }
 
 module shell() {
@@ -241,8 +279,7 @@ module shell() {
 
 // ---- pieces ------------------------------------------------------------
 
-// Both side walls, in place.
-module side_walls() {
+module cone_piece() {
     difference() { shell(); openings(); }
 }
 
@@ -260,12 +297,12 @@ module top_piece() {
     difference() {
         union() {
             translate([0, -top_fwd, clear_h]) cylinder(r = r_t, h = top_t);
-            // lip inside the tops of the side walls
+            // lip inside the top of the cone
             under_ring(wall + lip_clr, lip_in);
-            // tabs in the tops of the openings, as thick as the wall
+            // tab in the top of the rear opening, as thick as the wall
             intersection() {
                 under_ring(0, lip_in);
-                openings(-tab_clr);
+                rear_opening(-tab_clr);
             }
         }
         // room for the arm bracket
@@ -297,7 +334,7 @@ module belkin() {
 }
 
 module stand() {
-    color("Orange") side_walls();
+    color("Orange") cone_piece();
     color("Gold") top_piece();
 }
 
@@ -309,13 +346,8 @@ module assembly() {
     translate([0, -top_fwd, clear_h + top_t]) belkin();
 }
 
-if (part == "sides") {
-    // moved together to fit the bed
-    for (s = [-1, 1]) translate([-s * (half - plate_gap / 2), 0, skirt_h])
-        intersection() {
-            side_walls();
-            translate([s > 0 ? 0 : -big, -big, -big]) cube([big, 2 * big, 2 * big]);
-        }
+if (part == "cone") {
+    translate([0, 0, skirt_h]) cone_piece();
 } else if (part == "top") {
     translate([0, top_fwd, clear_h + top_t]) rotate([180, 0, 0]) top_piece();
 } else if (part == "assembly" || part == "side") {

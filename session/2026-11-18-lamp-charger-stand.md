@@ -14,14 +14,19 @@ base stays free.
   210 mm base), wall up to a 150 mm plate 65 mm above the lamp top.
   The plate is 33 mm in front of the lamp axis, its front edge above
   the front of the skirt, its rear edge 42 mm behind the axis.
-- Two 92 mm openings opposite each other: rear for the arm bracket,
-  front as the door. Asanoha relief on the wall, 42 triangles round,
-  6 rows. Geometry in specs/lamp-charger-stand.md.
-- Three pieces in two STLs: `lamp-charger-stand-sides.stl` (both side
-  walls) and `lamp-charger-stand-top.stl` (plate with lip and tabs).
+- Two 92 mm openings opposite each other: the rear one as tall as
+  the wall, for the arm bracket; the front one is the door, upright
+  to 40 mm with a 16 mm arch on top. Asanoha relief on the wall, 42
+  triangles round, 6 rows. Geometry in specs/lamp-charger-stand.md.
+- Ledge 10 x 3 mm inside the foot of the wall; it stands on the top
+  of the lamp base and carries the load.
+- Two pieces: `lamp-charger-stand-cone.stl` (wall, skirt and ledge,
+  a C open at the rear) and `lamp-charger-stand-top.stl` (plate with
+  lip and one tab).
 - `make lamp-stand` builds both STLs and six previews;
   `make lamp-stand-save` copies the STLs to `models/`.
-- Both STLs watertight, both fit a 220 mm bed, no supports.
+- Both STLs watertight, both fit a 220 mm bed. The cone needs
+  supports under the ledge and under the crown of the arch.
 - `make check` passes.
 
 ## Decisions
@@ -30,8 +35,10 @@ base stays free.
   on it: round, and it centres itself on the rounded edge.
 - Slanted cone, plate forward: the lamp arm swings forward and back;
   the plate ends in front of the arm bracket and needs no notch.
-- Door at the front, opposite the lamp arm. With the rear opening it
-  splits the cone into two side walls; the plate joins them.
+- Door at the front, opposite the lamp arm. Its arch joins the two
+  sides of the wall, so the wall is one piece, 216 mm across.
+- Ledge on the lamp top instead of resting on the rounded edge of
+  the base: a flat seat for the heavy charger.
 - Plate 150 mm: the smallest that keeps the wall ends beside the rear
   opening within 45 degrees of the vertical.
 - The pattern is a relief on a 1.2 mm skin. An open lattice on a
@@ -40,17 +47,20 @@ base stays free.
   cone the triangles are true on the sides and stretched at the rear.
 - Mesh fixes: bars 0.02 mm proud of the wall, pattern turned 0.7
   degrees, skirt and cone as one convex body, cone sections cut from
-  a longer cone. Each removed a source of non-manifold edges.
+  a longer cone, the ledge left standing in the hollow, jamb bands
+  not cut to the openings. Each removed a source of non-manifold
+  edges.
 
 ## Open
 
 - Not printed. The skirt fit (0.6 mm of air) is untested.
+- The cone leaves 2 mm of a 220 mm bed each side.
 - `bracket_r` (60) is a photo estimate. With the door facing the
   bracket, a phone centred on the pad reaches 83 mm back; whether it
   passes the bracket is not known.
 - The forward swing of the arm against the rear edge of the plate is
   not measured.
-- The plate lies loose on the walls; glue is recommended after the
+- The plate lies loose on the cone; glue is recommended after the
   fit test.
 - Both chargers working with the stand in place is untested.
 - The RM10 parts are still not committed (see the 2026-11-15 note).
@@ -58,8 +68,8 @@ base stays free.
 ## Files touched
 
 - scripts/lamp_charger_stand.scad
-- models/lamp-charger-stand-sides.stl, -top.stl (new);
-  models/lamp-charger-stand.stl (removed)
+- models/lamp-charger-stand-cone.stl, -top.stl (new);
+  models/lamp-charger-stand.stl, -sides.stl (removed)
 - Makefile (lamp-stand, lamp-stand-save)
 - specs/lamp-charger-stand.md, specs/README.md, specs/printability.md
 - todo/todo.md
@@ -68,14 +78,14 @@ base stays free.
 
 - `make check`
 - `make lamp-stand` and look at out/lamp-charger-stand-*.png
-- `make printcheck MODEL=out/lamp-charger-stand-sides.stl`
+- `make printcheck MODEL=out/lamp-charger-stand-cone.stl`
 
 ## Next step
 
-Print the side walls and try them on the rim of the lamp base. If the
-skirt is loose or tight, rebuild with
-`make lamp-stand-save SCAD_ARGS='-D lamp_clr=...'`. Then print the
-plate.
+Print a ring of the foot (cone cut at 12 mm in the slicer) and try it
+on the rim of the lamp base. If the skirt is loose or tight, rebuild
+with `make lamp-stand-save SCAD_ARGS='-D lamp_clr=...'`. Then print
+cone and plate.
 
 ## Security Note
 

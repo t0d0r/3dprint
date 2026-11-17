@@ -20,9 +20,11 @@ charging stand (WIZ017) above the base of an IKEA NYMANE work lamp
   needs the room behind the plate.
 - The wall carries a kumiko pattern.
 - The door for the device on the pad is at the front, opposite the
-  lamp arm.
+  lamp arm. It has upright sides and an arch on top.
+- A ledge at the foot stands on the top of the lamp base and carries
+  the weight of the Belkin.
 - No change to the lamp or to the Belkin; removable.
-- Every piece fits a 220 x 220 mm bed, no supports.
+- Every piece fits a 220 x 220 mm bed.
 
 ## Source measurements
 
@@ -56,38 +58,39 @@ Cone:
   edge is straight above the front of the skirt.
 - Lean of the wall above the level: upright at the front, 63 degrees
   at the sides, 46 degrees at the wall ends beside the rear opening.
-- The inside of the wall rests on the rounded top edge of the lamp
-  base; depending on the radius of that edge the stand sits 1 to
-  3 mm lower than drawn.
-- Two openings 92 mm wide (`open_w`) and as tall as the wall,
-  opposite each other: the rear one for the arm bracket, the front
-  one is the door. They leave two side walls, each 130 degrees of
-  the circle at the skirt.
+- Ledge: 10 mm wide (`ledge_w`), 3 mm thick (`ledge_t`), inside the
+  foot of the wall at Z = 0 to 3. It stands on the flat top of the
+  lamp base and carries the load; the skirt only keeps the stand in
+  place. The ledge is cut away in the door and in the rear opening.
+- Rear opening: 92 mm wide (`open_w`), as tall as the wall, for the
+  arm bracket and the arm.
+- Door at the front: 92 mm wide from the lamp top up to 40 mm, then
+  an arch 16 mm high (`arch_rise`, a segment of a 74 mm circle) with
+  its crown at 56 mm (`door_h`). 9 mm of wall stay above the crown.
+  The skirt runs on under the door.
 
 Plate:
 
-- Disc of 150 mm, 5 mm thick, on top of the two side walls. The
+- Disc of 150 mm, 5 mm thick, on top of the cone. The
   Belkin stands in its middle with 6.5 mm to spare all round.
 - Its rear edge is 42 mm behind the lamp axis, 18 mm in front of the
   arm bracket as read; the front edge is 108 mm in front of the axis.
 - Lip under it, 5 mm deep, inside the tops of the walls with 0.3 mm
   of air. It keeps the walls from leaning in.
-- Tabs under it in the tops of both openings, as thick as the wall,
-  0.3 mm from the wall ends. They keep the walls from sliding round
-  the lamp.
+- One tab under it in the top of the rear opening, as thick as the
+  wall, 0.3 mm from the wall ends. It keeps the plate from turning.
 - A notch for the arm bracket is cut only if the plate reaches it;
   with these numbers it does not.
 
 Heights: 65 mm from the top of the lamp base to the underside of the
-plate, 70 mm to the surface the Belkin stands on, less the 1 to 3 mm
-the cone settles on the rounded edge.
+plate, 70 mm to the surface the Belkin stands on.
 
 ## Pattern
 
 Asanoha (hemp leaf): a grid of triangles, each with three thin bars
 from its centre to its corners. 42 triangles round the circle
 (`n_around`), 6 rows (`rows`), between a 4 mm band at the bottom and
-a 3.8 mm band at the top, with 3 mm plain bands beside the openings.
+a 3.8 mm band at the top, with 3 mm plain bands round the openings.
 
 The rows get lower towards the top by a constant ratio, matched to
 the radius, so on the sides of the cone the triangles keep the shape
@@ -102,18 +105,26 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
 
 ## Pieces
 
-- `lamp-charger-stand-sides.stl`: both side walls, moved together to
-  144 x 195 x 73 mm, 58.5 cm3.
+- `lamp-charger-stand-cone.stl`: wall, skirt and ledge in one piece,
+  a C open at the rear, 216 x 206 x 73 mm, 75.6 cm3.
 - `lamp-charger-stand-top.stl`: the plate, 150 x 155 x 10 mm,
-  96.4 cm3.
+  95.1 cm3.
 
 ## Decisions
 
-- Three pieces. The two openings split the cone into two walls; the
-  plate joins them. The walls print with the pattern upwards and the
-  plate prints flat. With the measured 210 mm base the ring is
-  216 mm and would fit a 220 mm bed in one piece, but only upside
-  down on the plate, with the pattern facing the bed.
+- Two pieces. With the measured 210 mm base the cone is 216 mm
+  across and fits a 220 mm bed, 2 mm to spare each side. The arch
+  joins the two sides of the wall at the front, so the wall is one
+  piece. The plate is separate: it prints flat on its top face and
+  the wall prints with the pattern upwards.
+- Ledge on the lamp top instead of resting the cone on the rounded
+  edge of the base: a flat seat for a heavy charger, and the height
+  no longer depends on the radius of that edge.
+- Arch only at the top of the door: the door keeps its full width of
+  92 mm up to 40 mm, for a phone in a case and the hand holding it.
+- Supports accepted for the ledge and the crown of the arch. The
+  ledge must be flat underneath and is 8 mm above the bed; no shape
+  of it prints free.
 - Slanted cone instead of a notch in the plate: the plate ends in
   front of the arm bracket and the arm keeps its swing.
 - `top_d` 150: the smallest plate that keeps the wall ends beside
@@ -125,40 +136,47 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
 - Skin 1.2 mm level: three 0.4 mm lines in each layer.
 - No rim round the Belkin: the plate prints top face down. The soft
   underside of the Belkin holds it.
-- Rear opening as wide as the door: one number, a symmetric part.
+- Rear opening as wide as the door: one number.
 - Mesh: the bars stand 0.02 mm proud of the bands (`proud`), the
   pattern is turned 0.7 degrees (`phase`), skirt and cone are one
-  convex body, and cone sections are cut from a longer cone. Bar
-  faces in the wall surface, bars along a facet edge and thin end
-  discs each left edges shared by four or six faces in the STL.
+  convex body, cone sections are cut from a longer cone, and the
+  ledge is left standing in the hollow instead of being added. Bar
+  faces in the wall surface, bars along a facet edge, thin end discs
+  and an added ledge each left edges shared by four or six faces in
+  the STL.
 
 ## Print notes
 
-- Side walls: as exported, skirt on the bed, pattern outwards. No
-  supports. The bed contact is a 2.4 mm strip and the walls are
-  73 mm tall: use a brim. 3 perimeters. The rear ends lean 44
-  degrees from the vertical, the limit for most printers; slow the
-  outer wall down if they sag.
-- Plate: as exported, top face on the bed, lip and tabs up. No
+- Cone: as exported, skirt on the bed, pattern outwards. It fills
+  the bed to 2 mm: no outer brim, no skirt line; an inner brim only.
+- Supports for the cone: under the ledge (10 mm wide, 8 mm above the
+  bed, all round the inside) and under the crown of the door arch.
+  Set the support threshold to about 40 degrees so the wall itself,
+  which leans up to 44 degrees from the vertical at the rear ends,
+  gets none.
+- 3 perimeters. Slow the outer wall down if the rear ends sag.
+- Plate: as exported, top face on the bed, lip and tab up. No
   supports.
 - PETG preferred: both chargers get warm. PLA works away from the
   sun.
-- About 25 g for the walls and 42 g for the plate at 20 percent
+- About 33 g for the cone and 41 g for the plate at 20 percent
   infill.
 
 ## Limits and open points
 
 - Not printed. 0.6 mm of air between skirt and lamp base may be
-  loose or tight; print the side walls first and try them on the rim.
+  loose or tight. A ring of the foot alone (cut the model at 12 mm
+  in the slicer) tests the fit before the full print.
+- 216 mm on a 220 mm bed needs a printer that really reaches 220.
 - `bracket_r` and `bracket_w` are photo readings. The rear opening
   is 92 mm wide, so the width matters little.
 - The door faces the arm bracket. A 166 mm phone centred on the pad
   reaches 83 mm back from the lamp axis, the bracket is read at
   60 mm: whether a phone passes under or beside the bracket is not
   known. An earbud case fits.
-- The plate lies loose on the walls, 70 mm up and 33 mm in front of
+- The plate lies loose on the cone, 70 mm up and 33 mm in front of
   the lamp axis. The Belkin stays inside the outline of the lamp
-  base, but a few drops of glue between plate and walls are
+  base, but a few drops of glue between plate and cone are
   recommended once the fit is confirmed.
 - How far the arm can swing forward before it meets the rear edge of
   the plate is not measured.

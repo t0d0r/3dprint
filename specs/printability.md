@@ -128,16 +128,18 @@ Default bed is 220 x 220 x 250 mm.
 - Arm dimensions are photo readings; print the fit piece first
   (specs/deco-arm-platform.md).
 
-## out/lamp-charger-stand-sides.stl, out/lamp-charger-stand-top.stl
+## out/lamp-charger-stand-cone.stl, out/lamp-charger-stand-top.stl
 
 - Built by `make lamp-stand`, see specs/lamp-charger-stand.md.
-- Side walls as exported (skirt down): two bodies, 144 x 195.4 x
-  73 mm, 58.5 cm3, watertight. 11.5 cm2 on the bed, a 2.4 mm strip:
-  brim. 39.8 cm2 counted as overhang: the undersides of the relief
-  bars and the inside of the wall near the rear ends, which leans 44
-  degrees from the vertical. No supports.
-- Skin 1.2 mm measured level; 0.7% of the samples under 0.8 mm are
+- Cone as exported (skirt down): one body, 216 x 205.7 x 73 mm,
+  75.6 cm3, watertight. Fits the 220 mm bed with 2 mm each side.
+  13.8 cm2 on the bed, a 2.4 mm strip.
+- 88.7 cm2 counted as overhang: the underside of the ledge and the
+  crown of the door arch, which need supports, the undersides of the
+  relief bars, and the inside of the wall near the rear ends, which
+  leans 44 degrees from the vertical and needs none.
+- Skin 1.2 mm measured level; 0.6% of the samples under 0.8 mm are
   glancing hits at the bar edges.
-- Plate as exported (top face down): 150 x 155.1 x 10 mm, 96.4 cm3,
+- Plate as exported (top face down): 150 x 155.1 x 10 mm, 95.1 cm3,
   watertight, 177 cm2 on the bed, no supports.
-- About 25 g and 42 g PLA at 20 percent infill, rough.
+- About 33 g and 41 g PLA at 20 percent infill, rough.
