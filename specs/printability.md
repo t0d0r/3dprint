@@ -127,3 +127,13 @@ Default bed is 220 x 220 x 250 mm.
 - Fit piece: 45 x 52 x 19 mm, 18 cm3.
 - Arm dimensions are photo readings; print the fit piece first
   (specs/deco-arm-platform.md).
+
+## out/lamp-charger-stand.stl
+
+- Built by `make lamp-stand`, see specs/lamp-charger-stand.md.
+- 139 x 139 x 37 mm, 145.2 cm3, watertight, one body.
+- Orientation: as exported, top face of the plate on the bed. Fits
+  the bed, 189.8 cm2 bed contact, zero overhang, no supports.
+- Walls 6 mm, plate 5 mm. The 0.4% of thin samples are glancing hits
+  at the pointed wall ends in the rounded corners.
+- About 63 g PLA at 20 percent infill, rough.
