@@ -1,66 +1,76 @@
 # 2026-11-18 lamp charger stand
 
-New part: a bridge that carries a Belkin BoostCharge Pro 3-in-1 stand
+New part: a stand that carries a Belkin BoostCharge Pro 3-in-1 stand
 above the base of an IKEA NYMANE work lamp, so the Qi pad in the lamp
 base stays free.
 
 ## Done
 
-- `scripts/lamp_charger_stand.scad`: 139 x 139 x 5 mm plate on two
-  6 mm walls, 32 mm free height, 127 mm wide tunnel open at both
-  ends, 45 degree gussets. Previews with lamp, bracket, phone and
-  Belkin. Geometry in specs/lamp-charger-stand.md.
-- `make lamp-stand` builds `out/lamp-charger-stand.stl` and four
-  previews; `make lamp-stand-save` copies the STL to `models/`.
-- `models/lamp-charger-stand.stl` saved: watertight, 145.2 cm3, no
-  overhang when printed top face down.
+- First version: a square plate on two walls standing on the lamp
+  base (commit 70987b3). Replaced the same day by the round version
+  below.
+- `scripts/lamp_charger_stand.scad`: truncated cone with a skirt over
+  the rim of the lamp base (226 mm outside), narrowing to a 162 mm
+  plate 34 mm above the lamp top. Two 92 mm openings opposite each
+  other: rear for the arm bracket, front as the door. Asanoha relief
+  on the wall, 45 triangles round, 3 rows. Geometry in
+  specs/lamp-charger-stand.md.
+- Three pieces in two STLs: `lamp-charger-stand-sides.stl` (both side
+  walls) and `lamp-charger-stand-top.stl` (plate with lip and tabs).
+- `make lamp-stand` builds both STLs and six previews;
+  `make lamp-stand-save` copies the STLs to `models/`.
+- Both STLs watertight, both fit a 220 mm bed, no supports.
 - `make check` passes.
 
 ## Decisions
 
-- Walls stand on the lamp base, not on the desk: a bridge over the
-  220 mm base does not fit a 220 mm bed in one piece.
-- Two walls and a tunnel instead of legs: a phone is longer than the
-  bridge and passes through.
-- Square plate with the walls at its edges, so the feet are about as
-  far apart as the Belkin base is wide and the bridge does not tip
-  when a phone is pushed onto the magnet.
-- No rim around the Belkin and no locating feature on the lamp: the
-  plate prints flat on the bed, and the bracket position is only an
-  estimate.
-- Placed 11.5 mm in front of the lamp centre to clear the arm
-  bracket (derived from `bracket_r`).
+- Cone gripping the rim of the lamp base instead of a bridge standing
+  on it: round, and it centres itself on the rounded edge.
+- Door at the front, opposite the lamp arm. With the rear opening it
+  splits the cone into two side walls; the plate joins them. A ring
+  in one piece would be 226 mm and not fit the bed.
+- The pattern is a relief on a 1.2 mm skin. An open lattice on a
+  leaning wall needs supports under every bar.
+- The triangle grid is regular in (log radius, angle) on the unrolled
+  cone, so the triangles keep their shape and shrink towards the top.
+- Bars 0.02 mm proud of the wall and the pattern turned 0.7 degrees:
+  bar faces lying in the wall surface, or bars along a facet edge,
+  gave non-manifold edges in the STL.
 
 ## Open
 
-- Not printed. Lamp and Belkin numbers are photo readings, +-3 mm;
-  `bracket_r` (60) is the weakest.
-- Both chargers working with the bridge in place is untested (foreign
+- Not printed. `lamp_d` sets the skirt fit and is a ruler reading.
+- `bracket_r` (60) is the weakest number. With the door facing the
+  bracket, a phone centred on the pad reaches 83 mm back; whether it
+  passes the bracket is not known.
+- Both chargers working with the stand in place is untested (foreign
   object detection of the lamp pad, heat under the plate).
 - The RM10 parts are still not committed (see the 2026-11-15 note).
 
 ## Files touched
 
-- scripts/lamp_charger_stand.scad (new)
-- models/lamp-charger-stand.stl (new)
+- scripts/lamp_charger_stand.scad
+- models/lamp-charger-stand-sides.stl, -top.stl (new);
+  models/lamp-charger-stand.stl (removed)
 - Makefile (lamp-stand, lamp-stand-save)
-- specs/lamp-charger-stand.md (new), specs/README.md, specs/printability.md
+- specs/lamp-charger-stand.md, specs/README.md, specs/printability.md
 - todo/todo.md
 
 ## Verify
 
 - `make check`
 - `make lamp-stand` and look at out/lamp-charger-stand-*.png
-- `make printcheck MODEL=out/lamp-charger-stand.stl`
+- `make printcheck MODEL=out/lamp-charger-stand-sides.stl`
 
 ## Next step
 
-Measure on the lamp: centre of the pad to the arm bracket, width of
-the flat top, diameter of the Belkin base. Rebuild with
-`make lamp-stand-save SCAD_ARGS='-D bracket_r=...'`, print, test.
+Measure the lamp base with calipers and the position of the arm
+bracket, rebuild with `make lamp-stand-save SCAD_ARGS='-D lamp_d=...
+-D bracket_r=...'`, print the side walls first and try them on the
+rim.
 
 ## Security Note
 
 No secrets in this work. Two wireless chargers are stacked: keep
-metal objects out of the tunnel and watch the temperature in the
-first days.
+metal objects out of the cone and watch the temperature in the first
+days.

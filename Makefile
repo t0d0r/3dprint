@@ -160,18 +160,20 @@ deco-platform-save: deco-platform ## rebuild the Deco platform and copy both STL
 
 LCS := scripts/lamp_charger_stand.scad
 
-lamp-stand: build ## build out/lamp-charger-stand.stl, the bridge for a Belkin 3-in-1 stand over the Qi pad of the NYMANE lamp base, and previews (SCAD_ARGS passes -D overrides, e.g. -D clear_h=36)
+lamp-stand: build ## build out/lamp-charger-stand-{sides,top}.stl, the round kumiko stand for a Belkin 3-in-1 charger over the Qi pad of the NYMANE lamp base, and previews (SCAD_ARGS passes -D overrides, e.g. -D bracket_r=58)
 	mkdir -p out
-	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/lamp-charger-stand.stl $(LCS)
-	$(PY) -I scripts/mesh_info.py out/lamp-charger-stand.stl
-	$(MBS_PNG) -o out/lamp-charger-stand-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(LCS)
-	$(MBS_PNG) -D 'part="assembly"' -o out/lamp-charger-stand-assembly.png --imgsize=1200,900 --autocenter --viewall --camera=0,0,0,65,0,30,0 $(LCS)
-	$(MBS_PNG) -D 'part="side"' -o out/lamp-charger-stand-side.png --imgsize=1200,900 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,90,0 $(LCS)
+	for p in sides top; do \
+	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "part=\"$$p\"" -o out/lamp-charger-stand-$$p.stl $(LCS) || exit 1; \
+	  $(PY) -I scripts/mesh_info.py out/lamp-charger-stand-$$p.stl || exit 1; \
+	  $(MBS_PNG) -D "part=\"$$p\"" -o out/lamp-charger-stand-$$p.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(LCS) || exit 1; done
+	$(MBS_PNG) -D 'part="assembly"' -o out/lamp-charger-stand-assembly.png --imgsize=1200,900 --autocenter --viewall --camera=0,0,0,65,0,330,0 $(LCS)
+	$(MBS_PNG) -D 'part="assembly"' -o out/lamp-charger-stand-rear.png --imgsize=1200,900 --autocenter --viewall --camera=0,0,0,65,0,150,0 $(LCS)
+	$(MBS_PNG) -D 'part="side"' -o out/lamp-charger-stand-side.png --imgsize=1200,900 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(LCS)
 	$(MBS_PNG) -D 'part="below"' -o out/lamp-charger-stand-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,120,0,30,0 $(LCS)
 
-lamp-stand-save: lamp-stand ## rebuild the lamp charger stand and copy the STL to models/
-	cp out/lamp-charger-stand.stl models/
-	ls -l models/lamp-charger-stand.stl
+lamp-stand-save: lamp-stand ## rebuild the lamp charger stand and copy both STLs to models/
+	cp out/lamp-charger-stand-sides.stl out/lamp-charger-stand-top.stl models/
+	ls -l models/lamp-charger-stand-*.stl
 
 clean: ## remove build output
 	rm -rf out __pycache__ scripts/__pycache__

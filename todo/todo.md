@@ -51,4 +51,6 @@
 - [ ] deco platform: print the fit piece (make deco-platform-fit), try it on the link, set link_w, link_len, link_back, elbow_h, pin_to_plate (specs/deco-arm-platform.md)
 - [ ] deco platform: check how far the VESA head swivels with the tray in place; print tray and rim (specs/deco-arm-platform.md)
 - [x] lamp charger stand: bridge for the Belkin 3-in-1 stand over the Qi pad of the NYMANE lamp base, parametric OpenSCAD part (specs/lamp-charger-stand.md)
-- [ ] lamp charger stand: measure bracket_r, belkin_d and the flat top of the lamp base; print, test both chargers with the bridge in place (specs/lamp-charger-stand.md)
+- [x] lamp charger stand: reworked as a round cone on the rim of the lamp base with a kumiko relief, door opposite the lamp arm, two side walls and a plate (specs/lamp-charger-stand.md)
+- [ ] lamp charger stand: measure lamp_d with calipers, bracket_r, bracket_w and belkin_d; check whether a phone passes the arm bracket (specs/lamp-charger-stand.md)
+- [ ] lamp charger stand: print, test the skirt fit and both chargers with the stand in place (specs/lamp-charger-stand.md)
