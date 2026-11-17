@@ -10,7 +10,7 @@
 // lamp arm, which swings forward and back. The wall shows a kumiko
 // pattern (asanoha, hemp leaf) in relief on a thin skin.
 //
-// Two openings, both open_w wide, opposite each other:
+// Two openings, opposite each other:
 //   rear   as tall as the cone, for the bracket of the lamp arm, which
 //          stands on the base near its rim;
 //   front  the door, upright sides with an arch on top, for the device
@@ -63,7 +63,8 @@ clear_h  = 65;      // lamp top to the underside of the plate
 top_d    = 150;     // diameter of the plate and of the top of the cone
 wall     = 2.4;     // wall and skirt, measured level
 skirt_h  = 8;       // skirt down the side of the lamp base
-open_w   = 92;      // width of the door and of the rear opening
+open_w   = 92;      // width of the rear opening
+door_w   = 140;     // width of the door, room for a hand
 door_h   = 56;      // crown of the door arch above the lamp top
 arch_rise = 16;     // height of the arch; below it the door has upright sides
 ledge_w  = 10;      // ledge on the lamp top, inwards from the wall
@@ -124,14 +125,15 @@ tilt_min  = tilt(acos(half / r_o));
 
 assert(tilt_min >= 45, "wall leans more than 45 degrees beside the rear opening; raise clear_h or top_d");
 assert(2 * r_o <= bed, "cone does not fit the bed");
-assert(arch_rise > 0 && arch_rise <= half, "arch_rise must be between 0 and half the door width");
+assert(arch_rise > 0 && arch_rise <= door_w / 2, "arch_rise must be between 0 and half the door width");
 assert(door_h > arch_rise + 15, "door sides under 15 mm tall");
 assert(door_h <= clear_h - 6, "under 6 mm of wall above the door");
 assert(ledge_t < band_bot + 1, "ledge taller than the plain band at the foot");
 assert(top_d <= bed, "plate does not fit the bed");
 assert(z2 <= clear_h - band_top, "pattern runs into the top of the wall; fewer rows or more triangles");
 assert(belkin_d <= top_d - 2, "Belkin base reaches over the edge of the plate; raise top_d");
-assert(open_w >= phone_w + 8, "door under 8 mm wider than the device");
+assert(door_w >= phone_w + 8, "door under 8 mm wider than the device");
+assert(door_w / 2 + jamb_w < r_at(door_h - arch_rise) - 5, "door too wide for the cone at the foot of the arch");
 assert(open_w >= bracket_w + 6, "rear opening under 6 mm wider than the bracket");
 assert(lay >= 0.8, "pattern under 0.8 mm deep; lower skin");
 assert(skin >= 0.8, "skin under 0.8 mm");
@@ -227,12 +229,13 @@ big = lamp_d;
 // Outline of the door, seen from the front: X, and Z upwards. Upright
 // sides, and on top a segment of a circle arch_rise high.
 module door_2d() {
+    hw = door_w / 2;
     zs = door_h - arch_rise;                              // where the arch starts
-    ra = (half * half + arch_rise * arch_rise) / (2 * arch_rise);
-    translate([-half, 0]) square([open_w, zs]);
+    ra = (hw * hw + arch_rise * arch_rise) / (2 * arch_rise);
+    translate([-hw, 0]) square([door_w, zs]);
     intersection() {
         translate([0, door_h - ra]) circle(r = ra, $fn = 360);
-        translate([-half, zs - 0.01]) square([open_w, arch_rise + 1]);
+        translate([-hw, zs - 0.01]) square([door_w, arch_rise + 1]);
     }
 }
 

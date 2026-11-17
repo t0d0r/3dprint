@@ -20,7 +20,8 @@ charging stand (WIZ017) above the base of an IKEA NYMANE work lamp
   needs the room behind the plate.
 - The wall carries a kumiko pattern.
 - The door for the device on the pad is at the front, opposite the
-  lamp arm. It has upright sides and an arch on top.
+  lamp arm. It has upright sides and an arch on top, and is 140 mm
+  wide at the bottom so that a hand fits in.
 - A ledge at the foot stands on the top of the lamp base and carries
   the weight of the Belkin.
 - No change to the lamp or to the Belkin; removable.
@@ -64,10 +65,10 @@ Cone:
   place. The ledge is cut away in the door and in the rear opening.
 - Rear opening: 92 mm wide (`open_w`), as tall as the wall, for the
   arm bracket and the arm.
-- Door at the front: 92 mm wide from the lamp top up to 40 mm, then
-  an arch 16 mm high (`arch_rise`, a segment of a 74 mm circle) with
-  its crown at 56 mm (`door_h`). 9 mm of wall stay above the crown.
-  The skirt runs on under the door.
+- Door at the front: 140 mm wide (`door_w`) from the lamp top up to
+  40 mm, then an arch 16 mm high (`arch_rise`, a segment of a 161 mm
+  circle) with its crown at 56 mm (`door_h`). 9 mm of wall stay
+  above the crown. The skirt runs on under the door.
 
 Plate:
 
@@ -106,7 +107,7 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
 ## Pieces
 
 - `lamp-charger-stand-cone.stl`: wall, skirt and ledge in one piece,
-  a C open at the rear, 216 x 206 x 73 mm, 75.6 cm3.
+  a C open at the rear, 216 x 206 x 73 mm, 67.7 cm3.
 - `lamp-charger-stand-top.stl`: the plate, 150 x 155 x 10 mm,
   95.1 cm3.
 
@@ -121,7 +122,9 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
   edge of the base: a flat seat for a heavy charger, and the height
   no longer depends on the radius of that edge.
 - Arch only at the top of the door: the door keeps its full width of
-  92 mm up to 40 mm, for a phone in a case and the hand holding it.
+  140 mm up to 40 mm, for a hand holding a phone.
+- The door has its own width; the rear opening stays 92 mm, enough
+  for the arm bracket, so the wall keeps more of its length.
 - Supports accepted for the ledge and the crown of the arch. The
   ledge must be flat underneath and is 8 mm above the bed; no shape
   of it prints free.
@@ -136,7 +139,6 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
 - Skin 1.2 mm level: three 0.4 mm lines in each layer.
 - No rim round the Belkin: the plate prints top face down. The soft
   underside of the Belkin holds it.
-- Rear opening as wide as the door: one number.
 - Mesh: the bars stand 0.02 mm proud of the bands (`proud`), the
   pattern is turned 0.7 degrees (`phase`), skirt and cone are one
   convex body, cone sections are cut from a longer cone, and the
@@ -159,7 +161,7 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
   supports.
 - PETG preferred: both chargers get warm. PLA works away from the
   sun.
-- About 33 g for the cone and 41 g for the plate at 20 percent
+- About 29 g for the cone and 41 g for the plate at 20 percent
   infill.
 
 ## Limits and open points
@@ -168,6 +170,10 @@ bars 1.0 mm wide stand 1.2 mm (measured level) on a 1.2 mm skin
   loose or tight. A ring of the foot alone (cut the model at 12 mm
   in the slicer) tests the fit before the full print.
 - 216 mm on a 220 mm bed needs a printer that really reaches 220.
+- Above the 140 mm door only a 9 mm strip of wall joins the two
+  sides at the front, with the skirt below. Handle the cone with
+  care until the plate is on; glue between plate and cone stiffens
+  it.
 - `bracket_r` and `bracket_w` are photo readings. The rear opening
   is 92 mm wide, so the width matters little.
 - The door faces the arm bracket. A 166 mm phone centred on the pad

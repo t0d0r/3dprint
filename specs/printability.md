@@ -132,9 +132,9 @@ Default bed is 220 x 220 x 250 mm.
 
 - Built by `make lamp-stand`, see specs/lamp-charger-stand.md.
 - Cone as exported (skirt down): one body, 216 x 205.7 x 73 mm,
-  75.6 cm3, watertight. Fits the 220 mm bed with 2 mm each side.
+  67.7 cm3, watertight. Fits the 220 mm bed with 2 mm each side.
   13.8 cm2 on the bed, a 2.4 mm strip.
-- 88.7 cm2 counted as overhang: the underside of the ledge and the
+- 76.3 cm2 counted as overhang: the underside of the ledge and the
   crown of the door arch, which need supports, the undersides of the
   relief bars, and the inside of the wall near the rear ends, which
   leans 44 degrees from the vertical and needs none.
@@ -142,4 +142,4 @@ Default bed is 220 x 220 x 250 mm.
   glancing hits at the bar edges.
 - Plate as exported (top face down): 150 x 155.1 x 10 mm, 95.1 cm3,
   watertight, 177 cm2 on the bed, no supports.
-- About 33 g and 41 g PLA at 20 percent infill, rough.
+- About 29 g and 41 g PLA at 20 percent infill, rough.

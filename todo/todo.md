@@ -54,5 +54,6 @@
 - [x] lamp charger stand: reworked as a round cone on the rim of the lamp base with a kumiko relief, door opposite the lamp arm, two side walls and a plate (specs/lamp-charger-stand.md)
 - [x] lamp charger stand: 65 mm under the plate, plate moved forward to the front edge of the lamp base (slanted cone), measured lamp_d 210 and belkin_d 137 (specs/lamp-charger-stand.md)
 - [x] lamp charger stand: door with upright sides and an arch on top, ledge on the lamp top, wall in one piece (specs/lamp-charger-stand.md)
+- [x] lamp charger stand: door 140 mm wide at the bottom, room for a hand (specs/lamp-charger-stand.md)
 - [ ] lamp charger stand: measure bracket_r; check whether a phone passes the arm bracket and how far the arm swings forward (specs/lamp-charger-stand.md)
 - [ ] lamp charger stand: print a ring of the foot, test the skirt fit; print cone and plate, test both chargers with the stand in place (specs/lamp-charger-stand.md)

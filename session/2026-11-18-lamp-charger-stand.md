@@ -14,9 +14,10 @@ base stays free.
   210 mm base), wall up to a 150 mm plate 65 mm above the lamp top.
   The plate is 33 mm in front of the lamp axis, its front edge above
   the front of the skirt, its rear edge 42 mm behind the axis.
-- Two 92 mm openings opposite each other: the rear one as tall as
-  the wall, for the arm bracket; the front one is the door, upright
-  to 40 mm with a 16 mm arch on top. Asanoha relief on the wall, 42
+- Two openings opposite each other: the rear one 92 mm wide, as tall as
+  the wall, for the arm bracket; the front one is the door, 140 mm
+  wide so that a hand fits in, upright to 40 mm with a 16 mm arch on
+  top. Asanoha relief on the wall, 42
   triangles round, 6 rows. Geometry in specs/lamp-charger-stand.md.
 - Ledge 10 x 3 mm inside the foot of the wall; it stands on the top
   of the lamp base and carries the load.
@@ -55,6 +56,8 @@ base stays free.
 
 - Not printed. The skirt fit (0.6 mm of air) is untested.
 - The cone leaves 2 mm of a 220 mm bed each side.
+- Only a 9 mm strip of wall joins the two sides above the 140 mm
+  door; stiffness before the plate is glued on is untested.
 - `bracket_r` (60) is a photo estimate. With the door facing the
   bracket, a phone centred on the pad reaches 83 mm back; whether it
   passes the bracket is not known.
