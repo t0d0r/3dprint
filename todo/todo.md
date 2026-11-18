@@ -70,7 +70,7 @@
 - [x] lamp charger stand: door 140 mm wide at the bottom, room for a hand (specs/lamp-charger-stand.md)
 - [ ] lamp charger stand: measure bracket_r; check whether a phone passes the arm bracket and how far the arm swings forward (specs/lamp-charger-stand.md)
 - [ ] lamp charger stand: print a ring of the foot, test the skirt fit; print cone and plate, test both chargers with the stand in place (specs/lamp-charger-stand.md)
-- [x] repo: BSD 2-Clause license, private GitHub remote, main pushed (session/2026-11-18-github-remote.md)
+- [x] repo: BSD 2-Clause license, GitHub remote (public), main pushed (session/2026-11-18-github-remote.md)
 - [x] repo: third-party rack mount model and the hanger STL derived from it kept out of the repository (.gitignore, specs/rm10-shelf-hanger.md)
 - [ ] repo: record where the third-party rack mount model comes from, so a fresh clone can fetch it (specs/rm10-shelf-hanger.md)
 - [x] repo: README with the parts, build targets, requirements and license (README.md)

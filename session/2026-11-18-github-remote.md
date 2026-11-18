@@ -9,8 +9,9 @@ Repository housekeeping; no part changed.
   rm10 kumiko panel, with their specs, session notes, Makefile targets
   and the saved STLs that are generated from local source only.
 - `LICENSE`: BSD 2-Clause (the FreeBSD license), copyright 2026.
-- Remote `origin` added: a private GitHub repository named `3dprint`.
-  `main` is pushed and tracks `origin/main`.
+- Remote `origin` added: a GitHub repository named `3dprint`, created
+  private and then made public. `main` is pushed and tracks
+  `origin/main`.
 - `README.md`: what the project is, the parts with their build targets
   and specs, requirements, usage, layout, the third-party model rule
   and the license.
@@ -20,9 +21,12 @@ Repository housekeeping; no part changed.
 
 ## Decisions
 
-- Private repository. A public one cannot be taken back once it is
-  cloned or cached, so visibility changes only after the open points
-  below are settled.
+- Public repository, under the BSD 2-Clause license. Publication
+  cannot be taken back once the repository is cloned or cached, so
+  everything committed from now on is written as public.
+- `models/drawer-20cm.stl`, the input of `make drawer-swap`, is an own
+  model and stays in the repository.
+- The author address in the commits stays as it is and is public.
 - BSD 2-Clause: short, permissive, keeps only the copyright notice and
   the disclaimer.
 - No third-party models in the repository. The rack mount STL that
@@ -38,15 +42,11 @@ Repository housekeeping; no part changed.
 - The origin of the rack mount model is not recorded in the tree; a
   fresh clone cannot build the holed hanger until it is.
 - The commits of the first push are no longer on any branch, but the
-  host may keep unreferenced objects for a while. Deleting and
-  recreating the remote repository is the only way to purge them at
-  once.
-- The author address in the commits becomes visible if the repository
-  is made public.
+  host may keep unreferenced objects for a while; until it collects
+  them they can be fetched by their hash. Deleting and recreating the
+  remote repository is the only way to purge them at once.
 - `make help` does not list the `rm10-hanger*` targets: the pattern in
   the `help` rule does not match digits in a target name.
-- `models/drawer-20cm.stl` is the input of `make drawer-swap`; its
-  origin is not recorded in the tree.
 
 ## Files touched
 
@@ -72,8 +72,8 @@ todo/todo.md.
 
 ## Security Note
 
-The repository is private, but `specs/` and `session/` are still
-treated as public source: no secrets, personal data or internal
-addresses go into them. Run `gitleaks` and review `git log -p` again
-before any change of visibility. Third-party files stay out of the
+The repository is public: every commit, including `specs/` and
+`session/`, is readable by anyone. No secrets, personal data or
+internal addresses go into them, and `gitleaks` runs before each push.
+Third-party files stay out of the
 tree; check `git status` for new untracked models before each commit.
