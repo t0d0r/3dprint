@@ -9,7 +9,7 @@ OPENSCAD ?= openscad
 MODEL   ?= models/drawer-20cm.stl
 
 .DEFAULT_GOAL := help
-.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save phone-mount phone-mount-fit phone-mount-save tube-clip tube-clip-save tube-edge-clip tube-edge-clip-save deco-platform deco-platform-fit deco-platform-save lamp-stand lamp-stand-save
+.PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save kvm-mount kvm-mount-save rm10-hanger rm10-hanger-save rm10-hanger-plain rm10-hanger-plain-save tube-clip tube-clip-save tube-edge-clip tube-edge-clip-save phone-mount phone-mount-fit phone-mount-save deco-platform deco-platform-fit deco-platform-save lamp-stand lamp-stand-save
 
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
@@ -82,26 +82,54 @@ macbook-stand-fit: build ## build out/macbook-stack-stand-fit.stl, a 10 mm slice
 	$(OPENSCAD) --backend=manifold -q --hardwarnings $(SCAD_ARGS) -D 'part="fit"' -o out/macbook-stack-stand-fit.stl $(MBS)
 	$(PY) -I scripts/mesh_info.py out/macbook-stack-stand-fit.stl
 
-CPM := scripts/car_phone_mount.scad
+KVM := scripts/kvm_shelf_mount.scad
 
-phone-mount: build ## build out/car-phone-mount-{vertical,horizontal}.stl, the dashboard slot phone holder, and previews (SCAD_ARGS passes -D overrides, e.g. -D mouth_h=27)
+kvm-mount: build ## build out/kvm-shelf-mount.stl and previews (SCAD_ARGS passes -D overrides)
 	mkdir -p out
-	for v in vertical horizontal; do \
-	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "variant=\"$$v\"" -o out/car-phone-mount-$$v.stl $(CPM) || exit 1; \
-	  $(MBS_PNG) -D "variant=\"$$v\"" -o out/car-phone-mount-$$v-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(CPM) || exit 1; \
-	  $(MBS_PNG) -D "variant=\"$$v\"" -D 'part="assembly"' -o out/car-phone-mount-$$v-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,60,0,205,0 $(CPM) || exit 1; \
-	  $(MBS_PNG) -D "variant=\"$$v\"" -D 'part="side"' -o out/car-phone-mount-$$v-side.png --imgsize=1200,800 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(CPM) || exit 1; \
-	  $(PY) -I scripts/mesh_info.py out/car-phone-mount-$$v.stl || exit 1; done
-	$(MBS_PNG) -o out/car-phone-mount-top.png --imgsize=1200,600 --projection=ortho --autocenter --viewall --camera=0,0,0,0,0,0,0 $(CPM)
+	$(OPENSCAD) --backend=manifold -q --export-format binstl $(SCAD_ARGS) -o out/kvm-shelf-mount.stl $(KVM)
+	$(MBS_PNG) -o out/kvm-shelf-mount-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,60,0,25,0 $(KVM)
+	$(MBS_PNG) -D 'part="assembly"' -o out/kvm-shelf-mount-assembly.png --imgsize=1200,700 --autocenter --viewall --camera=0,0,0,97,0,325,0 $(KVM)
+	$(MBS_PNG) -D 'part="plan"' -o out/kvm-shelf-mount-front.png --imgsize=1200,500 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(KVM)
+	$(MBS_PNG) -D 'part="plan"' -o out/kvm-shelf-mount-plan.png --imgsize=1200,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,180,0,0,0 $(KVM)
+	$(PY) -I scripts/mesh_info.py out/kvm-shelf-mount.stl
 
-phone-mount-fit: build ## build out/car-phone-mount-fit.stl, three flat templates of the plug outline for a fit test in the slot
+kvm-mount-save: kvm-mount ## rebuild the KVM mount and copy the STL to models/
+	cp out/kvm-shelf-mount.stl models/
+	ls -l models/kvm-shelf-mount.stl
+
+RMH := scripts/rm10_shelf_hanger.scad
+
+rm10-hanger: build ## build out/rm10-shelf-hanger.stl and previews (SCAD_ARGS passes -D overrides, e.g. -D shelf_t=10)
 	mkdir -p out
-	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D 'part="fit"' -o out/car-phone-mount-fit.stl $(CPM)
-	$(PY) -I scripts/mesh_info.py out/car-phone-mount-fit.stl
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/rm10-shelf-hanger.stl $(RMH)
+	$(MBS_PNG) -o out/rm10-shelf-hanger-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,60,0,25,0 $(RMH)
+	$(MBS_PNG) -D 'part="assembly"' -o out/rm10-shelf-hanger-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,75,0,325,0 $(RMH)
+	$(MBS_PNG) -D 'part="assembly"' -o out/rm10-shelf-hanger-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,115,0,215,0 $(RMH)
+	$(MBS_PNG) -D 'part="side"' -o out/rm10-shelf-hanger-side.png --imgsize=1200,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(RMH)
+	$(PY) -I scripts/mesh_info.py out/rm10-shelf-hanger.stl
 
-phone-mount-save: phone-mount ## rebuild both phone holder variants and copy the STLs to models/
-	cp out/car-phone-mount-vertical.stl out/car-phone-mount-horizontal.stl models/
-	ls -l models/car-phone-mount-*.stl
+rm10-hanger-save: rm10-hanger ## rebuild the RM10 shelf hanger and copy the STL to models/
+	cp out/rm10-shelf-hanger.stl models/
+	ls -l models/rm10-shelf-hanger.stl
+
+RMP := scripts/rm10_shelf_hanger_plain.scad
+
+rm10-hanger-plain: build ## build out/rm10-shelf-hanger-plain.stl, the hanger without holes, and previews (SCAD_ARGS passes -D overrides)
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/rm10-shelf-hanger-plain.stl $(RMP)
+	$(MBS_PNG) -o out/rm10-shelf-hanger-plain-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,50,0,25,0 $(RMP)
+	$(MBS_PNG) -D 'part="assembly"' -o out/rm10-shelf-hanger-plain-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,75,0,325,0 $(RMP)
+	$(MBS_PNG) -D 'part="assembly"' -o out/rm10-shelf-hanger-plain-below.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,115,0,215,0 $(RMP)
+	$(MBS_PNG) -D 'part="side"' -o out/rm10-shelf-hanger-plain-side.png --imgsize=1200,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(RMP)
+	$(PY) -I scripts/mesh_info.py out/rm10-shelf-hanger-plain.stl
+
+rm10-hanger-plain-save: rm10-hanger-plain ## rebuild the hanger without holes and copy the STL to models/
+	cp out/rm10-shelf-hanger-plain.stl models/
+	ls -l models/rm10-shelf-hanger-plain.stl
 
 TBC := scripts/tube_clip.scad
 
@@ -137,6 +165,27 @@ tube-edge-clip-save: tube-edge-clip ## rebuild the shelf-edge tube clips and cop
 	cp out/tube-edge-clip.stl models/
 	ls -l models/tube-edge-clip.stl
 
+CPM := scripts/car_phone_mount.scad
+
+phone-mount: build ## build out/car-phone-mount-{vertical,horizontal}.stl, the dashboard slot phone holder, and previews (SCAD_ARGS passes -D overrides, e.g. -D mouth_h=27)
+	mkdir -p out
+	for v in vertical horizontal; do \
+	  $(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D "variant=\"$$v\"" -o out/car-phone-mount-$$v.stl $(CPM) || exit 1; \
+	  $(MBS_PNG) -D "variant=\"$$v\"" -o out/car-phone-mount-$$v-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,55,0,25,0 $(CPM) || exit 1; \
+	  $(MBS_PNG) -D "variant=\"$$v\"" -D 'part="assembly"' -o out/car-phone-mount-$$v-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,60,0,205,0 $(CPM) || exit 1; \
+	  $(MBS_PNG) -D "variant=\"$$v\"" -D 'part="side"' -o out/car-phone-mount-$$v-side.png --imgsize=1200,800 --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,270,0 $(CPM) || exit 1; \
+	  $(PY) -I scripts/mesh_info.py out/car-phone-mount-$$v.stl || exit 1; done
+	$(MBS_PNG) -o out/car-phone-mount-top.png --imgsize=1200,600 --projection=ortho --autocenter --viewall --camera=0,0,0,0,0,0,0 $(CPM)
+
+phone-mount-fit: build ## build out/car-phone-mount-fit.stl, three flat templates of the plug outline for a fit test in the slot
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -D 'part="fit"' -o out/car-phone-mount-fit.stl $(CPM)
+	$(PY) -I scripts/mesh_info.py out/car-phone-mount-fit.stl
+
+phone-mount-save: phone-mount ## rebuild both phone holder variants and copy the STLs to models/
+	cp out/car-phone-mount-vertical.stl out/car-phone-mount-horizontal.stl models/
+	ls -l models/car-phone-mount-*.stl
+
 DAP := scripts/deco_arm_platform.scad
 
 deco-platform: build ## build out/deco-arm-platform-{tray,rim}.stl, the Deco platform for the swivel link of the monitor arm, and previews (SCAD_ARGS passes -D overrides, e.g. -D link_w=27)
@@ -157,6 +206,23 @@ deco-platform-fit: build ## build out/deco-arm-platform-fit.stl, the saddle of t
 deco-platform-save: deco-platform ## rebuild the Deco platform and copy both STLs to models/
 	cp out/deco-arm-platform-tray.stl out/deco-arm-platform-rim.stl models/
 	ls -l models/deco-arm-platform-*.stl
+
+KUM := scripts/rm10_kumiko_panel.scad
+
+kumiko-panel: build ## build out/rm10-kumiko-panel.stl, the kumiko front and top panels for the plain hanger, and previews
+	mkdir -p out
+	$(OPENSCAD) --backend=manifold -q --hardwarnings --export-format binstl $(SCAD_ARGS) -o out/rm10-kumiko-panel.stl $(KUM)
+	$(MBS_PNG) -o out/rm10-kumiko-panel-part.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,50,0,20,0 $(KUM)
+	$(MBS_PNG) -D 'part="view"' -o out/rm10-kumiko-panel-front.png --imgsize=1400,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,90,0,0,0 $(KUM)
+	$(MBS_PNG) -D 'part="view"' -o out/rm10-kumiko-panel-top.png --imgsize=1400,700 \
+	  --projection=ortho --autocenter --viewall --camera=0,0,0,0,0,0,0 $(KUM)
+	$(MBS_PNG) -D 'part="assembly"' -o out/rm10-kumiko-panel-assembly.png --imgsize=1200,800 --autocenter --viewall --camera=0,0,0,65,0,330,0 $(KUM)
+	$(PY) -I scripts/mesh_info.py out/rm10-kumiko-panel.stl
+
+kumiko-panel-save: kumiko-panel ## rebuild the kumiko panel and copy the STL to models/
+	cp out/rm10-kumiko-panel.stl models/
+	ls -l models/rm10-kumiko-panel.stl
 
 LCS := scripts/lamp_charger_stand.scad
 

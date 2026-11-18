@@ -75,20 +75,36 @@ Default bed is 220 x 220 x 250 mm.
   the 45 degree cuts meet the rounded shelf tips.
 - About 72 g PLA each if printed solid; one left and one right.
 
-## out/car-phone-mount-vertical.stl, -horizontal.stl
+## out/kvm-shelf-mount.stl
 
-- Vertical 225.3 x 72.5 x 94.7 mm, 224 cm3 solid; horizontal
-  225.3 x 73.9 x 57.2 mm, 246 cm3 solid. As exported (car frame,
-  underside of the plug on the bed), both watertight.
-- As exported: 99 and 117 cm2 bed contact, 0.4 cm2 of downward face,
-  no supports. Neither fits a 220 mm bed straight; both fit
-  diagonally, or straight on 235 mm and larger.
-- Layers lie across the 5 mm backrest (specs/car-phone-mount.md).
-- About 97 and 107 g at 20% infill by the rough factor; 10 to 15% is
-  enough. PETG or ASA, not PLA: the part sits on a dashboard in the
-  sun.
-- Fit test `out/car-phone-mount-fit.stl`: three flat rings, 2 mm
-  thick, 225.3 x 92.8 mm, 13.0 cm3. The same for both variants.
+- 209 x 53.6 x 60.5 mm as exported (standing on the front face),
+  86.5 cm3, watertight, one body.
+- Fits the 220 mm bed with 5.5 mm to spare on each side in X.
+- As exported: 13.7 cm2 bed contact in strips, brim recommended. The
+  11 cm2 reported as overhang are the 45 degree stops and the bridged
+  ends of the slots; no supports needed. Every other orientation needs
+  supports inside the bays.
+- About 38 g at 20% infill by the rough factor; PETG recommended
+  (specs/kvm-shelf-mount.md).
+
+## out/rm10-shelf-hanger.stl
+
+- 144 x 62.2 x 57.8 mm as exported (standing on the front face),
+  104.5 cm3, watertight, one body.
+- As exported: 58.9 cm2 bed contact. The 38 cm2 reported as overhang
+  are the vent slots and the end lip of the source sleeve; the added
+  clip has none. Every other orientation is worse.
+- About 45 g at 20% infill by the rough factor; PETG recommended
+  (specs/rm10-shelf-hanger.md).
+
+## out/rm10-shelf-hanger-plain.stl
+
+- 120 x 64.7 x 59.5 mm as exported (standing on the front face),
+  109.2 cm3, watertight, one body.
+- As exported: 44.1 cm2 bed contact, 1 cm2 reported as overhang (the
+  45 degree stops and jaw tip). No holes, no bridges, no supports.
+- About 47 g at 20% infill by the rough factor; PETG recommended
+  (specs/rm10-shelf-hanger.md).
 
 ## out/tube-clip.stl
 
@@ -103,6 +119,21 @@ Default bed is 220 x 220 x 250 mm.
   percentile 2.40 mm (the ring), median 3.00 mm.
 - About 11 g at 20% infill by the rough factor for both; PETG
   recommended (specs/tube-clip.md).
+
+## out/car-phone-mount-vertical.stl, -horizontal.stl
+
+- Vertical 225.3 x 72.5 x 94.7 mm, 224 cm3 solid; horizontal
+  225.3 x 73.9 x 57.2 mm, 246 cm3 solid. As exported (car frame,
+  underside of the plug on the bed), both watertight.
+- As exported: 99 and 117 cm2 bed contact, 0.4 cm2 of downward face,
+  no supports. Neither fits a 220 mm bed straight; both fit
+  diagonally, or straight on 235 mm and larger.
+- Layers lie across the 5 mm backrest (specs/car-phone-mount.md).
+- About 97 and 107 g at 20% infill by the rough factor; 10 to 15% is
+  enough. PETG or ASA, not PLA: the part sits on a dashboard in the
+  sun.
+- Fit test `out/car-phone-mount-fit.stl`: three flat rings, 2 mm
+  thick, 225.3 x 92.8 mm, 13.0 cm3. The same for both variants.
 
 ## out/tube-edge-clip.stl
 
@@ -127,6 +158,15 @@ Default bed is 220 x 220 x 250 mm.
 - Fit piece: 45 x 52 x 19 mm, 18 cm3.
 - Arm dimensions are photo readings; print the fit piece first
   (specs/deco-arm-platform.md).
+
+## out/rm10-kumiko-panel.stl
+
+- Two bodies, front and top panel, laid out for one print:
+  152.8 x 188.1 x 11 mm (visible faces down, tabs up), 27.7 cm3,
+  watertight.
+- 97 cm2 bed contact, no overhang, no supports.
+- Thinnest walls are the 1 mm leaf bars; check that the slicer keeps
+  them (specs/rm10-kumiko-panel.md).
 
 ## out/lamp-charger-stand-cone.stl, out/lamp-charger-stand-top.stl
 

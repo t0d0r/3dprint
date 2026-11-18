@@ -7,3 +7,6 @@ out/
 __pycache__/
 *.pyc
 .DS_Store
+# third-party model and the STL derived from it: local only, never committed
+models/Comet-Pro-RM10-10inch-3d-printable-rack-mount-1-lot.stl
+models/rm10-shelf-hanger.stl

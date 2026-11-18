@@ -5,7 +5,10 @@
 - [printability.md](printability.md) - what the printability check measures, per-model results
 - [drawer-swap.md](drawer-swap.md) - drawer with ramp at the front and a square back wall: geometry, method, print notes
 - [macbook-stack-stand.md](macbook-stack-stand.md) - side rails that stack two closed MacBook Pro 14" laptops: geometry, parameters, print notes
-- [car-phone-mount.md](car-phone-mount.md) - phone holder plugged into the dashboard slot above the car radio: slot shape from photos, full-shape plug, vertical and horizontal cradle for a Xiaomi 15T Pro, fit templates, print notes
+- [kvm-shelf-mount.md](kvm-shelf-mount.md) - under-shelf mount for a GL-RM10 and two JetKVM Mini W in a row: geometry, parameters, print notes
+- [rm10-shelf-hanger.md](rm10-shelf-hanger.md) - clip-on shelf hanger for a GL-RM10, made from the 10 inch rack mount, and a variant without holes: source measurements, geometry, print notes
 - [tube-clip.md](tube-clip.md) - snap clips for a 20 mm tube under a shelf, one taped or screwed, one pushed onto the shelf edge, both holding the tube in one line: geometry, snap and tape numbers, print notes
+- [car-phone-mount.md](car-phone-mount.md) - phone holder plugged into the dashboard slot above the car radio: slot shape from photos, full-shape plug, vertical and horizontal cradle for a Xiaomi 15T Pro, fit templates, print notes
 - [deco-arm-platform.md](deco-arm-platform.md) - platform for a TP-Link Deco on the swivel link of a monitor arm: arm numbers from ruler photos, tray with pad, cheek and cable tie, loose rim, fit piece, print notes
+- [rm10-kumiko-panel.md](rm10-kumiko-panel.md) - kumiko (asanoha) cover for the hanger without holes, front and top panel joined into an L: pattern, tabs, joint, print notes
 - [lamp-charger-stand.md](lamp-charger-stand.md) - round kumiko stand that carries a Belkin 3-in-1 charging stand over the Qi pad in the base of an IKEA NYMANE lamp: photo measurements, cone on the rim of the lamp base, pattern, three pieces, print notes
