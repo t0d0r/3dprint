@@ -73,3 +73,5 @@
 - [x] repo: BSD 2-Clause license, private GitHub remote, main pushed (session/2026-11-18-github-remote.md)
 - [x] repo: third-party rack mount model and the hanger STL derived from it kept out of the repository (.gitignore, specs/rm10-shelf-hanger.md)
 - [ ] repo: record where the third-party rack mount model comes from, so a fresh clone can fetch it (specs/rm10-shelf-hanger.md)
+- [x] repo: README with the parts, build targets, requirements and license (README.md)
+- [ ] repo: make help skips targets with a digit in the name (rm10-hanger*); widen the pattern in the help rule (Makefile)

@@ -11,6 +11,9 @@ Repository housekeeping; no part changed.
 - `LICENSE`: BSD 2-Clause (the FreeBSD license), copyright 2026.
 - Remote `origin` added: a private GitHub repository named `3dprint`.
   `main` is pushed and tracks `origin/main`.
+- `README.md`: what the project is, the parts with their build targets
+  and specs, requirements, usage, layout, the third-party model rule
+  and the license.
 - Before the push: `gitleaks` over the history and over the working
   tree found nothing; the history holds no local paths, addresses or
   credentials.
@@ -40,11 +43,15 @@ Repository housekeeping; no part changed.
   once.
 - The author address in the commits becomes visible if the repository
   is made public.
-- No `README.md` yet.
+- `make help` does not list the `rm10-hanger*` targets: the pattern in
+  the `help` rule does not match digits in a target name.
+- `models/drawer-20cm.stl` is the input of `make drawer-swap`; its
+  origin is not recorded in the tree.
 
 ## Files touched
 
 - `LICENSE` (new)
+- `README.md` (new)
 - `.gitignore`
 - `specs/rm10-shelf-hanger.md`
 - `todo/todo.md`
