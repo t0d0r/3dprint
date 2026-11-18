@@ -15,6 +15,9 @@ Repository housekeeping; no part changed.
 - `README.md`: what the project is, the parts with their build targets
   and specs, requirements, usage, layout, the third-party model rule
   and the license.
+- `make help` lists the four `rm10-hanger*` targets. The pattern in
+  the `help` rule did not match digits in a target name; it now
+  accepts `[a-zA-Z0-9_-]`.
 - Before the push: `gitleaks` over the history and over the working
   tree found nothing; the history holds no local paths, addresses or
   credentials.
@@ -45,13 +48,12 @@ Repository housekeeping; no part changed.
   host may keep unreferenced objects for a while; until it collects
   them they can be fetched by their hash. Deleting and recreating the
   remote repository is the only way to purge them at once.
-- `make help` does not list the `rm10-hanger*` targets: the pattern in
-  the `help` rule does not match digits in a target name.
 
 ## Files touched
 
 - `LICENSE` (new)
 - `README.md` (new)
+- `Makefile`
 - `.gitignore`
 - `specs/rm10-shelf-hanger.md`
 - `todo/todo.md`

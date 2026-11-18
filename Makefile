@@ -12,7 +12,7 @@ MODEL   ?= models/drawer-20cm.stl
 .PHONY: help build test lint check run clean info printcheck preview sections drawer-swap macbook-stand macbook-stand-fit macbook-stand-save kvm-mount kvm-mount-save rm10-hanger rm10-hanger-save rm10-hanger-plain rm10-hanger-plain-save tube-clip tube-clip-save tube-edge-clip tube-edge-clip-save phone-mount phone-mount-fit phone-mount-save deco-platform deco-platform-fit deco-platform-save lamp-stand lamp-stand-save
 
 help: ## list targets
-	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z0-9_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-8s %s\n", $$1, $$2}'
 
 build: $(VENV)/.ok ## create the venv and install requirements
 
